@@ -10,21 +10,18 @@ use yii\filters\VerbFilter;
 class SiteController extends base\BaseController
 {
     /**
-     *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
-        return array_merge(
-            $this->getAccess(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
 
-                    ]
-                ]
-            ]);
+                ],
+            ],
+        ];
     }
 
     /**
@@ -35,17 +32,8 @@ class SiteController extends base\BaseController
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'layout' => 'zero',
             ],
         ];
-    }
-
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
     }
 }

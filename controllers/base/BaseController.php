@@ -84,8 +84,6 @@ class BaseController extends \yii\web\Controller
      */
     public function beforeAction($action)
     {
-        $this->getView()->params['assetCommon'] = \common\assets\AppAsset::register($this->getView());
-
         if (!empty(Yii::$app->request->get('token'))) {
 
             if (Yii::$app->user->isGuest) {

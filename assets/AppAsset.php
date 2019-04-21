@@ -9,12 +9,16 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'lib/asicon/asicon.css',
+        'css/style.css',
+        'css/colors/default.css',
     ];
     public $js = [
     ];
     public $depends = [
-        'common\assets\AppAsset',
-        'common\assets\MaterialDesignAsset',
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
+        'webview\assets\MaterialDesignAsset',
     ];
 }
