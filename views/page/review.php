@@ -188,7 +188,7 @@ $this->registerMetaTag([
                                                 <div class="col-xs-3">
                                                     <ul class="list-inline mt-0 mb-0">
                                                         <li>
-                                                            <small><?= '<i class="aicon aicon-heart"></i> <span class="total-likes-review">' . $loveCount . '</span>' ?></small>
+                                                            <small><?= '<i class="aicon aicon-heart1"></i> <span class="total-likes-review">' . $loveCount . '</span>' ?></small>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -208,22 +208,22 @@ $this->registerMetaTag([
                                                 <div class="col-tab-7 col-xs-12">
                                                     <ul class="list-inline list-review mt-0 mb-0">
                                                         <li>
-                                                            <?= Html::a('<i class="aicon aicon-heart"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-tab']); ?>
-                                                            <?= Html::a('<i class="aicon aicon-heart"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-xs']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-baseline-thumb_up-24px"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-tab']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-baseline-thumb_up-24px"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-xs']); ?>
                                                         </li>
                                                         <li>
                                                             <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-tab']); ?>
                                                             <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-xs']); ?>
                                                         </li>
                                                         <li class="visible-xs-inline-block">
-                                                            <?= Html::a('<i class="aicon aicon-share2"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div class="col-tab-5 text-right visible-tab">
                                                     <ul class="list-inline list-review mt-0 mb-0">
                                                         <li>
-                                                            <?= Html::a('<i class="aicon aicon-share2"></i> Share', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-share1"></i> Share', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
                                                         </li>
                                                     </ul>
                                             	</div>
