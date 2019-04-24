@@ -5,6 +5,7 @@
 
 use webview\assets\AppAsset;
 use yii\helpers\Html;
+use yii\web\View;
 
 AppAsset::register($this); ?>
 
@@ -30,7 +31,13 @@ AppAsset::register($this); ?>
             foreach ($this->params['beforeEndBody'] as $value) {
                 $value();
             }
-        } ?>
+        }
+
+        $this->registerJs('
+            $(document).ready(function() {
+
+                $("body").bootstrapMaterialDesign();
+            });', View::POS_END); ?>
 
     <?php $this->endBody() ?>
     </body>

@@ -2,7 +2,6 @@
 
 use common\components\Helper;
 use frontend\components\GrowlCustom;
-use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\web\View;
@@ -64,7 +63,7 @@ $this->registerMetaTag([
 
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
-                            <div class="box bg-white">
+                            <div class="card box bg-white">
                                 <div class="box-content">
 
                                     <?php
@@ -83,7 +82,7 @@ $this->registerMetaTag([
                                                         <div class="widget-posts-image">
 
         												    <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-        												        'class' => 'img-responsive img-circle img-profile-thumb img-component'
+        												        'class' => 'img-fluid rounded-circle'
         												    ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
 
                                                         </div>
@@ -107,17 +106,6 @@ $this->registerMetaTag([
                                                         <li>
                                                             <div class="widget star-rating">
 
-                                                                <?= StarRating::widget([
-                                                                    'id' => 'rating-' . $modelUserPostMain['id'],
-                                                                    'name' => 'rating_' . $modelUserPostMain['id'],
-                                                                    'value' => $overallValue,
-                                                                    'pluginOptions' => [
-                                                                        'displayOnly' => true,
-                                                                        'filledStar' => '<span class="aicon aicon-star-full"></span>',
-                                                                        'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-                                                                        'showCaption' => false,
-                                                                    ]
-                                                                ]); ?>
 
                                                             </div>
                                                         </li>
@@ -302,16 +290,16 @@ $this->registerMetaTag([
 </div>
 
 <?php
-$this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\YiiAsset']);
+$this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
-GrowlCustom::widget();
+//GrowlCustom::widget();
 frontend\components\RatingColor::widget();
 frontend\components\Readmore::widget();
 frontend\components\FacebookShare::widget();
 
 $this->registerJs(GrowlCustom::messageResponse(), View::POS_HEAD);
 
-$this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\YiiAsset']);
+$this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
 
 $jscript = '
     var reviewId = $(".user-post-main-id");
