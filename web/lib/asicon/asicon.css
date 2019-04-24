@@ -1,29 +1,13 @@
 @font-face {
   font-family: 'asicon';
-  src:  url('fonts/asicon.eot?rstbko');
-  src:  url('fonts/asicon.eot?rstbko#iefix') format('embedded-opentype'),
-    url('fonts/asicon.ttf?rstbko') format('truetype'),
-    url('fonts/asicon.woff?rstbko') format('woff'),
-    url('fonts/asicon.svg?rstbko#asicon') format('svg');
+  src:  url('fonts/asicon.eot?s28g87');
+  src:  url('fonts/asicon.eot?s28g87#iefix') format('embedded-opentype'),
+    url('fonts/asicon.ttf?s28g87') format('truetype'),
+    url('fonts/asicon.woff?s28g87') format('woff'),
+    url('fonts/asicon.svg?s28g87#asicon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
-
-[class^="aicon-"], [class*=" aicon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'asicon' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 .aicon {
  display:inline-block;
  font:normal normal normal 14px/1 Asicon;
@@ -61,8 +45,10 @@
 .aicon-5x {
  font-size:5em
 }
-
-.aicon-baseline-thumb_up-24px:before {
+.aicon-more:before {
+  content: "\eaf4";
+}
+.aicon-thumb:before {
   content: "\e900";
 }
 .aicon-icon-flag-1:before {
@@ -2546,10 +2532,10 @@
 .aicon-IcoMoon:before {
   content: "\eaf0";
 }
-.aicon-image2vector:before {
+.aicon-rupiah:before {
   content: "\eaf1";
 }
-.aicon-image2vector1:before {
+.aicon-promo:before {
   content: "\eaf2";
 }
 .aicon-booking:before {

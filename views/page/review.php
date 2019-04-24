@@ -71,7 +71,6 @@ $this->registerMetaTag([
                                     if (!empty($modelUserPostMain)):
 
                                         $img = !empty($modelUserPostMain['user']['image']) ? $modelUserPostMain['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
-
 										$overallValue = !empty($dataUserVoteReview['overallValue']) ? $dataUserVoteReview['overallValue'] : 0; ?>
 
                                         <div class="review-container">
@@ -188,7 +187,7 @@ $this->registerMetaTag([
                                                 <div class="col-xs-3">
                                                     <ul class="list-inline mt-0 mb-0">
                                                         <li>
-                                                            <small><?= '<i class="aicon aicon-heart1"></i> <span class="total-likes-review">' . $loveCount . '</span>' ?></small>
+                                                            <small><?= '<i class="aicon aicon-thumb"></i> <span class="total-likes-review">' . $loveCount . '</span>' ?></small>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -208,8 +207,8 @@ $this->registerMetaTag([
                                                 <div class="col-tab-7 col-xs-12">
                                                     <ul class="list-inline list-review mt-0 mb-0">
                                                         <li>
-                                                            <?= Html::a('<i class="aicon aicon-baseline-thumb_up-24px"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-tab']); ?>
-                                                            <?= Html::a('<i class="aicon aicon-baseline-thumb_up-24px"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-xs']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-tab']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-xs']); ?>
                                                         </li>
                                                         <li>
                                                             <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-tab']); ?>

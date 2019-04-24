@@ -40,7 +40,7 @@ class PageController extends base\BaseController
             ]);
     }
 
-    public function actionDetail($city, $uniqueName)
+    public function actionDetail($id)
     {
         Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
@@ -118,8 +118,7 @@ class PageController extends base\BaseController
                     ]);
                 }
             ])
-            ->andWhere(['business.unique_name' => $uniqueName])
-            ->andWhere(['lower(city.name)' => str_replace('-', ' ', $city)])
+            ->andWhere(['business.id' => $id])
             ->asArray()->one();
 
         $isOrderOnline = false;
@@ -352,7 +351,7 @@ class PageController extends base\BaseController
         ]);
     }
 
-    public function actionPhoto($id, $uniqueName)
+    public function actionPhoto($id)
     {
         $modelUserPostMain = UserPostMain::find()
             ->joinWith([
@@ -373,7 +372,6 @@ class PageController extends base\BaseController
             ->andWhere(['user_post_main.id' => $id])
             ->andWhere(['user_post_main.type' => 'Photo'])
             ->andWhere(['user_post_main.is_publish' => true])
-            ->andWhere(['business.unique_name' => $uniqueName])
             ->asArray()->one();
 
         if (empty($modelUserPostMain)) {

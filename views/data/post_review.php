@@ -13,8 +13,6 @@ use yii\widgets\Pjax;
 /* @var $totalCount int */
 /* @var $modelUserPostMain core\models\UserPostMain */
 
-kartik\popover\PopoverXAsset::register($this);
-
 Pjax::begin([
     'enablePushState' => false,
     'linkSelector' => '#pagination-review a',
@@ -27,18 +25,18 @@ $linkPager = LinkPager::widget([
     'maxButtonCount' => 5,
     'prevPageLabel' => false,
     'nextPageLabel' => false,
-    'firstPageLabel' => '<i class="fa fa-angle-double-left"></i>',
-    'lastPageLabel' => '<i class="fa fa-angle-double-right"></i>',
+    'firstPageLabel' => '<i class="aicon aicon-icon-left-angle-semantic"></i>',
+    'lastPageLabel' => '<i class="aicon aicon-icon-right-angle-semantic"></i>',
     'options' => ['id' => 'pagination-review', 'class' => 'pagination'],
 ]); ?>
 
 <div class="row mt-10 mb-20">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-tab-6 col-xs-12 mb-10">
 
         <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-tab-6 visible-tab text-right">
 
         <?= $linkPager; ?>
 
@@ -83,12 +81,12 @@ $linkPager = LinkPager::widget([
 
                 ksort($ratingComponent); ?>
 
-                <div class="col-lg-12 review-post">
+                <div class="col-xs-12 review-post">
 
                     <?= Html::hiddenInput('user_post_main_id', $dataUserPostMain['id'], ['class' => 'user-post-main-id']) ?>
 
                     <div class="row mb-10">
-                        <div class="col-sm-6 col-tab-7 col-xs-12">
+                        <div class="col-tab-7 col-xs-12">
                             <div class="widget">
                                 <div class="widget-posts-image">
                                     <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img-responsive img-circle img-profile-thumb img-component']), ['user/user-profile', 'user' => $dataUserPostMain['user']['username']]) ?>
@@ -101,58 +99,11 @@ $linkPager = LinkPager::widget([
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 col-tab-5 visible-lg visible-md visible-sm visible-tab">
+                        <div class="col-tab-5 visible-tab">
                             <div class="rating">
                             	<h3 class="mt-0 mb-0">
-                                    <?= Html::a(number_format($overallValue, 1), '#', ['id' => 'user-rating-popover' . $dataUserPostMain['id'], 'class' => 'label label-success user-rating-popover pt-10']); ?>
+                                    <?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success pt-10']); ?>
                             	</h3>
-                            </div>
-                            <div id="user-container-popover<?= $dataUserPostMain['id']; ?>" class="popover popover-x popover-default popover-rating">
-                                <div class="arrow"></div>
-                                <div class="popover-body popover-content">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="widget star-rating">
-                                                <ul class="icon-list">
-
-                                                    <?php
-                                                    if (!empty($ratingComponent)):
-
-                                                        foreach ($ratingComponent as $dataUserVote): ?>
-
-                                                            <li>
-                                                                <div class="row">
-                                                                    <div class="col-xs-5">
-
-                                                                        <?= StarRating::widget([
-                                                                            'id' => 'user-' . $dataUserPostMain['id'] . '-' . $dataUserVote['ratingComponent']['name'] . '-rating',
-                                                                            'name' => 'user-' . $dataUserPostMain['id'] . '-' . $dataUserVote['ratingComponent']['name'] . '-rating',
-                                                                            'value' => $dataUserVote['vote_value'],
-                                                                            'pluginOptions' => [
-                                                                                'displayOnly' => true,
-                                                                                'filledStar' => '<span class="aicon aicon-star-full"></span>',
-                                                                                'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-                                                                                'showCaption' => false,
-                                                                            ]
-                                                                        ]); ?>
-
-                                                                    </div>
-
-                                                                    <div class="col-xs-7">
-                                                                        <?= $dataUserVote['vote_value'] . ' &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataUserVote['ratingComponent']['name']); ?>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                        <?php
-                                                        endforeach;
-                                                    endif; ?>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-xs-12 visible-xs">
@@ -177,7 +128,7 @@ $linkPager = LinkPager::widget([
                                 <li>
                                     <div class="rating rating-<?= $dataUserPostMain['id']; ?>">
                                         <h4 class="mt-0 mb-0">
-                                        	<?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success user-rating-popover']); ?>
+                                        	<?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success']); ?>
                                         </h4>
                                     </div>
                                 </li>
@@ -194,7 +145,7 @@ $linkPager = LinkPager::widget([
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12 col-xs-12">
+                        <div class="col-xs-12">
                             <ul class="works-grid works-grid-gut works-grid-5">
 
                                 <?php
@@ -215,10 +166,10 @@ $linkPager = LinkPager::widget([
                                                         	if ($i == 4) {
 
                                                         	    echo Html::a('+' . (count($dataUserPostMain['userPostMains']) - $i), ['page/review', 'id' => $dataUserPostMain['id']], ['class' => 'btn btn-d btn-small btn-xs btn-circle']);
-                                                        	    echo Html::a('<i class="fa fa-search"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-d btn-small btn-xs btn-circle show-image hidden']);
+                                                        	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image hidden']);
                                                         	} else {
 
-                                                        	    echo Html::a('<i class="fa fa-search"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-d btn-small btn-xs btn-circle show-image']);
+                                                        	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
                                                         	} ?>
 
                                                         </div>
@@ -250,7 +201,7 @@ $linkPager = LinkPager::widget([
                         <div class="col-xs-3">
                             <ul class="list-inline mt-0 mb-0">
                                 <li>
-                                    <small><?= '<i class="fa fa-thumbs-up"></i> ' . $loveSpanCount ?></small>
+                                    <small><?= '<i class="aicon aicon-thumb"></i> ' . $loveSpanCount ?></small>
                                 </li>
                             </ul>
                         </div>
@@ -267,36 +218,36 @@ $linkPager = LinkPager::widget([
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-7 col-tab-7 col-xs-12">
+                        <div class="col-tab-7 col-xs-12">
                             <ul class="list-inline list-review mt-0 mb-0">
                                 <li>
-                                    <?= Html::a('<i class="fa fa-thumbs-up"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], ['class' => 'btn btn-default btn-small btn-round-4 user-likes-review-trigger ' . $selected . ' visible-lg visible-md visible-sm visible-tab']); ?>
-                                    <?= Html::a('<i class="fa fa-thumbs-up"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-default btn-small btn-round-4 user-likes-review-trigger ' . $selected . ' visible-xs']); ?>
+                                    <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round user-likes-review-trigger ' . $selected . ' visible-tab']); ?>
+                                    <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round user-likes-review-trigger ' . $selected . ' visible-xs']); ?>
                                 </li>
                                 <li>
-                                    <?= Html::a('<i class="fa fa-comments"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-default btn-small btn-round-4 user-comments-review-trigger visible-lg visible-md visible-sm visible-tab']); ?>
-                                    <?= Html::a('<i class="fa fa-comments"></i> Comment', '', ['class' => 'btn btn-default btn-small btn-round-4 user-comments-review-trigger visible-xs']); ?>
+                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round user-comments-review-trigger visible-tab']); ?>
+                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round user-comments-review-trigger visible-xs']); ?>
                                 </li>
                                 <li class="visible-xs-inline-block">
 
-                                    <?= Html::a('<i class="fa fa-share-alt"></i> ', Yii::$app->urlManager->createAbsoluteUrl([
+                                    <?= Html::a('<i class="aicon aicon-share1"></i> ', Yii::$app->urlManager->createAbsoluteUrl([
                                         'page/review',
                                         'id' => $dataUserPostMain['id'],
                                         'uniqueName' => $dataUserPostMain['business']['unique_name'],
-                                    ]), ['class' => 'btn btn-default btn-small btn-round-4 share-review-trigger']); ?>
+                                    ]), ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
 
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-sm-5 col-tab-5 text-right visible-lg visible-md visible-sm visible-tab">
+                        <div class="col-tab-5 text-right visible-tab">
                             <ul class="list-inline list-review mt-0 mb-0">
                                 <li>
 
-                                    <?= Html::a('<i class="fa fa-share-alt"></i> Share', Yii::$app->urlManager->createAbsoluteUrl([
+                                    <?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl([
                                         'page/review',
                                         'id' => $dataUserPostMain['id'],
                                         'uniqueName' => $dataUserPostMain['business']['unique_name'],
-                                    ]), ['class' => 'btn btn-default btn-small btn-round-4 share-review-trigger']); ?>
+                                    ]), ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
 
                                 </li>
                             </ul>
@@ -306,11 +257,11 @@ $linkPager = LinkPager::widget([
                     <hr class="divider-w mt-10">
 
                     <div class="row">
-                        <div class="user-comment-review">
-                            <div class="col-xs-12">
+                    	<div class="col-xs-12">
+                        	<div class="user-comment-review">
                                 <div class="input-group mt-10 mb-10">
-                                    <span class="input-group-addon"><i class="fa fa-comment"></i></span>
-
+                                    <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
+                                    &nbsp;&nbsp;&nbsp;
                                     <?= Html::textInput('comment_input', null, [
                                         'class' => 'form-control input-comments-review',
                                         'placeholder' => Yii::t('app', 'Write a Comment')
@@ -372,12 +323,12 @@ $linkPager = LinkPager::widget([
 </div>
 
 <div class="row mt-20 mb-10">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-tab-6 col-xs-12 mb-10">
 
         <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-tab-6 visible-lg visible-tab text-right">
 
         <?= $linkPager; ?>
 
@@ -396,12 +347,6 @@ $jscript = '
     ratingColor($(".rating"), "a");
 
     $(".user-post-main-id").each(function() {
-
-        $("#user-rating-popover" + $(this).val()).popoverButton({
-            trigger: "hover",
-            placement: "right right-top",
-            target: "#user-container-popover" + $(this).val()
-        });
 
         $(this).parent().find(".post-gallery").magnificPopup({
             delegate: "a.show-image",
@@ -446,6 +391,11 @@ $jscript = '
     $("#pjax-review-container").on("pjax:error", function (event) {
 
         event.preventDefault();
+    });
+
+    $(".rating").children().children(".label").on("click", function() {
+
+        return false;
     });
 ';
 
