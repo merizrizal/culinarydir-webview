@@ -1,7 +1,7 @@
 <?php
 
 use common\components\Helper;
-use frontend\components\GrowlCustom;
+use webview\components\Snackbar;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\web\View;
@@ -195,17 +195,15 @@ $this->registerMetaTag([
                                                 <div class="col-sm-7 col-12">
                                                     <ul class="list-inline list-review mt-0 mb-0">
                                                         <li class="list-inline-item">
-                                                            <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-tab']); ?>
-                                                            <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-xs']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' d-none d-sm-block d-md-none']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' d-block d-sm-none']); ?>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-tab']); ?>
-                                                            <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-xs']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger d-none d-sm-block d-md-none']); ?>
+                                                            <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger d-block d-sm-none']); ?>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                        	<div class="d-block d-sm-none">
-                                                            	<?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
-                                                            </div>
+                                                        	<?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger d-block d-sm-none']); ?>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -294,12 +292,12 @@ $this->registerMetaTag([
 <?php
 $this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
-//GrowlCustom::widget();
+Snackbar::widget();
 webview\components\RatingColor::widget();
 frontend\components\Readmore::widget();
 frontend\components\FacebookShare::widget();
 
-$this->registerJs(GrowlCustom::messageResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse(), View::POS_HEAD);
 
 $this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
 
