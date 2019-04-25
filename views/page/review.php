@@ -9,6 +9,8 @@ use yii\web\View;
 /* @var $this \yii\web\View */
 /* @var $modelUserPostMain core\models\UserPostMain */
 
+webview\assets\RateyoAsset::register($this);
+
 $this->title = 'Review ' . $modelUserPostMain['business']['name'];
 
 $ogUrl = Yii::$app->urlManager->createAbsoluteUrl([
@@ -77,7 +79,7 @@ $this->registerMetaTag([
                                             <?= Html::hiddenInput('user_post_main_id', $modelUserPostMain['id'], ['class' => 'user-post-main-id']) ?>
 
                                             <div class="row mb-10">
-                                                <div class="col-tab-7 col-xs-12">
+                                                <div class="col-sm-7 col-12">
                                                     <div class="widget">
                                                         <div class="widget-posts-image">
 
@@ -94,26 +96,24 @@ $this->registerMetaTag([
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-tab-5 visible-tab">
+                                                <div class="col-sm-5 d-none d-sm-block d-md-none">
 													<div class="rating">
-                                                    	<h3 class="mt-0 mb-0">
-                                                    		<?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success']); ?>
-                                                        </h3>
+                                                    	<h4>
+                                                    		<?= Html::tag('span', number_format($overallValue, 1), ['class' => 'badge badge-success']); ?>
+                                                        </h4>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-12 visible-xs">
+                                                <div class="col-12 d-block d-sm-none">
                                                 	<ul class="list-inline mt-0 mb-0">
-                                                        <li>
-                                                            <div class="widget star-rating">
-
-
+                                                        <li class="list-inline-item">
+                                                            <div class="widget star-rating" data-rating="<?= number_format($overallValue, 1) ?>">
                                                             </div>
                                                         </li>
-                                                        <li>
+                                                        <li class="list-inline-item">
                                                             <div class="rating rating-<?= $modelUserPostMain['id']; ?>">
-                                                                <h4 class="mt-0 mb-0">
-                                                                	<?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success']); ?>
-                                                                </h4>
+                                                                <h6 class="mt-0 mb-0">
+                                                                	<?= Html::tag('span', number_format($overallValue, 1), ['class' => 'badge badge-success']); ?>
+                                                                </h6>
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -121,7 +121,7 @@ $this->registerMetaTag([
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-xs-12">
+                                                <div class="col-12">
                                                     <p class="review-description">
                                                         <?= $modelUserPostMain['text']; ?>
                                                     </p>
@@ -129,7 +129,7 @@ $this->registerMetaTag([
                                           	</div>
 
                                             <div class="row">
-                                                <div class="col-xs-12">
+                                                <div class="col-12">
                                                     <ul class="works-grid works-grid-gut works-grid-5">
 
                                                         <?php
@@ -141,7 +141,7 @@ $this->registerMetaTag([
                                                                     <div class="gallery-item post-gallery">
                                                                         <div class="gallery-image">
                                                                             <div class="work-image">
-                                                                                <?= Html::img(Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=200&h=200', ['class' => 'img-component']); ?>
+                                                                                <?= Html::img(Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=200&h=200', ['class' => 'img-fluid']); ?>
                                                                             </div>
                                                                             <div class="work-caption">
                                                                                 <div class="work-descr">
@@ -171,20 +171,20 @@ $this->registerMetaTag([
 
                         					$selected = !empty($modelUserPostMain['userPostLoves'][0]) ? 'selected' : ''; ?>
 
-                                            <div class="row visible-xs">
-                                                <div class="col-xs-3">
+                                            <div class="row">
+                                                <div class="col-3 d-block d-sm-none">
                                                     <ul class="list-inline mt-0 mb-0">
-                                                        <li>
+                                                        <li class="list-inline-item">
                                                             <small><?= '<i class="aicon aicon-thumb"></i> <span class="total-likes-review">' . $loveCount . '</span>' ?></small>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="col-xs-9 text-right">
+                                                <div class="col-9 d-block d-sm-none text-right">
                                                     <ul class="list-inline mt-0 mb-0">
-                                                        <li>
+                                                        <li class="list-inline-item">
                                                             <small><?= $commentSpanCount . ' Comment' ?></small>
                                                         </li>
-                                                        <li>
+                                                        <li class="list-inline-item">
                                                             <small><?= $photoSpanCount . ' Photo' ?></small>
                                                         </li>
                                                     </ul>
@@ -192,25 +192,27 @@ $this->registerMetaTag([
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-tab-7 col-xs-12">
+                                                <div class="col-sm-7 col-12">
                                                     <ul class="list-inline list-review mt-0 mb-0">
-                                                        <li>
+                                                        <li class="list-inline-item">
                                                             <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-tab']); ?>
                                                             <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-review-trigger ' . $selected . ' visible-xs']); ?>
                                                         </li>
-                                                        <li>
+                                                        <li class="list-inline-item">
                                                             <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-tab']); ?>
                                                             <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-review-trigger visible-xs']); ?>
                                                         </li>
-                                                        <li class="visible-xs-inline-block">
-                                                            <?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                        <li class="list-inline-item">
+                                                        	<div class="d-block d-sm-none">
+                                                            	<?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                            </div>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="col-tab-5 text-right visible-tab">
+                                                <div class="col-sm-5 d-none d-sm-block d-md-none text-right">
                                                     <ul class="list-inline list-review mt-0 mb-0">
-                                                        <li>
-                                                            <?= Html::a('<i class="aicon aicon-share1"></i> Share', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                        <li class="list-inline-item">
+                                                        	<?= Html::a('<i class="aicon aicon-share1"></i> Share', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
                                                         </li>
                                                     </ul>
                                             	</div>
@@ -219,7 +221,7 @@ $this->registerMetaTag([
                                             <hr class="divider-w mt-10">
 
                                             <div class="row">
-                                            	<div class="col-xs-12">
+                                            	<div class="col-12">
                                                 	<div class="user-comment-review" id="comments-review-container">
 
                                                         <div class="input-group mt-10 mb-10">
@@ -238,7 +240,7 @@ $this->registerMetaTag([
 
                                                                 <div class="comment-post">
                                                                     <div class="row mb-10">
-                                                                        <div class="col-xs-12">
+                                                                        <div class="col-12">
                                                                             <div class="widget">
                                                                                 <div class="widget-comments-image">
 
@@ -246,7 +248,7 @@ $this->registerMetaTag([
                                                                                     $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
                                                                                     echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                                                                                        'class' => 'img-responsive img-circle img-comment-thumb img-component'
+                                                                                        'class' => 'img-fluid rounded-circle'
                                                                                     ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
                                                                                 </div>
@@ -293,7 +295,7 @@ $this->registerMetaTag([
 $this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
 //GrowlCustom::widget();
-frontend\components\RatingColor::widget();
+webview\components\RatingColor::widget();
 frontend\components\Readmore::widget();
 frontend\components\FacebookShare::widget();
 
@@ -304,7 +306,15 @@ $this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magni
 $jscript = '
     var reviewId = $(".user-post-main-id");
 
-    ratingColor($(".rating"), "a");
+    ratingColor($(".rating"), "span");
+
+    $(".star-rating").rateYo({
+        rating: $(".star-rating").data("rating"),
+        starWidth: "18px",
+        fullStar: true,
+        readOnly: true,
+        "starSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>"
+    });
 
     readmoreText({
         element: $(".review-description"),

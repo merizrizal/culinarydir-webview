@@ -18,6 +18,11 @@
 	line-height: 20px
 }
 
+.form-control, .custom-file-control,
+.is-focused .form-control,
+.is-focused .custom-file-control {
+  	background-image: linear-gradient(to top, rgba(229, 38, 38, 0.9) 2px, rgba(0, 150, 136, 0) 2px), linear-gradient(to top, rgba(0, 0, 0, 0.26) 1px, transparent 1px); }
+
 /*place detail*/
 .detail.place-detail .view .tab-content.box {
     border: 1px solid #ddd;
@@ -498,25 +503,6 @@ a.form-control:hover {
     padding: 0;
 }
 
-/*general - icon*/
-.icon-rupiah {
-    display: inline-block;
-    width: 0px;
-    height: 14px;
-    padding-left: 13px;
-}
-
-.icon-rupiah:before{
-    content: "";
-    background: url("../../icon/rupiah.png");
-    background-size: cover;
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    margin-left: -14px;
-    margin-top: 2px;
-}
-
 /*general - box*/
 .box, .box-place {
     position: relative;
@@ -534,7 +520,7 @@ a.form-control:hover {
 }
 
 .detail .box {
-    padding: 0 16px;
+    padding: 0;
 }
 
 .detail .box .box-title,
@@ -738,12 +724,12 @@ a.form-control:hover {
 /*general - comment section*/
 .widget-comments-image {
     float: left;
-    margin: 5px 0 0 7px;
+    margin: 5px 0 0 0;
     width: 45px;
 }
 
 .widget-comments-body {
-    margin-left: 74px;
+    margin-left: 56px;
 }
 
 /*kartik select2*/
@@ -1072,7 +1058,7 @@ a.form-control:hover {
     .detail.user-profile .widget-comments-body,
     .detail.review .widget-comments-body,
     .detail.photo .widget-comments-body {
-        margin-left: 50px;
+        margin-left: 46px;
     }
 
     .detail.place-detail .img-comment-thumb,

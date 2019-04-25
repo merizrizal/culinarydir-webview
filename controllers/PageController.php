@@ -306,7 +306,10 @@ class PageController extends base\BaseController
                         'user_post_love.is_active' => true
                     ]);
                 },
-                'userPostComments',
+                'userPostComments' => function ($query) {
+
+                    $query->orderBy(['user_post_comment.created_at' => SORT_ASC]);
+                },
                 'userPostComments.user user_comment'
             ])
             ->andWhere(['user_post_main.id' => $id])

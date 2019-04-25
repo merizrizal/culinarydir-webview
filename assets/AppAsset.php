@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
     public $js = [
     ];
     public $depends = [
+        'yii\web\YiiAsset',
         'webview\assets\MaterialDesignAsset',
     ];
 }

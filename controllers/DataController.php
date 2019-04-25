@@ -180,7 +180,7 @@ class DataController extends base\BaseController
                 'userPostMain',
             ])
             ->andWhere(['user_post_comment.user_post_main_id' => Yii::$app->request->post('user_post_main_id')])
-            ->orderBy(['user_post_comment.id' => SORT_ASC])
+            ->orderBy(['user_post_comment.created_at' => SORT_ASC])
             ->distinct()
             ->asArray()->all();
 
@@ -202,7 +202,7 @@ class DataController extends base\BaseController
 
         $modelBusinessDetailVote = BusinessDetailVote::find()
             ->joinWith([
-                'ratingComponent' => function($query) {
+                'ratingComponent' => function ($query) {
 
                     $query->andOnCondition(['is_active' => true]);
                 }

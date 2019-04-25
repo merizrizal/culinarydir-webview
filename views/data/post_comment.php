@@ -16,15 +16,15 @@ if (!empty($modelUserPostComment)): ?>
 
             <div class="comment-post">
                 <div class="row mb-10">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                         <div class="widget">
                             <div class="widget-comments-image">
 
                                 <?php
-                                $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=64&h=64' : 'default-avatar.png';
+                                $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
                                 echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                                    'class' => 'img-responsive img-circle img-comment-thumb img-component'
+                                    'class' => 'img-fluid rounded-circle'
                                 ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
                             </div>
