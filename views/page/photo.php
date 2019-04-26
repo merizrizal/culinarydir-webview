@@ -1,10 +1,9 @@
 <?php
 
-use yii\web\View;
-use yii\helpers\Html;
-use yii\helpers\Inflector;
 use common\components\Helper;
-use frontend\components\GrowlCustom;
+use webview\components\Snackbar;
+use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $modelUserPostMain core\models\UserPostMain */
@@ -66,11 +65,13 @@ $this->registerMetaTag([
 <div class="main bg-main">
     <section>
         <div class="detail photo">
-            <div class="row mb-20">
-                <div class="col-xs-12">
+
+            <div class="row">
+                <div class="col-12">
+
                     <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box bg-white">
+                        <div class="col-12">
+                            <div class="card box bg-white">
                                 <div class="box-content">
 
                                     <?php
@@ -83,14 +84,13 @@ $this->registerMetaTag([
                                             <?= Html::hiddenInput('user_post_main_id', $modelUserPostMain['id'], ['class' => 'user-post-main-id']) ?>
 
                                             <div class="row mb-10">
-                                                <div class="col-tab-7 col-xs-9">
-
+                                                <div class="col-sm-7 col-12">
                                                     <div class="widget">
                                                         <div class="widget-posts-image">
 
-                    									   <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                    									       'class' => 'img-responsive img-circle img-profile-thumb img-component'
-                    									   ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
+        												    <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+        												        'class' => 'img-fluid rounded-circle'
+        												    ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
 
                                                         </div>
 
@@ -100,19 +100,14 @@ $this->registerMetaTag([
                                                             <small><?= Helper::asRelativeTime($modelUserPostMain['created_at']) ?></small>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-xs-12">
+                                                <div class="col-12">
                                                     <div class="photo-review mt-10 mb-10">
-                                                        <div class="row">
-                                                            <div class="col-xs-12">
-                                                            	<div class="owl-carousel owl-theme">
-                                                                	<?= Html::img(null, ['class' => 'owl-lazy', 'data-src' => Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image']]) ?>
-                                                                </div>
-                                                            </div>
+                                                    	<div class="owl-carousel owl-theme">
+                                                        	<?= Html::img(null, ['class' => 'owl-lazy img-fluid', 'data-src' => Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image']]) ?>
                                                         </div>
                                                     </div>
 
@@ -129,17 +124,17 @@ $this->registerMetaTag([
 
                                 					$selected = !empty($modelUserPostMain['userPostLoves'][0]) ? 'selected' : ''; ?>
 
-                                                    <div class="row visible-xs">
-                                                        <div class="col-xs-3">
+                                                    <div class="row">
+                                                        <div class="col-3 d-block d-sm-none">
                                                             <ul class="list-inline mt-0 mb-0">
-                                                                <li>
+                                                                <li class="list-inline-item">
                                                                     <small><?= '<i class="aicon aicon-thumb"></i> <span class="total-likes-photo">' . $loveCount . '</span>' ?></small>
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <div class="col-xs-9 text-right">
+                                                        <div class="col-9 d-block d-sm-none text-right">
                                                             <ul class="list-inline mt-0 mb-0">
-                                                                <li>
+                                                                <li class="list-inline-item">
                                                                     <small><?= $commentSpanCount . ' Comment' ?></small>
                                                                 </li>
                                                             </ul>
@@ -147,25 +142,25 @@ $this->registerMetaTag([
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-tab-7 col-xs-12">
+                                                        <div class="col-sm-7 col-12">
                                                             <ul class="list-inline list-review mt-0 mb-0">
-                                                                <li>
-                                                                    <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-photo-trigger ' . $selected . ' visible-tab']); ?>
-                                                                    <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-photo-trigger ' . $selected . ' visible-xs']); ?>
+                                                                <li class="list-inline-item">
+                                                                    <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'] , ['class' => 'btn btn-raised btn-small btn-round likes-photo-trigger ' . $selected . ' d-none d-sm-block d-md-none']); ?>
+                                                                    <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round likes-photo-trigger ' . $selected . ' d-block d-sm-none']); ?>
                                                                 </li>
-                                                                <li>
-                                                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-photo-trigger visible-lg visible-md visible-sm visible-tab']); ?>
-                                                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-photo-trigger visible-xs']); ?>
+                                                                <li class="list-inline-item">
+                                                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-photo-trigger d-none d-sm-block d-md-none']); ?>
+                                                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round comments-photo-trigger d-block d-sm-none']); ?>
                                                                 </li>
-                                                                <li class="visible-xs-inline-block">
-                                                                    <?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                                <li class="list-inline-item">
+                                                                	<?= Html::a('<i class="aicon aicon-share1"></i> ', '', ['class' => 'btn btn-raised btn-small btn-round share-photo-trigger d-block d-sm-none']); ?>
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <div class="col-sm-5 col-tab-5 text-right visible-lg visible-md visible-sm visible-tab">
+                                                        <div class="col-sm-5 d-none d-sm-block d-md-none text-right">
                                                             <ul class="list-inline list-review mt-0 mb-0">
-                                                                <li>
-                                                                    <?= Html::a('<i class="aicon aicon-share1"></i> Share', '', ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                                                <li class="list-inline-item">
+                                                                	<?= Html::a('<i class="aicon aicon-share1"></i> Share', '', ['class' => 'btn btn-raised btn-small btn-round share-photo-trigger']); ?>
                                                                 </li>
                                                             </ul>
                                                     	</div>
@@ -173,10 +168,11 @@ $this->registerMetaTag([
 
                                                     <hr class="divider-w mt-10">
 
-                                                    <div class="row">
-                                                    	<div class="col-sm-12">
+                                                     <div class="row">
+                                        				<div class="col-12">
                                                         	<div class="user-comment-review" id="comments-photo-container">
-                                                                <div class="input-group mt-10 mb-10">
+
+        														<div class="input-group mt-10 mb-10">
                                                                     <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
                                                                     &nbsp;&nbsp;&nbsp;
                                                                     <?= Html::textInput('comment_input', null, ['id' => 'input-comments-photo', 'class' => 'form-control', 'placeholder' => Yii::t('app', 'Write a Comment')]); ?>
@@ -192,7 +188,7 @@ $this->registerMetaTag([
 
                                                                         <div class="comment-post">
                                                                             <div class="row mb-10">
-                                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                                <div class="col-12">
                                                                                     <div class="widget">
                                                                                         <div class="widget-comments-image">
 
@@ -200,7 +196,7 @@ $this->registerMetaTag([
                                                                                             $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
                                                                                             echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                                                                                                'class' => 'img-responsive img-circle img-comment-thumb img-component'
+                                                                                                'class' => 'img-fluid rounded-circle'
                                                                                             ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
                                                                                         </div>
@@ -227,8 +223,6 @@ $this->registerMetaTag([
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <hr class="divider-w mb-10">
                                         </div>
 
                                     <?php
@@ -245,10 +239,10 @@ $this->registerMetaTag([
 </div>
 
 <?php
-GrowlCustom::widget();
+Snackbar::widget();
 frontend\components\FacebookShare::widget();
 
-$this->registerJs(GrowlCustom::messageResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse(), View::POS_HEAD);
 
 $jscript = '
     var photoId = $(".user-post-main-id");
@@ -359,7 +353,7 @@ $jscript = '
         }
     });
 
-    $(".share-review-trigger").on("click", function() {
+    $(".share-photo-trigger").on("click", function() {
 
         facebookShare({
             ogUrl: "' . $ogUrl . '",

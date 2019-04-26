@@ -11,7 +11,7 @@ use yii\web\View;
 
 webview\assets\RateyoAsset::register($this);
 
-$this->title = 'Review ' . $modelUserPostMain['business']['name'];
+$this->title = Yii::t('app', 'Review') . ' ' . $modelUserPostMain['business']['name'];
 
 $ogUrl = Yii::$app->urlManager->createAbsoluteUrl([
     'page/review',
@@ -60,11 +60,11 @@ $this->registerMetaTag([
 	<section>
         <div class="detail review">
 
-        	<div class="row mb-20">
-                <div class="col-sm-12 col-xs-12">
+        	<div class="row">
+                <div class="col-12">
 
                     <div class="row">
-                        <div class="col-sm-12 col-xs-12">
+                        <div class="col-12">
                             <div class="card box bg-white">
                                 <div class="box-content">
 

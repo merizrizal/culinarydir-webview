@@ -4,8 +4,6 @@ namespace webview\controllers;
 
 use core\models\Business;
 use core\models\BusinessPromo;
-use core\models\City;
-use core\models\ProductCategory;
 use core\models\Promo;
 use core\models\RatingComponent;
 use core\models\TransactionSession;
@@ -48,12 +46,16 @@ class PageController extends base\BaseController
             ->joinWith([
                 'businessCategories' => function ($query) {
 
-                    $query->andOnCondition(['business_category.is_active' => true]);
+                    $query->andOnCondition([
+                        'business_category.is_active' => true
+                    ]);
                 },
                 'businessCategories.category',
                 'businessFacilities' => function ($query) {
 
-                    $query->andOnCondition(['business_facility.is_active' => true]);
+                    $query->andOnCondition([
+                        'business_facility.is_active' => true
+                    ]);
                 },
                 'businessFacilities.facility',
                 'businessImages',
@@ -71,7 +73,7 @@ class PageController extends base\BaseController
                 },
                 'businessProductCategories.productCategory' => function ($query) {
 
-                    $query->andOnCondition(['<>', 'product_category.type', 'Menu']);
+                    $query->andOnCondition(['<>', 'product_category.type', 'Menu' ]);
                 },
                 'businessDetail',
                 'businessHours' => function ($query) {
@@ -106,16 +108,16 @@ class PageController extends base\BaseController
                 'userLoves' => function ($query) {
 
                     $query->andOnCondition([
-                        'user_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null,
+                        'user_love.user_id' => ! empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null
+                    ])
+                        ->andOnCondition([
                         'user_love.is_active' => true
                     ]);
                 },
                 'userVisits' => function ($query) {
 
-                    $query->andOnCondition([
-                        'user_visit.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null,
-                        'user_visit.is_active' => true
-                    ]);
+                    $query->andOnCondition(['user_visit.user_id' => ! empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+                        ->andOnCondition(['user_visit.is_active' => true]);
                 }
             ])
             ->andWhere(['business.id' => $id])
@@ -146,6 +148,7 @@ class PageController extends base\BaseController
                 'userPostMains child' => function ($query) {
 
                     $query->andOnCondition(['child.is_publish' => true])
+                        ->andOnCondition(['child.type' => 'Photo'])
                         ->orderBy(['child.created_at' => SORT_ASC]);
                 },
                 'userVotes' => function ($query) {
@@ -158,10 +161,8 @@ class PageController extends base\BaseController
                 },
                 'userPostLoves' => function ($query) {
 
-                    $query->andOnCondition([
-                        'user_post_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null,
-                        'user_post_love.is_active' => true
-                    ]);
+                    $query->andOnCondition(['user_post_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+                        ->andOnCondition(['user_post_love.is_active' => true]);
                 },
                 'userPostComments',
                 'userPostComments.user user_comment'
@@ -501,40 +502,6 @@ class PageController extends base\BaseController
 
         return $this->render('detail_promo', [
            'modelPromo' => $modelPromo
-        ]);
-    }
-
-    private function getResult($fileRender)
-    {
-        $get = Yii::$app->request->get();
-
-        if (!empty($get['pct'])) {
-
-            $modelProductCategory = ProductCategory::find()
-                ->andFilterWhere(['id' => $get['pct']])
-                ->asArray()->one();
-        }
-
-        $city = City::find()->andWhere(['name' => 'Bandung'])->asArray()->one();
-
-        $keyword = [];
-        $keyword['searchType'] = !empty($get['searchType']) ? $get['searchType'] : Yii::t('app', 'favorite');;
-        $keyword['city'] = !empty($get['cty']) ? $get['cty'] : $city['id'];
-        $keyword['name'] = !empty($get['nm']) ? $get['nm'] : null;
-        $keyword['product']['id'] = !empty($get['pct']) ? $get['pct'] : null;
-        $keyword['product']['name'] = !empty($modelProductCategory) ? $modelProductCategory['name'] : null;
-        $keyword['category'] = !empty($get['ctg']) ? $get['ctg'] : null;
-        $keyword['map']['coordinate'] = !empty($get['cmp']) ? $get['cmp'] : null;
-        $keyword['map']['radius'] = !empty($get['rmp']) ? $get['rmp'] : null;
-        $keyword['facility'] = !empty($get['fct']) ? $get['fct'] : null;
-        $keyword['price']['min'] = ($keyword['searchType'] == Yii::t('app', 'favorite') || $keyword['searchType'] == Yii::t('app', 'online-order')) && $get['pmn'] !== null && $get['pmn'] !== '' ? $get['pmn'] : null;
-        $keyword['price']['max'] = ($keyword['searchType'] == Yii::t('app', 'favorite') || $keyword['searchType'] == Yii::t('app', 'online-order')) && $get['pmx'] !== null && $get['pmx'] !== '' ? $get['pmx'] : null;
-
-        Yii::$app->session->set('keyword', $get);
-
-        return $this->render($fileRender, [
-            'keyword' => $keyword,
-            'params' => $get
         ]);
     }
 }
