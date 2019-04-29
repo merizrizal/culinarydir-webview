@@ -2,12 +2,11 @@
 
 use frontend\components\AddressType;
 use frontend\components\GrowlCustom;
-use yii\bootstrap\Modal;
+use webview\components\Snackbar;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use yii\web\View;
-use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $modelBusiness core\models\Business */
@@ -94,16 +93,6 @@ foreach ($modelBusiness['businessImages'] as $dataImageThumbail) {
 $ogUrlMenuDetail = ['page/menu', 'uniqueName' => $modelBusiness['unique_name']];
 
 $this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
     'property' => 'og:url',
     'content' => $ogUrl
 ]);
@@ -131,31 +120,33 @@ $this->registerMetaTag([
 $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=756&h=425'; ?>
 
 <div class="main bg-main">
+
     <section>
         <div class="detail place-detail">
+
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
 
                     <div class="row mb-20">
-                        <div class="col-xs-12">
+                        <div class="col-12">
 
                             <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="view">
+                                <div class="col-12">
+                                    <div class="card view">
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
-                                            <li role="presentation" class="nav-item active">
-                                                <a class="nav-link" href="#photo" aria-controls="photo" role="tab" data-toggle="tab"><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Ambience') ?></a>
+                                            <li class="nav-item">
+                                                <a id="photo-tab" href="#photo" class="nav-link active" data-toggle="tab" role="tab" aria-controls="photo" aria-selected="true"><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Ambience') ?></a>
                                             </li>
-                                            <li role="presentation" class="nav-item">
-                                                <a class="nav-link" href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="aicon aicon-icon-budicon"></i> Menu</a>
+                                            <li class="nav-item">
+                                                <a id="menu-tab" href="#menu" class="nav-link" data-toggle="tab" role="tab" aria-controls="#menu" aria-selected="false"><i class="aicon aicon-icon-budicon"></i> Menu</a>
                                             </li>
                                         </ul>
 
-                                        <div class="tab-content box bg-white">
-                                            <div role="tabpanel" class="tab-pane fade in active" id="photo">
+                                        <div class="tab-content">
+                                            <div id="photo" class="tab-pane fade show active" role="tabpanel" aria-labelledby="photo-tab">
                                                 <div class="row">
-                                                    <div class="col-xs-12">
+                                                    <div class="col-12">
 														<div class="ambience-gallery owl-carousel owl-theme">
 
                                                             <?php
@@ -190,9 +181,9 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div role="tabpanel" class="tab-pane fade in active" id="menu">
+                                            <div id="menu" class="tab-pane fade" role="tabpanel" aria-labelledby="menu-tab">
                                                 <div class="row">
-                                                    <div class="col-xs-12">
+                                                    <div class="col-12">
                                                     	<div class="menu-gallery owl-carousel owl-theme">
 
                                                             <?php
@@ -233,20 +224,19 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                             </div>
 
                             <div class="row mt-20">
-                                <div class="col-xs-12">
-                                    <div class="box bg-white">
+                                <div class="col-12">
+                                    <div class="card box">
                                         <div class="box-title">
                                             <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <h4 class="mb-0 business-name"><?= $modelBusiness['name']; ?></h4>
+                                                <div class="col-12">
+                                                    <h6 class="business-name"><?= $modelBusiness['name']; ?></h6>
                                                 </div>
 
-												<div class="d-none d-sm-block d-md-none col-sm-12 clearfix"></div>
-                                                <div class="d-block d-sm-none clearfix"></div>
+												<div class="clearfix"></div>
 
-                                                <div class="col-sm-12 col-xs-12">
+                                                <div class="col-12">
 
-                                                    <?php
+                                                	<?php
                                                     $categories = '';
 
                                                     foreach ($modelBusiness['businessCategories'] as $dataBusinessCategory) {
@@ -254,8 +244,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                         $categories .= $dataBusinessCategory['category']['name'] . ' / ';
                                                     } ?>
 
-                                                    <h5 class="d-none d-sm-block d-md-none mt-10"><?= trim($categories, ' / ') ?></h5>
-                                                    <h6 class="d-block d-sm-none mt-10"><?= trim($categories, ' / ') ?></h6>
+                                                    <h5><small><?= trim($categories, ' / ') ?></small></h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -264,7 +253,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                         <div class="box-content">
                                             <div class="row mt-10">
-                                                <div class="col-xs-12 pull-right mb-10">
+                                                <div class="col-12 pull-right">
                                                     <div class="business-rating">
 
                                                         <?= $this->render('@webview/views/data/business_rating.php', [
@@ -275,200 +264,210 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-12">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div class="widget">
-                                                                <ul class="icon-list">
-                                                                    <li>
-                                                                        <i class="aicon aicon-home1"></i>
+                                                <div class="col-12">
+                                                    <ul class="list-inline">
+                                                        <li>
+                                                            <i class="aicon aicon-home1"></i>
 
-                                                                        <?php
-                                                                        echo AddressType::widget([
-                                                                            'businessLocation' => $modelBusiness['businessLocation'],
-                                                                            'showDetail' => true
-                                                                        ]);
+                                                            <?php
+                                                            echo AddressType::widget([
+                                                                'businessLocation' => $modelBusiness['businessLocation'],
+                                                                'showDetail' => true
+                                                            ]);
 
-                                                                        echo !empty($modelBusiness['businessLocation']['address_info']) ? '<br>' . $modelBusiness['businessLocation']['address_info'] : '';
+                                                            echo !empty($modelBusiness['businessLocation']['address_info']) ? '<br>' . $modelBusiness['businessLocation']['address_info'] : '';
 
-                                                                        echo Html::a(Yii::t('app', 'See Map'), '', ['class' => 'btn btn-standard see-map-shortcut font-12 d-none d-sm-block d-md-none', 'style' => 'width: 70px']);
-                                                                        echo Html::a(Yii::t('app', 'See Map'), '', ['class' => 'btn btn-standard see-map-shortcut xs font-12 d-block d-sm-none', 'style' => 'width: 70px']); ?>
+                                                            echo Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . Yii::t('app', 'See Map'), '', ['class' => 'btn btn-small btn-xs btn-round see-map-shortcut']); ?>
 
-                                                                    </li>
-                                                                    <li>
-                                                                        <i class="aicon aicon-rupiah"></i>
-                                                                        <?= $ogPriceRange; ?>
-                                                                    </li>
-                                                                    <li><i class="aicon aicon-icon-phone-fill"></i> <?= !empty($modelBusiness['phone1']) ? $modelBusiness['phone1'] : '-' ?></li>
-                                                                    <li class="icon-list-parent">
-                                                                    	<i class="aicon aicon-clock"></i> <?= Yii::t('app', 'Operational Hours') ?>
+                                                        </li>
+                                                        <li>
+                                                            <i class="aicon aicon-rupiah"></i> <?= $ogPriceRange; ?>
+                                                        </li>
+                                                        <li>
+                                                        	<i class="aicon aicon-icon-phone-fill"></i> <?= !empty($modelBusiness['phone1']) ? $modelBusiness['phone1'] : '-' ?>
+                                                    	</li>
+                                                        <li>
+                                                        	<i class="aicon aicon-clock"></i> <?= Yii::t('app', 'Operational Hours') ?>
 
-                                                                    	<?php
-                                                                        if (!empty($modelBusiness['businessHours'])):
+                                                        	<?php
+                                                            if (!empty($modelBusiness['businessHours'])):
 
-                                                                            $days = Yii::$app->params['days'];
+                                                                $days = Yii::$app->params['days'];
 
-                                                                            Yii::$app->formatter->timeZone = 'Asia/Jakarta';
+                                                                Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
-                                                                            $now = Yii::$app->formatter->asTime(time());
+                                                                $now = Yii::$app->formatter->asTime(time());
 
-                                                                            Yii::$app->formatter->timeZone = 'UTC';
+                                                                Yii::$app->formatter->timeZone = 'UTC';
 
-                                                                            $isOpen = false;
-                                                                            $listSchedule = '';
-                                                                            $hour = null;
-                                                                            $hourAdditional = null;
+                                                                $isOpen = false;
+                                                                $listSchedule = '';
+                                                                $hour = null;
+                                                                $hourAdditional = null;
 
-                                                                            $ogBusinessHour = '"openingHoursSpecification": [';
+                                                                $ogBusinessHour = '"openingHoursSpecification": [';
 
-                                                                            foreach ($modelBusiness['businessHours'] as $dataBusinessHour) {
+                                                                foreach ($modelBusiness['businessHours'] as $dataBusinessHour) {
 
-                                                                                $day = $days[$dataBusinessHour['day'] - 1];
+                                                                    $day = $days[$dataBusinessHour['day'] - 1];
 
-                                                                                $openAt = Yii::$app->formatter->asTime($dataBusinessHour['open_at'], 'HH:mm');
-                                                                                $closeAt = Yii::$app->formatter->asTime($dataBusinessHour['close_at'], 'HH:mm');
+                                                                    $openAt = Yii::$app->formatter->asTime($dataBusinessHour['open_at'], 'HH:mm');
+                                                                    $closeAt = Yii::$app->formatter->asTime($dataBusinessHour['close_at'], 'HH:mm');
 
-                                                                                $isOpenToday = false;
-                                                                                $is24Hour = (($dataBusinessHour['open_at'] == '00:00:00') && ($dataBusinessHour['close_at'] == '24:00:00'));
+                                                                    $isOpenToday = false;
+                                                                    $is24Hour = (($dataBusinessHour['open_at'] == '00:00:00') && ($dataBusinessHour['close_at'] == '24:00:00'));
 
-                                                                                $businessHour = $is24Hour ? Yii::t('app','24 Hours') : ($openAt . ' - ' . $closeAt);
-                                                                                $businessHourAdditional = '';
+                                                                    $businessHour = $is24Hour ? Yii::t('app','24 Hours') : ($openAt . ' - ' . $closeAt);
+                                                                    $businessHourAdditional = '';
 
-                                                                                if (date('l') == $day) {
+                                                                    if (date('l') == $day) {
 
-                                                                                    $isOpen = $now >= $dataBusinessHour['open_at'] && $now <= $dataBusinessHour['close_at'];
+                                                                        $isOpen = $now >= $dataBusinessHour['open_at'] && $now <= $dataBusinessHour['close_at'];
 
-                                                                                    $isOpenToday = true;
-                                                                                    $hour = $businessHour;
+                                                                        $isOpenToday = true;
+                                                                        $hour = $businessHour;
+                                                                    }
+
+                                                                    $ogBusinessHour .= '{"@type": "OpeningHoursSpecification", "dayOfWeek": "' . $day . '", "opens": "' . $openAt . '", "closes": "' . $closeAt . '"},';
+
+                                                                    if (!empty($dataBusinessHour['businessHourAdditionals'])) {
+
+                                                                        foreach ($dataBusinessHour['businessHourAdditionals'] as $dataBusinessHourAdditional) {
+
+                                                                            $openAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm');
+                                                                            $closeAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
+
+                                                                            $businessHourAdditional .= '<div class="col-xs-offset-5 col-xs-7 p-0">' . $openAt . ' - ' . $closeAt . '</div>';
+
+                                                                            if (date('l') == $day) {
+
+                                                                                $hourAdditional .= '<br>' . Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm') . ' - ' . Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
+
+                                                                                if (!$isOpen) {
+
+                                                                                    $isOpen = $now >= $dataBusinessHourAdditional['open_at'] && $now <= $dataBusinessHourAdditional['close_at'];
                                                                                 }
-
-                                                                                $ogBusinessHour .= '{"@type": "OpeningHoursSpecification", "dayOfWeek": "' . $day . '", "opens": "' . $openAt . '", "closes": "' . $closeAt . '"},';
-
-                                                                                if (!empty($dataBusinessHour['businessHourAdditionals'])) {
-
-                                                                                    foreach ($dataBusinessHour['businessHourAdditionals'] as $dataBusinessHourAdditional) {
-
-                                                                                        $openAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm');
-                                                                                        $closeAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
-
-                                                                                        $businessHourAdditional .= '<div class="col-xs-offset-5 col-xs-7 p-0">' . $openAt . ' - ' . $closeAt . '</div>';
-
-                                                                                        if (date('l') == $day) {
-
-                                                                                            $hourAdditional .= '<br>' . Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm') . ' - ' . Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
-
-                                                                                            if (!$isOpen) {
-
-                                                                                                $isOpen = $now >= $dataBusinessHourAdditional['open_at'] && $now <= $dataBusinessHourAdditional['close_at'];
-                                                                                            }
-                                                                                        }
-
-                                                                                        $ogBusinessHour .= '{"@type": "OpeningHoursSpecification", "dayOfWeek": "' . $day . '", "opens": "' . $openAt . '", "closes": "' . $closeAt . '"},';
-                                                                                    }
-                                                                                }
-
-                                                                                $listSchedule .= '
-                                                                                    <li>
-                                                                                        <div class="col-xs-5">' .
-                                                                                            ($isOpenToday ? '<strong>' . Yii::t('app', $day) . '</strong>' : Yii::t('app', $day)) .
-                                                                                        '</div>
-                                                                                        <div class="col-xs-7 p-0">' .
-                                                                                            ($isOpenToday ? '<strong>' . $businessHour . '</strong>' : $businessHour) .
-                                                                                        '</div>' .
-                                                                                        ($isOpenToday ? '<strong>' . $businessHourAdditional . '</strong>' : $businessHourAdditional) .
-                                                                                    '</li>';
                                                                             }
 
-                                                                            $ogBusinessHour = trim($ogBusinessHour, ',') .  '],'; ?>
+                                                                            $ogBusinessHour .= '{"@type": "OpeningHoursSpecification", "dayOfWeek": "' . $day . '", "opens": "' . $openAt . '", "closes": "' . $closeAt . '"},';
+                                                                        }
+                                                                    }
 
-                                                                            <span class="label <?= $isOpen ? 'label-success' : 'label-danger' ?>"><strong><?= $isOpen ? Yii::t('app', 'Open') : Yii::t('app', 'Closed') ?></strong></span>
-    																		<div class="btn-group m-0">
-                                                                                <button type="button" class="btn btn-raised btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                    <span class="caret"></span>
-                                                                                </button>
-                                                                                <ul class="dropdown-menu list-schedule pull-right">
-                                                                                    <?= $listSchedule ?>
-                                                                                </ul>
-                                                                            </div>
+                                                                    $listSchedule .= '
+                                                                        <li>
+                                                                            <div class="row">
+                                                                                <div class="col-5">' .
+                                                                                    ($isOpenToday ? '<strong>' . Yii::t('app', $day) . '</strong>' : Yii::t('app', $day)) .
+                                                                                '</div>
+                                                                                <div class="col-7">' .
+                                                                                    ($isOpenToday ? '<strong>' . $businessHour . '</strong>' : $businessHour) .
+                                                                                '</div>' .
+                                                                                ($isOpenToday ? '<strong>' . $businessHourAdditional . '</strong>' : $businessHourAdditional) .
+                                                                            '</div>
+                                                                        </li>';
+                                                                }
 
-                                                                            <?php
-                                                                            if ($isOpen): ?>
+                                                                $ogBusinessHour = trim($ogBusinessHour, ',') .  '],'; ?>
 
-                                                                                <table style="margin-left: 18px">
-                                                                                    <tr>
-    																					<td valign="top"><?= Yii::t('app', 'Today') ?></td>
-    																					<td valign="top">&nbsp; : &nbsp;</td>
-    																					<td>
-    																						<?= $hour . $hourAdditional ?>
-    																					</td>
-    																				</tr>
-                                                                                </table>
+																<div class="dropdown inline-block">
+                                                                    <button id="dropdown-business-hour" type="button" class="btn btn-small btn-xs btn-round <?= $isOpen ? 'btn-success' : 'btn-danger' ?> active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <?= $isOpen ? Yii::t('app', 'Open') : Yii::t('app', 'Closed') ?> <span class="caret"></span>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu list-inline" aria-labelledby="dropdown-business-hour">
+                                                                        <?= $listSchedule ?>
+                                                                    </ul>
+                                                                </div>
 
-                                                                            <?php
-                                                                            endif;
-                                                                        else:
+                                                                <?php
+                                                                if ($isOpen): ?>
 
-                                                                            echo '<br><span style="margin-left: 18px">' . Yii::t('app', 'Data Not Available') . '</span>';
-                                                                        endif; ?>
+                                                                    <table style="margin-left: 18px">
+                                                                        <tr>
+																			<td valign="top"><?= Yii::t('app', 'Today') ?></td>
+																			<td valign="top">&nbsp; : &nbsp;</td>
+																			<td>
+																				<?= $hour . $hourAdditional ?>
+																			</td>
+																		</tr>
+                                                                    </table>
 
-                                                                    </li>
-                                                                    <li class="tag">
+                                                                <?php
+                                                                endif;
+                                                            else:
 
-                                                                        <?php
-                                                                        foreach ($modelBusiness['businessProductCategories'] as $dataBusinessProductCategory) {
+                                                                echo '<br><span style="margin-left: 18px">' . Yii::t('app', 'Data Not Available') . '</span>';
+                                                            endif; ?>
 
-                                                                            if (!empty($dataBusinessProductCategory['productCategory'])) {
+                                                        </li>
+                                                        <li>
 
-                                                                                echo '<strong class="text-red">#</strong>' . $dataBusinessProductCategory['productCategory']['name'] . ' ';
-                                                                            }
-                                                                        } ?>
+                                                            <?php
+                                                            foreach ($modelBusiness['businessProductCategories'] as $dataBusinessProductCategory) {
 
-                                                                    </li>
-                                                                    <li class="tag">
+                                                                if (!empty($dataBusinessProductCategory['productCategory'])) {
 
-                                                                        <?php
-                                                                        foreach ($modelBusiness['businessFacilities'] as $dataBusinessFacility) {
+                                                                    echo '<strong class="text-danger">#</strong>' . $dataBusinessProductCategory['productCategory']['name'] . ' ';
+                                                                }
+                                                            } ?>
 
-                                                                            echo '<strong class="text-blue">#</strong>' . $dataBusinessFacility['facility']['name'] . ' ';
-                                                                        } ?>
+                                                        </li>
+                                                        <li>
 
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                            <?php
+                                                            foreach ($modelBusiness['businessFacilities'] as $dataBusinessFacility) {
+
+                                                                echo '<strong class="text-info">#</strong>' . $dataBusinessFacility['facility']['name'] . ' ';
+                                                            } ?>
+
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
 
                                             <?php
                                             $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . Yii::t('app', 'Online Order'), $ogUrlMenuDetail, [
-                                                'class' => 'btn btn-standard btn-danger btn-block btn-raised btn-round'
+                                                'class' => 'btn btn-standard btn-d btn-block btn-round-4'
                                             ]);
 
                                             if (!$isOrderOnline) {
 
                                                 $orderbtn = Html::a('<i class="fas fa-utensils"></i> ' . Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
-                                                    'class' => 'btn btn-standard btn-danger btn-block btn-raised btn-round'
+                                                    'class' => 'btn btn-standard btn-d btn-block btn-round-4'
                                                 ]);
                                             }
 
                                             $reportbtn = Html::a('<i class="aicon aicon-warning aicon-1-2x"></i> ' .  Yii::t('app', 'Report'), '', [
-                                                'class' => 'btn btn-standard btn-danger btn-block btn-raised btn-round report-business-trigger'
+                                                'class' => 'btn btn-standard btn-d btn-block btn-round-4 report-business-trigger'
                                             ]);
 
                                             $messagebtn = Html::a('<i class="aicon aicon-icon-envelope aicon-1-2x"></i> Message', '', [
-                                                'class' => 'btn btn-standard btn-danger btn-block btn-raised btn-round message-feature'
+                                                'class' => 'btn btn-standard btn-d btn-block btn-round-4 message-feature'
                                             ]); ?>
 
-                                            <div class="row mt-10 mb-10">
-                                                <div class="col-sm-3 col-xs-6 col">
+                                            <div class="row mt-10 mb-10 visible-lg visible-md visible-sm visible-tab">
+                                                <div class="col-lg-2 col-sm-3 col-tab-3 col">
                                                     <?= $reportbtn ?>
                                                 </div>
-                                                <div class="col-sm-3 col-xs-6 col">
+                                                <div class="col-lg-2 col-sm-3 col-tab-3 col">
                                                     <?= $messagebtn ?>
                                                 </div>
-                                                <div class="col-sm-6 col-xs-12 pull-right">
+                                                <div class="col-lg-4 col-offset-lg-4 col-sm-5 col-offset-sm-6 col-tab-5 col-offset-tab-6 pull-right">
                                                     <?= $orderbtn ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-10 mb-10 visible-xs">
+                                                <div class="col-xs-6 col">
+                                                	<?= $reportbtn ?>
+                                            	</div>
+                                            	<div class="col-xs-6 col">
+                                                	<?= $messagebtn ?>
+                                                </div>
+
+                                                <div class="clearfix mb-10"></div>
+
+                                                <div class="col-xs-12">
+                                                	<?= $orderbtn ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -480,7 +479,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                             <?= Html::hiddenInput('business_id', $modelBusiness['id'], ['class' => 'business-id']) ?>
 
                                             <div class="row">
-                                                <div class="col-xs-12">
+                                                <div class="col-sm-12 col-xs-12">
 
                                                     <?php
                                                     $selectedVisit = !empty($modelBusiness['userVisits'][0]) ? 'selected' : '';
@@ -489,12 +488,16 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                     $visitValue = !empty($modelBusiness['businessDetail']['visit_value']) ? $modelBusiness['businessDetail']['visit_value'] : 0;
                                                     $loveValue = !empty($modelBusiness['businessDetail']['love_value']) ? $modelBusiness['businessDetail']['love_value'] : 0; ?>
 
-                                                    <ul class="list-inline list-default mt-0 mb-0">
+                                                    <ul class="list-inline mt-0 mb-0 visible-lg visible-md visible-sm visible-tab">
                                                         <li>
                                                             <div class="btn-group" role="group">
 
-                                                                <?= Html::a('<i class="aicon aicon-icon-been-there"></i> <span class="been-here-count">' . $visitValue . '</span> Visit', ['action/submit-user-visit'], [
-                                                                    'class' => 'btn btn-raised btn-default btn-standard btn-round btn-md been-here ' . $selectedVisit,
+                                                                <?= Html::a('<i class="aicon aicon-icon-been-there"></i> Visit', ['action/submit-user-visit'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 been-here ' . $selectedVisit . '',
+                                                                ]) ?>
+
+                                                                <?= Html::a($visitValue, ['action/submit-user-visit'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 been-here ' . $selectedVisit . ' been-here-count',
                                                                 ]) ?>
 
                                                             </div>
@@ -502,16 +505,53 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                         <li>
                                                             <div class="btn-group" role="group">
 
-                                                                <?= Html::a('<i class="aicon aicon-heart1"></i> <span class="love-place-count">' . $loveValue . '</span> Love', ['action/submit-user-love'], [
-                                                                    'class' => 'btn btn-raised btn-default btn-standard btn-round btn-md love-place ' . $selectedLove,
+                                                                <?= Html::a('<i class="fa fa-heart"></i> Love', ['action/submit-user-love'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 love-place ' . $selectedLove . '',
+                                                                ]) ?>
+
+                                                                <?= Html::a($loveValue, ['action/submit-user-love'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 love-place ' . $selectedLove . ' love-place-count',
                                                                 ]) ?>
 
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div class="btn-group" role="group">
-                                                                <?= Html::a('<i class="aicon aicon-share1"></i>', '', ['class' => 'btn btn-raised btn-standard btn-round btn-md share-feature d-block d-sm-none']) ?>
-                                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', '', ['class' => 'btn btn-raised btn-standard btn-round btn-md share-feature d-none d-sm-block d-md-none']) ?>
+                                                                <?= Html::a('<i class="fa fa-share-alt"></i> Share', '', ['class' => 'btn btn-default btn-standard btn-round-4 share-feature']) ?>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="list-inline list-default mt-0 mb-0 visible-xs">
+                                                        <li>
+                                                            <div class="btn-group" role="group">
+
+                                                                <?= Html::a('<i class="aicon aicon-icon-been-there"></i> Visit', ['action/submit-user-visit'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs been-here ' . $selectedVisit . '',
+                                                                ]) ?>
+
+                                                                <?= Html::a($visitValue, ['action/submit-user-visit'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs been-here ' . $selectedVisit . ' been-here-count',
+                                                                ]) ?>
+
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="btn-group" role="group">
+
+                                                                <?= Html::a('<i class="fa fa-heart"></i> Love', ['action/submit-user-love'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs love-place ' . $selectedLove . '',
+                                                                ]) ?>
+
+                                                                <?= Html::a($loveValue, ['action/submit-user-love'], [
+                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs love-place ' . $selectedLove . ' love-place-count',
+                                                                ]) ?>
+
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="btn-group" role="group">
+                                                                <?= Html::a('<i class="fa fa-share-alt"></i>', '', ['class' => 'btn btn-default btn-standard btn-round-4 btn-xs share-feature']) ?>
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -527,11 +567,11 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                             if (!empty($modelBusiness['businessPromos'])): ?>
 
                                 <div id="special" class="row mt-10">
-                                    <div class="col-xs-12">
+                                    <div class="col-sm-12 col-xs-12">
                                         <div class="box bg-white">
                                             <div class="box-title">
                                                 <div class="row">
-                                                    <div class="col-xs-12">
+                                                    <div class="col-sm-12 col-xs-12">
                                                         <h4 class="m-0"><?= Yii::t('app', 'Special & Discount') ?> !!</h4>
                                                     </div>
                                                 </div>
@@ -558,11 +598,11 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                             $dateEnd = Yii::$app->formatter->asDate($dataBusinessPromo['date_end'], 'medium'); ?>
 
                                                             <div class="row mb-10">
-                                                                <div class="col-xs-12">
+                                                                <div class="col-lg-4 col-sm-5 col-xs-12">
                                                                     <?= Html::a(Html::img($img, ['class' => 'img-responsive']), $urlPromoDetail); ?>
                                                                 </div>
 
-                                                                <div class="col-xs-12 mt-10">
+                                                                <div class="col-lg-8 col-sm-7 col-xs-12 mt-10">
                                                                     <h4 class="promo-title">
                                                                         <?= Html::a($dataBusinessPromo['title'], $urlPromoDetail) ?>
                                                                     </h4>
@@ -573,7 +613,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                         <?= Yii::t('app', 'Valid from {dateStart} until {dateEnd}', ['dateStart' => $dateStart, 'dateEnd' => $dateEnd]); ?>
                                                                     </p>
                                                                     <p>
-                                                                        <?= Html::a(Yii::t('app', 'View Details'), $urlPromoDetail, ['class' => 'btn btn-standard btn-danger btn-round btn-raised']) ?>
+                                                                        <?= Html::a('<span class="text-red">' . Yii::t('app', 'View Details') . ' <i class="fa fa-angle-double-right"></i></span>', $urlPromoDetail) ?>
 																	</p>
                                                                 </div>
                                                             </div>
@@ -594,7 +634,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                             endif; ?>
 
                             <div class="row mt-20">
-                                <div class="col-xs-12">
+                                <div class="col-sm-12 col-xs-12">
 
                                     <div class="view">
                                         <ul class="nav nav-tabs widget mb-10" role="tablist">
@@ -622,7 +662,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                     </ul>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="visible-tab">
+                                            <li role="presentation" class="visible-lg visible-md visible-sm visible-tab">
                                                 <a href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
                                                     <ul class="link-icon list-inline tab-detail">
                                                         <li>
@@ -634,7 +674,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                     </ul>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="visible-tab">
+                                            <li role="presentation" class="visible-lg visible-md visible-sm visible-tab">
                                                 <a href="#view-map" aria-controls="view-map" role="tab" data-toggle="tab">
                                                     <ul class="link-icon list-inline tab-detail">
                                                         <li>
@@ -647,11 +687,11 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                 </a>
                                             </li>
                                             <li role="presentation" class="dropdown visible-xs">
-                                                <a data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                                     <ul class="link-icon list-inline tab-detail">
                                                         <li>
                                                             <ul class="text-center">
-                                                                <li><i class="aicon aicon-more aicon-1-5x"></i></li>
+                                                                <li><i class="fa fa-ellipsis-h aicon-1-5x"></i></li>
                                                                 <li>More <span class="caret"></span></li>
                                                             </ul>
                                                         </li>
@@ -727,6 +767,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
         </div>
     </section>
+
 </div>
 
 <?php
@@ -749,7 +790,8 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
                     </div>
                 </div>
             </div>
-        </div>';
+        </div>
+    ';
 
     echo '
         <div id="modal-confirmation" class="modal" tabindex="-1" role="dialog">
@@ -770,78 +812,75 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
                     </div>
                 </div>
             </div>
-        </div>';
+        </div>
+    ';
 
-    Modal::begin([
-        'header' => '<i class="aicon aicon-warning"></i> ' . Yii::t('app', 'Report'),
-        'id' => 'modal-report',
-    ]);
+//     Modal::begin([
+//         'header' => '<i class="aicon aicon-warning"></i> ' . Yii::t('app', 'Report'),
+//         'id' => 'modal-report',
+//     ]);
 
-        echo '<div class="overlay" style="display: none;"></div>';
-        echo '<div class="loading-img" style="display: none;"></div>';
+//         echo '<div class="overlay" style="display: none;"></div>';
+//         echo '<div class="loading-img" style="display: none;"></div>';
 
-        $form = ActiveForm::begin([
-            'id' => 'report-form',
-            'action' => ['action/submit-report'],
-            'fieldConfig' => [
-                'template' => '{label}{input}{error}'
-            ],
-        ]);
+//         $form = ActiveForm::begin([
+//             'id' => 'report-form',
+//             'action' => ['action/submit-report'],
+//             'fieldConfig' => [
+//                 'template' => '{label}{input}{error}'
+//             ],
+//         ]);
 
-            echo Html::hiddenInput('business_id', $modelBusiness['id']);
+//             echo Html::hiddenInput('business_id', $modelBusiness['id']);
 
-            echo $form->field($modelUserReport, 'report_status')
-                    ->radioList([
-                        'Closed' => Yii::t('app', 'Closed'),
-                        'Moved'=> Yii::t('app', 'Moved'),
-                        'Duplicate' => Yii::t('app', 'Duplicate'),
-                        'Inaccurate' => Yii::t('app', 'Inaccurate'),
-                    ],
-                    [
-                        'separator' => '<br>',
-                        'itemOptions' => [
-                            'class' => 'report-subject icheck',
-                        ],
-                    ])
-                    ->label(Yii::t('app', 'This business:'));
+//             echo $form->field($modelUserReport, 'report_status')
+//                     ->radioList([
+//                         'Closed' => Yii::t('app', 'Closed'),
+//                         'Moved'=> Yii::t('app', 'Moved'),
+//                         'Duplicate' => Yii::t('app', 'Duplicate'),
+//                         'Inaccurate' => Yii::t('app', 'Inaccurate'),
+//                     ],
+//                     [
+//                         'separator' => '<br>',
+//                         'itemOptions' => [
+//                             'class' => 'report-subject icheck',
+//                         ],
+//                     ])
+//                     ->label(Yii::t('app', 'This business:'));
 
-            echo $form->field($modelUserReport, 'text')
-                    ->textArea([
-                        'rows' => 3,
-                        'placeholder' => Yii::t('app', 'Tell about your situation or complaint.')
-                    ])
-                    ->label(Yii::t('app', 'Note'));
+//             echo $form->field($modelUserReport, 'text')
+//                     ->textArea([
+//                         'rows' => 3,
+//                         'placeholder' => Yii::t('app', 'Tell about your situation or complaint.')
+//                     ])
+//                     ->label(Yii::t('app', 'Note'));
 
-            echo '
-                <div class="row">
-                    <div class="col-xs-12 text-center">
-                        ' . Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-round btn-danger btn-raised btn-submit-modal-report']) . '
-                        ' . Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-round btn-raised btn-close-modal-report']) . '
-                    </div>
-                </div>';
+//             echo '
+//                 <div class="row">
+//                     <div class="col-sm-12 col-md-12 text-center">
+//                         ' . Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-round btn-d btn-submit-modal-report']) . '
+//                         ' . Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-round btn-default btn-close-modal-report']) . '
+//                     </div>
+//                 </div>';
 
-        ActiveForm::end();
+//         ActiveForm::end();
 
-    Modal::end();
+//     Modal::end();
 };
 
-$this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\YiiAsset']);
-$this->registerCssFile(Yii::$app->homeUrl . 'lib/customicheck/customicheck.css', ['depends' => 'yii\web\YiiAsset']);
+$this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
-GrowlCustom::widget();
-frontend\components\RatingColor::widget();
+Snackbar::widget();
+webview\components\RatingColor::widget();
 frontend\components\Readmore::widget();
 frontend\components\FacebookShare::widget();
 
-$this->registerJs(GrowlCustom::messageResponse() . GrowlCustom::stickyResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse() . GrowlCustom::stickyResponse(), View::POS_HEAD);
 
-$this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\YiiAsset']);
-$this->registerJsFile(Yii::$app->homeUrl . 'lib/customicheck/customicheck.js', ['depends' => 'yii\web\YiiAsset']);
+$this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
 
 $jscript = '
     $("#img-for-share-link").hide();
-
-    $("#menu").removeClass("in active");
 
     $(".see-map-shortcut").on("click", function(event) {
 

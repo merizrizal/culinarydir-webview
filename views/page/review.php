@@ -65,7 +65,7 @@ $this->registerMetaTag([
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card box bg-white">
+                            <div class="card box">
                                 <div class="box-content">
 
                                     <?php
@@ -78,22 +78,20 @@ $this->registerMetaTag([
 
                                             <?= Html::hiddenInput('user_post_main_id', $modelUserPostMain['id'], ['class' => 'user-post-main-id']) ?>
 
-                                            <div class="row mb-10">
+                                            <div class="row">
                                                 <div class="col-sm-7 col-12">
-                                                    <div class="widget">
-                                                        <div class="widget-posts-image">
+                                                    <div class="widget-posts-image">
 
-        												    <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-        												        'class' => 'img-fluid rounded-circle'
-        												    ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
+    												    <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+    												        'class' => 'img-fluid rounded-circle'
+    												    ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
 
-                                                        </div>
+                                                    </div>
 
-                                                        <div class="widget-posts-body">
-                                                            <?= Html::a($modelUserPostMain['user']['full_name'], ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
-                                                            <br>
-                                                            <small><?= Helper::asRelativeTime($modelUserPostMain['created_at']) ?></small>
-                                                        </div>
+                                                    <div class="widget-posts-body">
+                                                        <?= Html::a($modelUserPostMain['user']['full_name'], ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
+                                                        <br>
+                                                        <small><?= Helper::asRelativeTime($modelUserPostMain['created_at']) ?></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-5 d-none d-sm-block d-md-none">
@@ -106,7 +104,7 @@ $this->registerMetaTag([
                                                 <div class="col-12 d-block d-sm-none">
                                                 	<ul class="list-inline mt-0 mb-0">
                                                         <li class="list-inline-item">
-                                                            <div class="widget star-rating" data-rating="<?= number_format($overallValue, 1) ?>">
+                                                            <div class="star-rating" data-rating="<?= number_format($overallValue, 1) ?>">
                                                             </div>
                                                         </li>
                                                         <li class="list-inline-item">
@@ -309,7 +307,6 @@ $jscript = '
     $(".star-rating").rateYo({
         rating: $(".star-rating").data("rating"),
         starWidth: "18px",
-        fullStar: true,
         readOnly: true,
         "starSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>"
     });

@@ -1,10 +1,8 @@
 <?php
 
 use common\components\Helper;
-use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
-use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -77,17 +75,18 @@ $urlMyReviewDetail = [
                                             <li>
                                                 <div class="widget star-rating">
 
-                                                    <?= StarRating::widget([
-                                                        'id' => 'my-overall-rating',
-                                                        'name' => 'rating_' . $modelUserPostMain['id'],
-                                                        'value' => $overallValue,
-                                                        'pluginOptions' => [
-                                                            'displayOnly' => true,
-                                                            'filledStar' => '<span class="aicon aicon-star-full"></span>',
-                                                            'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-                                                            'showCaption' => false,
-                                                        ]
-                                                    ]); ?>
+                                                    <?php
+//                                                     StarRating::widget([
+//                                                         'id' => 'my-overall-rating',
+//                                                         'name' => 'rating_' . $modelUserPostMain['id'],
+//                                                         'value' => $overallValue,
+//                                                         'pluginOptions' => [
+//                                                             'displayOnly' => true,
+//                                                             'filledStar' => '<span class="aicon aicon-star-full"></span>',
+//                                                             'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
+//                                                             'showCaption' => false,
+//                                                         ]
+//                                                     ]); ?>
 
                                                 </div>
                                             </li>
@@ -337,22 +336,23 @@ $urlMyReviewDetail = [
 
                                     <?= Html::hiddenInput('temp_overall_rating', null, ['class' => 'temp-overall-rating']) ?>
 
-                                    <?= StarRating::widget([
-                                        'id' => 'overall-rating',
-                                        'name' => 'overall_rating',
-                                        'value' => !empty($dataUserVoteReview['overallValue']) ? $dataUserVoteReview['overallValue'] : null,
-                                        'pluginOptions' => [
-                                            'step' => 1,
-                                            'filledStar' => '<span class="aicon aicon-star-full"></span>',
-                                            'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-                                            'showClear' => false,
-                                            'clearCaption' => '0',
-                                            'captionElement' => '.rating-overall',
-                                            'starCaptions' => new JsExpression('function(val){return val == 1 ? "1" : val;}'),
-                                            'starCaptionClasses' => new JsExpression('function(val){ return false;}'),
-                                            'hoverChangeCaption' => false,
-                                        ]
-                                    ]); ?>
+                                    <?php
+//                                     StarRating::widget([
+//                                         'id' => 'overall-rating',
+//                                         'name' => 'overall_rating',
+//                                         'value' => !empty($dataUserVoteReview['overallValue']) ? $dataUserVoteReview['overallValue'] : null,
+//                                         'pluginOptions' => [
+//                                             'step' => 1,
+//                                             'filledStar' => '<span class="aicon aicon-star-full"></span>',
+//                                             'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
+//                                             'showClear' => false,
+//                                             'clearCaption' => '0',
+//                                             'captionElement' => '.rating-overall',
+//                                             'starCaptions' => new JsExpression('function(val){return val == 1 ? "1" : val;}'),
+//                                             'starCaptionClasses' => new JsExpression('function(val){ return false;}'),
+//                                             'hoverChangeCaption' => false,
+//                                         ]
+//                                     ]); ?>
 
                                 </div>
                                 <div class="col-xs-6">
@@ -397,21 +397,22 @@ $urlMyReviewDetail = [
 
                                                                 <?= $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,]) ?>
 
-                                                                <?= StarRating::widget([
-                                                                    'id' => 'rating-' . $dataRatingComponent['id'],
-                                                                    'name' => 'rating_' . $dataRatingComponent['id'],
-                                                                    'value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,
-                                                                    'pluginOptions' => [
-                                                                        'step' => 1,
-                                                                        'filledStar' => '<span class="aicon aicon-star-full"></span>',
-                                                                        'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-                                                                        'showClear' => false,
-                                                                        'clearCaption' => Yii::t('app', $dataRatingComponent['name']),
-                                                                        'captionElement' => '.rating-' . $dataRatingComponent['id'],
-                                                                        'starCaptions' => new JsExpression('function(val){return val == 1 ? "1 &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) . '" : val + " &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) . '";}'),
-                                                                        'starCaptionClasses' => new JsExpression('function(val){ return false;}'),
-                                                                    ]
-                                                                ]); ?>
+                                                                <?php
+//                                                                 StarRating::widget([
+//                                                                     'id' => 'rating-' . $dataRatingComponent['id'],
+//                                                                     'name' => 'rating_' . $dataRatingComponent['id'],
+//                                                                     'value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,
+//                                                                     'pluginOptions' => [
+//                                                                         'step' => 1,
+//                                                                         'filledStar' => '<span class="aicon aicon-star-full"></span>',
+//                                                                         'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
+//                                                                         'showClear' => false,
+//                                                                         'clearCaption' => Yii::t('app', $dataRatingComponent['name']),
+//                                                                         'captionElement' => '.rating-' . $dataRatingComponent['id'],
+//                                                                         'starCaptions' => new JsExpression('function(val){return val == 1 ? "1 &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) . '" : val + " &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) . '";}'),
+//                                                                         'starCaptionClasses' => new JsExpression('function(val){ return false;}'),
+//                                                                     ]
+//                                                                 ]); ?>
 
                                                             </div>
 
