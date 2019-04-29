@@ -27,6 +27,39 @@
     color: rgba(0, 0, 0, 0.54);
 }
 
+.bmd-form-group input::placeholder {
+	font-size: 13px;
+	line-height: 20px
+}
+
+.form-control, .custom-file-control,
+.is-focused .form-control,
+.is-focused .custom-file-control {
+  	background-image: linear-gradient(to top, rgba(229, 38, 38, 0.9) 2px, rgba(0, 150, 136, 0) 2px), linear-gradient(to top, rgba(0, 0, 0, 0.26) 1px, transparent 1px); 
+}
+
+.radio label input[type="radio"]:checked ~ .bmd-radio::before, 
+label.radio-inline input[type="radio"]:checked ~ .bmd-radio::before {
+	background-color: rgb(229, 38, 38);
+}
+
+.radio label input[type="radio"]:checked ~ .bmd-radio::after, 
+label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
+	border-color: rgb(229, 38, 38);
+}
+
+.radio label .bmd-radio::before, label.radio-inline .bmd-radio::before {
+	background-color: rgb(229, 38, 38);
+}
+
+.snackbar-content {
+	padding: 0;
+}
+
+.snackbar-content .list-group-item :first-child {
+	margin-right: 0.5rem;
+}
+
 /*place detail*/
 .detail.place-detail .view .box .widget.star-rating {
     font-size: 14px;
@@ -340,25 +373,6 @@
 
 .link-icon.list-inline > li:not(:last-child) {
 
-}
-
-.bmd-form-group input::placeholder {
-	font-size: 13px;
-	line-height: 20px
-}
-
-.form-control, .custom-file-control,
-.is-focused .form-control,
-.is-focused .custom-file-control {
-  	background-image: linear-gradient(to top, rgba(229, 38, 38, 0.9) 2px, rgba(0, 150, 136, 0) 2px), linear-gradient(to top, rgba(0, 0, 0, 0.26) 1px, transparent 1px); 
-}
-
-.snackbar-content {
-	padding: 0;
-}
-
-.snackbar-content .list-group-item :first-child {
-	margin-right: 0.5rem;
 }
 
 .bg-main {
@@ -748,48 +762,7 @@ a.form-control:hover {
 }
 
 /*general - modal*/
-.modal {
-    text-align: center;
-}
-
-.modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-}
-
-.modal-open {
-    padding-right: 0px !important;
-}
-
-.modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
-}
-
-.modal.fade .modal-dialog {
-    -webkit-transform: scale(0.9);
-    -moz-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    transform: scale(0.9);
-    opacity: 0;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-
-.modal.fade.in .modal-dialog {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    opacity: 1;
-}
-
-#modal-product-category > .modal-dialog > .modal-content > .modal-body,
-#modal-report > .modal-dialog > .modal-content > .modal-body {
+#modal-product-category > .modal-dialog > .modal-content > .modal-body {
     overflow-y: auto;
 }
 

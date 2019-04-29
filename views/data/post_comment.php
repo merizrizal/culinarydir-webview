@@ -17,26 +17,24 @@ if (!empty($modelUserPostComment)): ?>
             <div class="comment-post">
                 <div class="row mb-10">
                     <div class="col-12">
-                        <div class="widget">
-                            <div class="widget-comments-image">
+                        <div class="widget-comments-image">
 
-                                <?php
-                                $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
+                            <?php
+                            $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
-                                echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                                    'class' => 'img-fluid rounded-circle'
-                                ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
+                            echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                'class' => 'img-fluid rounded-circle'
+                            ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
-                            </div>
+                        </div>
 
-                            <div class="widget-comments-body">
-                                <?= Html::a($dataUserPostComment['user']['full_name'], ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>&nbsp;&nbsp;&nbsp;
-                                <small><?= Helper::asRelativeTime($dataUserPostComment['created_at']) ?></small>
-                                <br>
-                                <p class="comment-description">
-                                    <?= $dataUserPostComment['text']; ?>
-                                </p>
-                            </div>
+                        <div class="widget-comments-body">
+                            <?= Html::a($dataUserPostComment['user']['full_name'], ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>&nbsp;&nbsp;&nbsp;
+                            <small><?= Helper::asRelativeTime($dataUserPostComment['created_at']) ?></small>
+                            <br>
+                            <p class="comment-description">
+                                <?= $dataUserPostComment['text']; ?>
+                            </p>
                         </div>
                     </div>
                 </div>

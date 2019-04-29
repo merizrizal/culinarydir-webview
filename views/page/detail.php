@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use yii\web\View;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $modelBusiness core\models\Business */
@@ -356,9 +357,9 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                     $listSchedule .= '
                                                                         <li>
                                                                             <div class="row">
-                                                                                <div class="col-5">' .
-                                                                                    ($isOpenToday ? '<strong>' . Yii::t('app', $day) . '</strong>' : Yii::t('app', $day)) .
-                                                                                '</div>
+                                                                                <div class="col-5">
+                                                                                    <span class="pl-3">' . ($isOpenToday ? '<strong>' . Yii::t('app', $day) . '</strong>' : Yii::t('app', $day)) . '</span>
+                                                                                </div>
                                                                                 <div class="col-7">' .
                                                                                     ($isOpenToday ? '<strong>' . $businessHour . '</strong>' : $businessHour) .
                                                                                 '</div>' .
@@ -426,50 +427,49 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                             <?php
                                             $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . Yii::t('app', 'Online Order'), $ogUrlMenuDetail, [
-                                                'class' => 'btn btn-standard btn-d btn-block btn-round-4'
+                                                'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round'
                                             ]);
 
                                             if (!$isOrderOnline) {
 
-                                                $orderbtn = Html::a('<i class="fas fa-utensils"></i> ' . Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
-                                                    'class' => 'btn btn-standard btn-d btn-block btn-round-4'
+                                                $orderbtn = Html::a('<i class="aicon aicon-icon-cuisine"></i> ' . Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
+                                                    'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round'
                                                 ]);
                                             }
 
                                             $reportbtn = Html::a('<i class="aicon aicon-warning aicon-1-2x"></i> ' .  Yii::t('app', 'Report'), '', [
-                                                'class' => 'btn btn-standard btn-d btn-block btn-round-4 report-business-trigger'
+                                                'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round report-business-trigger'
                                             ]);
 
                                             $messagebtn = Html::a('<i class="aicon aicon-icon-envelope aicon-1-2x"></i> Message', '', [
-                                                'class' => 'btn btn-standard btn-d btn-block btn-round-4 message-feature'
+                                                'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round message-feature'
                                             ]); ?>
 
-                                            <div class="row mt-10 mb-10 visible-lg visible-md visible-sm visible-tab">
-                                                <div class="col-lg-2 col-sm-3 col-tab-3 col">
+                                            <div class="row mt-10 mb-10">
+                                                <div class="col-sm-3 d-none d-sm-block d-md-none">
                                                     <?= $reportbtn ?>
                                                 </div>
-                                                <div class="col-lg-2 col-sm-3 col-tab-3 col">
+                                                <div class="col-sm-3 d-none d-sm-block d-md-none">
                                                     <?= $messagebtn ?>
                                                 </div>
-                                                <div class="col-lg-4 col-offset-lg-4 col-sm-5 col-offset-sm-6 col-tab-5 col-offset-tab-6 pull-right">
+                                                <div class="col-sm-6 d-none d-sm-block d-md-none">
                                                     <?= $orderbtn ?>
                                                 </div>
-                                            </div>
 
-                                            <div class="row mt-10 mb-10 visible-xs">
-                                                <div class="col-xs-6 col">
+                                                <div class="col-6 d-block d-sm-none">
                                                 	<?= $reportbtn ?>
                                             	</div>
-                                            	<div class="col-xs-6 col">
+                                            	<div class="col-6 d-block d-sm-none">
                                                 	<?= $messagebtn ?>
                                                 </div>
 
-                                                <div class="clearfix mb-10"></div>
+                                                <div class="clearfix d-block d-sm-none mb-10"></div>
 
-                                                <div class="col-xs-12">
+                                                <div class="col-12 d-block d-sm-none">
                                                 	<?= $orderbtn ?>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         <hr class="divider-w">
@@ -479,80 +479,51 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                             <?= Html::hiddenInput('business_id', $modelBusiness['id'], ['class' => 'business-id']) ?>
 
                                             <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
+                                                <div class="col-12">
 
                                                     <?php
                                                     $selectedVisit = !empty($modelBusiness['userVisits'][0]) ? 'selected' : '';
                                                     $selectedLove = !empty($modelBusiness['userLoves'][0]) ? 'selected' : '';
 
                                                     $visitValue = !empty($modelBusiness['businessDetail']['visit_value']) ? $modelBusiness['businessDetail']['visit_value'] : 0;
-                                                    $loveValue = !empty($modelBusiness['businessDetail']['love_value']) ? $modelBusiness['businessDetail']['love_value'] : 0; ?>
+                                                    $loveValue = !empty($modelBusiness['businessDetail']['love_value']) ? $modelBusiness['businessDetail']['love_value'] : 0;
 
-                                                    <ul class="list-inline mt-0 mb-0 visible-lg visible-md visible-sm visible-tab">
-                                                        <li>
-                                                            <div class="btn-group" role="group">
+                                                    $visitSpanCount = '<span class="been-here-count">' . $visitValue . '</span>';
+                                                    $loveSpanCount = '<span class="love-place-count">' . $loveValue . '</span>'; ?>
 
-                                                                <?= Html::a('<i class="aicon aicon-icon-been-there"></i> Visit', ['action/submit-user-visit'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 been-here ' . $selectedVisit . '',
-                                                                ]) ?>
+                                                    <ul class="list-inline mt-0 mb-0">
+                                                        <li class="list-inline-item">
 
-                                                                <?= Html::a($visitValue, ['action/submit-user-visit'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 been-here ' . $selectedVisit . ' been-here-count',
-                                                                ]) ?>
+                                                            <?= Html::a('<i class="aicon aicon-icon-been-there"></i> ' . $visitSpanCount . ' Visit', ['action/submit-user-visit'], [
+                                                                'class' => 'btn btn-raised btn-standard btn-round d-none d-sm-block d-md-none been-here ' . $selectedVisit . '',
+                                                            ]) ?>
 
-                                                            </div>
+                                                            <?= Html::a('<i class="aicon aicon-icon-been-there"></i> ' . $visitSpanCount . ' Visit', ['action/submit-user-visit'], [
+                                                                'class' => 'btn btn-raised btn-standard btn-round d-block d-sm-none been-here ' . $selectedVisit . '',
+                                                            ]) ?>
+
                                                         </li>
-                                                        <li>
-                                                            <div class="btn-group" role="group">
+                                                        <li class="list-inline-item">
 
-                                                                <?= Html::a('<i class="fa fa-heart"></i> Love', ['action/submit-user-love'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 love-place ' . $selectedLove . '',
-                                                                ]) ?>
+                                                            <?= Html::a('<i class="aicon aicon-heart1"></i> ' . $loveSpanCount . ' Love', ['action/submit-user-love'], [
+                                                                'class' => 'btn btn-raised btn-standard btn-round d-none d-sm-block d-md-none love-place ' . $selectedLove . '',
+                                                            ]) ?>
 
-                                                                <?= Html::a($loveValue, ['action/submit-user-love'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 love-place ' . $selectedLove . ' love-place-count',
-                                                                ]) ?>
+                                                            <?= Html::a('<i class="aicon aicon-heart1"></i> ' . $loveSpanCount . ' Love', ['action/submit-user-love'], [
+                                                                'class' => 'btn btn-raised btn-standard btn-round d-block d-sm-none love-place ' . $selectedLove . '',
+                                                            ]) ?>
 
-                                                            </div>
                                                         </li>
-                                                        <li>
-                                                            <div class="btn-group" role="group">
-                                                                <?= Html::a('<i class="fa fa-share-alt"></i> Share', '', ['class' => 'btn btn-default btn-standard btn-round-4 share-feature']) ?>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                        <li class="list-inline-item">
 
-                                                    <ul class="list-inline list-default mt-0 mb-0 visible-xs">
-                                                        <li>
-                                                            <div class="btn-group" role="group">
+                                                            <?= Html::a('<i class="aicon aicon-share1"></i> Share', '', [
+                                                                'class' => 'btn btn-raised btn-standard btn-round d-none d-sm-block d-md-none share-feature'
+                                                            ]) ?>
 
-                                                                <?= Html::a('<i class="aicon aicon-icon-been-there"></i> Visit', ['action/submit-user-visit'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs been-here ' . $selectedVisit . '',
-                                                                ]) ?>
+                                                            <?= Html::a('<i class="aicon aicon-share1"></i>', '', [
+                                                                'class' => 'btn btn-raised btn-standard btn-round d-block d-sm-none share-feature'
+                                                            ]) ?>
 
-                                                                <?= Html::a($visitValue, ['action/submit-user-visit'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs been-here ' . $selectedVisit . ' been-here-count',
-                                                                ]) ?>
-
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="btn-group" role="group">
-
-                                                                <?= Html::a('<i class="fa fa-heart"></i> Love', ['action/submit-user-love'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs love-place ' . $selectedLove . '',
-                                                                ]) ?>
-
-                                                                <?= Html::a($loveValue, ['action/submit-user-love'], [
-                                                                    'class' => 'btn btn-default btn-standard btn-round-4 btn-xs love-place ' . $selectedLove . ' love-place-count',
-                                                                ]) ?>
-
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="btn-group" role="group">
-                                                                <?= Html::a('<i class="fa fa-share-alt"></i>', '', ['class' => 'btn btn-default btn-standard btn-round-4 btn-xs share-feature']) ?>
-                                                            </div>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -567,64 +538,58 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                             if (!empty($modelBusiness['businessPromos'])): ?>
 
                                 <div id="special" class="row mt-10">
-                                    <div class="col-sm-12 col-xs-12">
-                                        <div class="box bg-white">
+                                    <div class="col-12">
+                                        <div class="card box">
                                             <div class="box-title">
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-xs-12">
-                                                        <h4 class="m-0"><?= Yii::t('app', 'Special & Discount') ?> !!</h4>
-                                                    </div>
-                                                </div>
+                                                <h6 class="m-0"><?= Yii::t('app', 'Special & Discount') ?> !!</h6>
                                             </div>
 
                                             <hr class="divider-w">
 
                                             <div class="box-content">
-                                                <div class="row">
-                                                    <div class="col-xs-12">
 
-                                                        <?php
-                                                        foreach ($modelBusiness['businessPromos'] as $dataBusinessPromo):
+                                                <?php
+                                                foreach ($modelBusiness['businessPromos'] as $dataBusinessPromo):
 
-                                                            $urlPromoDetail = [
-                                                                'page/detail-business-promo',
-                                                                'id' => $dataBusinessPromo['id'],
-                                                                'uniqueName' => $modelBusiness['unique_name'],
-                                                            ];
+                                                    $urlPromoDetail = [
+                                                        'page/detail-business-promo',
+                                                        'id' => $dataBusinessPromo['id'],
+                                                        'uniqueName' => $modelBusiness['unique_name'],
+                                                    ];
 
-                                                            $img = Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $dataBusinessPromo['image'] . '&w=1252&h=706';
+                                                    $img = Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $dataBusinessPromo['image'] . '&w=1252&h=706';
 
-                                                            $dateStart = Yii::$app->formatter->asDate($dataBusinessPromo['date_start'], 'medium');
-                                                            $dateEnd = Yii::$app->formatter->asDate($dataBusinessPromo['date_end'], 'medium'); ?>
+                                                    $dateStart = Yii::$app->formatter->asDate($dataBusinessPromo['date_start'], 'medium');
+                                                    $dateEnd = Yii::$app->formatter->asDate($dataBusinessPromo['date_end'], 'medium'); ?>
 
-                                                            <div class="row mb-10">
-                                                                <div class="col-lg-4 col-sm-5 col-xs-12">
-                                                                    <?= Html::a(Html::img($img, ['class' => 'img-responsive']), $urlPromoDetail); ?>
-                                                                </div>
+                                                    <div class="row mb-10">
+                                                        <div class="col-sm-5 col-12">
+                                                            <?= Html::a(Html::img($img, ['class' => 'img-fluid']), $urlPromoDetail); ?>
+                                                        </div>
 
-                                                                <div class="col-lg-8 col-sm-7 col-xs-12 mt-10">
-                                                                    <h4 class="promo-title">
-                                                                        <?= Html::a($dataBusinessPromo['title'], $urlPromoDetail) ?>
-                                                                    </h4>
-                                                                    <p class="description mb-10">
-                                                                        <?= $dataBusinessPromo['short_description'] ?>
-                                                                    </p>
-                                                                    <p>
-                                                                        <?= Yii::t('app', 'Valid from {dateStart} until {dateEnd}', ['dateStart' => $dateStart, 'dateEnd' => $dateEnd]); ?>
-                                                                    </p>
-                                                                    <p>
-                                                                        <?= Html::a('<span class="text-red">' . Yii::t('app', 'View Details') . ' <i class="fa fa-angle-double-right"></i></span>', $urlPromoDetail) ?>
-																	</p>
-                                                                </div>
-                                                            </div>
+                                                        <div class="clearfix d-block d-sm-none">&nbsp;</div>
 
-                                                            <hr class="divider-w mb-10">
-
-                                                        <?php
-                                                        endforeach; ?>
-
+                                                        <div class="col-sm-7 col-12">
+                                                            <h6 class="m-0">
+                                                                <?= Html::a($dataBusinessPromo['title'], $urlPromoDetail) ?>
+                                                            </h6>
+                                                            <p class="mb-10">
+                                                                <?= $dataBusinessPromo['short_description'] ?>
+                                                            </p>
+                                                            <p>
+                                                                <?= Yii::t('app', 'Valid from {dateStart} until {dateEnd}', ['dateStart' => $dateStart, 'dateEnd' => $dateEnd]); ?>
+                                                            </p>
+                                                            <p>
+                                                                <?= Html::a('<span class="text-danger"><i class="aicon aicon-circle-right"></i> ' . Yii::t('app', 'View Details') . '</span>', $urlPromoDetail) ?>
+															</p>
+                                                        </div>
                                                     </div>
-                                                </div>
+
+                                                    <div class="divider-w mb-10"></div>
+
+                                                <?php
+                                                endforeach; ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -776,11 +741,11 @@ echo Html::img($ogImage, ['id' => 'img-for-share-link']);
 $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserReport) {
 
     echo '
-        <div id="modal-coming-soon" class="modal" tabindex="-1" role="dialog">
+        <div id="modal-coming-soon" class="modal fade in" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">' . Yii::t('app', 'Coming Soon') . '</h5>
+                        <h6 class="modal-title">' . Yii::t('app', 'Coming Soon') . '</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -794,11 +759,81 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
     ';
 
     echo '
-        <div id="modal-confirmation" class="modal" tabindex="-1" role="dialog">
+        <div id="modal-report" class="modal fade in" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">';
+
+                    $form = ActiveForm::begin([
+                        'id' => 'report-form',
+                        'action' => ['action/submit-report'],
+                        'fieldConfig' => [
+                            'template' => '{label}{input}{error}'
+                        ],
+                    ]);
+
+                        echo '
+                            <div class="modal-header">
+                                <h6 class="modal-title"><i class="aicon aicon-warning"></i> ' . Yii::t('app', 'Report') . '</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="overlay" style="display: none;"></div>
+                                <div class="loading-img" style="display: none;"></div>';
+
+                                echo Html::hiddenInput('business_id', $modelBusiness['id']);
+
+                                echo Html::label(Yii::t('app', 'This business:'));
+                                echo $form->field($modelUserReport, 'report_status')
+                                    ->radioList([
+                                        'Closed' => Yii::t('app', 'Closed'),
+                                        'Moved'=> Yii::t('app', 'Moved'),
+                                        'Duplicate' => Yii::t('app', 'Duplicate'),
+                                        'Inaccurate' => Yii::t('app', 'Inaccurate'),
+                                    ],
+                                    [
+                                        'item' => function ($index, $label, $name, $checked, $value) {
+
+                                            return '
+                                                <div class="radio">
+                                                    <label>' .
+                                                        Html::radio($name, $checked, ['class' => 'report-subject', 'value' => $value]) .
+                                                        $label . '
+                                                    </label>
+                                                </div>
+                                            ';
+                                        }
+                                    ])
+                                    ->label(false);
+
+                                echo $form->field($modelUserReport, 'text')
+                                    ->textArea([
+                                        'rows' => 4,
+                                        'placeholder' => Yii::t('app', 'Tell about your situation or complaint.')
+                                    ])
+                                    ->label(false);
+
+                                echo '
+                            </div>
+                            <div class="modal-footer">' .
+                                Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-d btn-round btn-submit-modal-report']) .
+                                Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-round btn-close-modal-report']) . '
+                            </div>';
+
+                    ActiveForm::end();
+
+                echo '
+            </div>
+        </div>
+    ';
+
+    echo '
+        <div id="modal-confirmation" class="modal fade in" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">' . Yii::t('app', 'Confirmation') . '</h5>
+                        <h6 class="modal-title">' . Yii::t('app', 'Confirmation') . '</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -814,58 +849,6 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
             </div>
         </div>
     ';
-
-//     Modal::begin([
-//         'header' => '<i class="aicon aicon-warning"></i> ' . Yii::t('app', 'Report'),
-//         'id' => 'modal-report',
-//     ]);
-
-//         echo '<div class="overlay" style="display: none;"></div>';
-//         echo '<div class="loading-img" style="display: none;"></div>';
-
-//         $form = ActiveForm::begin([
-//             'id' => 'report-form',
-//             'action' => ['action/submit-report'],
-//             'fieldConfig' => [
-//                 'template' => '{label}{input}{error}'
-//             ],
-//         ]);
-
-//             echo Html::hiddenInput('business_id', $modelBusiness['id']);
-
-//             echo $form->field($modelUserReport, 'report_status')
-//                     ->radioList([
-//                         'Closed' => Yii::t('app', 'Closed'),
-//                         'Moved'=> Yii::t('app', 'Moved'),
-//                         'Duplicate' => Yii::t('app', 'Duplicate'),
-//                         'Inaccurate' => Yii::t('app', 'Inaccurate'),
-//                     ],
-//                     [
-//                         'separator' => '<br>',
-//                         'itemOptions' => [
-//                             'class' => 'report-subject icheck',
-//                         ],
-//                     ])
-//                     ->label(Yii::t('app', 'This business:'));
-
-//             echo $form->field($modelUserReport, 'text')
-//                     ->textArea([
-//                         'rows' => 3,
-//                         'placeholder' => Yii::t('app', 'Tell about your situation or complaint.')
-//                     ])
-//                     ->label(Yii::t('app', 'Note'));
-
-//             echo '
-//                 <div class="row">
-//                     <div class="col-sm-12 col-md-12 text-center">
-//                         ' . Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-round btn-d btn-submit-modal-report']) . '
-//                         ' . Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-round btn-default btn-close-modal-report']) . '
-//                     </div>
-//                 </div>';
-
-//         ActiveForm::end();
-
-//     Modal::end();
 };
 
 $this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
@@ -1017,13 +1000,13 @@ $jscript = '
 
         var thisObj = $(this);
 
-        thisObj.siblings(".overlay").show();
-        thisObj.siblings(".loading-img").show();
+        thisObj.find(".overlay").show();
+        thisObj.find(".loading-img").show();
 
         if (thisObj.find(".has-error").length)  {
 
-            thisObj.siblings(".overlay").hide();
-            thisObj.siblings(".loading-img").hide();
+            thisObj.find(".overlay").hide();
+            thisObj.find(".loading-img").hide();
 
             return false;
         }
@@ -1054,15 +1037,15 @@ $jscript = '
                     messageResponse(response.icon, response.title, response.message, response.type);
                 }
 
-                thisObj.siblings(".overlay").hide();
-                thisObj.siblings(".loading-img").hide();
+                thisObj.find(".overlay").hide();
+                thisObj.find(".loading-img").hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
 
                 messageResponse("aicon aicon-icon-info", xhr.status, xhr.responseText, "danger");
 
-                thisObj.siblings(".overlay").hide();
-                thisObj.siblings(".loading-img").hide();
+                thisObj.find(".overlay").hide();
+                thisObj.find(".loading-img").hide();
             }
         });
 
