@@ -9,8 +9,8 @@ use yii\widgets\ActiveForm;
 /* @var $modelPostPhoto frontend\models\Post */ ?>
 
 <div class="row">
-    <div class="col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
 
             <div class="overlay" style="display: none;"></div>
             <div class="loading-img" style="display: none;"></div>
@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
                     </div>
 
                     <div class="row" id="post-photo-container">
-                        <div class="col-xs-12">
+                        <div class="col-12">
 
                         	<?php
                             echo $form->field($modelPostPhoto, 'text')->textInput([
@@ -68,8 +68,8 @@ use yii\widgets\ActiveForm;
 </div>
 
 <div class="row mt-10">
-    <div class="col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
             <div class="box-content">
                 <div class="gallery-section"></div>
             </div>

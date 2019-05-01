@@ -16,18 +16,17 @@ use yii\widgets\ActiveForm;
 $urlMyReviewDetail = [
     'page/review',
     'id' => $modelUserPostMain['id'],
-    'uniqueName' => $modelBusiness['unique_name'],
 ]; ?>
 
 <div class="row">
-    <div class="col-sm-12 col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
 
             <div class="overlay" style="display: none;"></div>
             <div class="loading-img" style="display: none;"></div>
 
             <div class="box-title" id="title-write-review">
-                <h4 class="mt-0 mb-0 inline-block"><?= !empty($modelUserPostMain) ? Yii::t('app', 'Your Review') : Yii::t('app', 'Write a Review') ?></h4>
+                <h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? Yii::t('app', 'Your Review') : Yii::t('app', 'Write a Review') ?></h4>
                 <span class="pull-right inline-block" id="close-review-container"><?= Html::a('<i class="fa fa-close"></i> ' . Yii::t('app', 'Cancel'), '', ['class' => 'text-main']) ?></span>
             </div>
 
@@ -44,9 +43,9 @@ $urlMyReviewDetail = [
                     	echo Html::hiddenInput('user_post_main_id', $modelUserPostMain['id'], ['class' => 'my-user-post-main-id']); ?>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="row mb-10">
-                                    <div class="col-md-6 col-sm-6 col-tab-7 col-xs-12">
+                                    <div class="col-sm-7 col-12">
                                         <div class="widget">
                                             <div class="widget-posts-image">
 
@@ -63,14 +62,14 @@ $urlMyReviewDetail = [
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-tab-5 visible-tab">
+                                    <div class="col-sm-5 d-none d-sm-block">
     									<div class="my-rating">
                                         	<h3 class="mt-0 mb-0">
                                                 <?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success pt-10']); ?>
                                         	</h3>
                      					</div>
                                     </div>
-                                    <div class="col-xs-12 visible-xs">
+                                    <div class="col-12 d-block d-sm-none">
                                     	<ul class="list-inline mt-0 mb-0">
                                             <li>
                                                 <div class="widget star-rating">
@@ -102,7 +101,7 @@ $urlMyReviewDetail = [
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-12">
+                                    <div class="col-12">
                                         <p class="my-review-description">
                                             <?= !empty($modelUserPostMain['text']) ? $modelUserPostMain['text'] : null ?>
                                         </p>
@@ -110,7 +109,7 @@ $urlMyReviewDetail = [
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-12">
+                                    <div class="col-12">
                                         <ul class="works-grid works-grid-gut works-grid-5" id="review-uploaded-photo">
 
                                             <?php
@@ -164,15 +163,15 @@ $urlMyReviewDetail = [
 
                         	    $selected = !empty($modelUserPostMain['userPostLoves'][0]) ? 'selected' : ''; ?>
 
-                                <div class="row visible-xs">
-                                    <div class="col-xs-3">
+                                <div class="row d-block d-sm-none">
+                                    <div class="col-3">
                                         <ul class="list-inline mt-0 mb-0">
                                             <li>
                                                 <small><?= '<i class="aicon aicon-thumb"></i> <span class="my-total-likes-review">' . $loveCount . '</span>' ?></small>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-xs-9 text-right">
+                                    <div class="col-9 text-right">
                                         <ul class="list-inline mt-0 mb-0">
                                             <li>
                                                 <small><?= $commentSpanCount . ' Comment'?></small>
@@ -185,31 +184,31 @@ $urlMyReviewDetail = [
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-tab-6 col-xs-12">
+                                    <div class="col-sm-6 col-12">
                                         <ul class="list-inline list-review mt-0 mb-0">
                                             <li>
 
                                                 <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], [
-                                                    'class' => 'btn btn-raised btn-small btn-round my-likes-review-trigger ' . $selected . ' visible-tab'
+                                                    'class' => 'btn btn-raised btn-small btn-round my-likes-review-trigger ' . $selected . ' d-none d-sm-block'
                                                 ]); ?>
 
                                                 <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], [
-                                                    'class' => 'btn btn-raised btn-small btn-round my-likes-review-trigger ' . $selected . ' visible-xs'
+                                                    'class' => 'btn btn-raised btn-small btn-round my-likes-review-trigger ' . $selected . ' d-block d-sm-none'
                                                 ]); ?>
 
                                             </li>
                                             <li>
 
                                                 <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', [
-                                                    'class' => 'btn btn-raised btn-small btn-round my-comments-review-trigger visible-tab'
+                                                    'class' => 'btn btn-raised btn-small btn-round my-comments-review-trigger d-none d-sm-block'
                                                 ]); ?>
 
                                                 <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', [
-                                                    'class' => 'btn btn-raised btn-small btn-round my-comments-review-trigger visible-xs'
+                                                    'class' => 'btn btn-raised btn-small btn-round my-comments-review-trigger d-block d-sm-none'
                                                 ]); ?>
 
                                             </li>
-                                            <li class="visible-xs-inline-block">
+                                            <li class="d-block d-sm-none">
                                             	<div class="btn-group">
                                                 	<a class="btn btn-raised btn-small btn-round" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                                                         <i class="aicon aicon-more"></i>
@@ -229,16 +228,16 @@ $urlMyReviewDetail = [
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-tab-6 text-right visible-tab">
+                                    <div class="col-sm-6 text-right d-none d-sm-block">
                                         <ul class="list-inline list-review mt-0 mb-0">
                                     		<li>
-                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-small btn-round-4 share-my-review-trigger']) ?>
+                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-small btn-round share-my-review-trigger']) ?>
                                             </li>
                                             <li>
-                                                <?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i> Edit', '', ['class' => 'btn btn-raised btn-small btn-round-4 edit-my-review-trigger']) ?>
+                                                <?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i> Edit', '', ['class' => 'btn btn-raised btn-small btn-round edit-my-review-trigger']) ?>
                                             </li>
                                             <li>
-                                                <?= Html::a('<i class="aicon aicon-icon-trash"></i> ' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'btn btn-raised btn-small btn-round-4 delete-my-review-trigger']) ?>
+                                                <?= Html::a('<i class="aicon aicon-icon-trash"></i> ' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'btn btn-raised btn-small btn-round delete-my-review-trigger']) ?>
                                             </li>
                                         </ul>
                                     </div>
@@ -247,7 +246,7 @@ $urlMyReviewDetail = [
                                 <hr class="divider-w mt-10">
 
                                 <div class="row">
-                                	<div class="col-xs-12">
+                                	<div class="col-12">
                                     	<div class="user-comment-review" id="my-comments-review-container">
                                             <div class="input-group mt-10 mb-10">
                                                 <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
@@ -268,7 +267,7 @@ $urlMyReviewDetail = [
 
                                                             <div class="comment-post">
                                                                 <div class="row mb-10">
-                                                                    <div class="col-xs-12">
+                                                                    <div class="col-12">
                                                                         <div class="widget">
                                                                             <div class="widget-comments-image">
 
@@ -329,9 +328,9 @@ $urlMyReviewDetail = [
                     echo Html::hiddenInput('business_id', $modelBusiness['id'], ['id' => 'business_id']); ?>
 
                     <div class="row" id="write-review-container">
-                        <div class="col-tab-6 col-xs-12 mb-20">
+                        <div class="col-sm-6 col-12 mb-20">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <span><strong>Overall Rating</strong></span>
 
                                     <?= Html::hiddenInput('temp_overall_rating', null, ['class' => 'temp-overall-rating']) ?>
@@ -355,19 +354,19 @@ $urlMyReviewDetail = [
 //                                     ]); ?>
 
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-6">
                                     <h3 class="rating-overall mt-0 mb-0"></h3>
                                 </div>
                             </div>
 
                             <div class="row mt-20 mb-20">
-                                <div class="col-xs-12">
+                                <div class="col-12">
                                     <span><strong>O R</strong></span>
                                 </div>
                             </div>
 
                             <div class="row form-rating">
-                                <div class="col-xs-12">
+                                <div class="col-12">
                                     <div class="widget star-rating">
                                         <ul class="icon-list">
 
@@ -389,7 +388,7 @@ $urlMyReviewDetail = [
 
                                                     <li>
                                                         <div class="row">
-                                                            <div class="col-tab-6 col-xs-6">
+                                                            <div class="col-sm-6 col-6">
 
                                                                 <?= Html::hiddenInput('rating_component_id', $dataRatingComponent['id'], ['class' => 'rating-component-id']) ?>
 
@@ -416,7 +415,7 @@ $urlMyReviewDetail = [
 
                                                             </div>
 
-                                                            <div class="col-xs-6 business-rating-components">
+                                                            <div class="col-6 business-rating-components">
                                                                 <div class="rating-<?= $dataRatingComponent['id'] ?>"></div>
                                                             </div>
                                                         </div>
@@ -432,7 +431,7 @@ $urlMyReviewDetail = [
                             </div>
                         </div>
 
-                        <div class="col-tab-6 col-xs-12">
+                        <div class="col-sm-6 col-12">
                             <div class="form-group">
 
                                 <?= $form->field($modelPost, '[review]text')->textarea([
@@ -446,7 +445,7 @@ $urlMyReviewDetail = [
                             <div class="form-group">
 
                                 <div class="row" id="form-photos-review-container">
-                                    <div class="col-sm-12 col-xs-12">
+                                    <div class="col-12">
                                         <ul class="works-grid works-grid-gut works-grid-5" id="form-review-uploaded-photo">
 
                                             <?php
@@ -503,8 +502,8 @@ $urlMyReviewDetail = [
 </div>
 
 <div class="row mt-10">
-    <div class="col-sm-12 col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
             <div class="box-title">
                 <h4 class="mt-0 mb-0 inline-block"><?= Yii::t('app', 'Review') ?></h4>
             </div>
@@ -518,7 +517,7 @@ $urlMyReviewDetail = [
     </div>
 </div>
 
-<ul id="container-temp-uploaded-photo" class="hidden">
+<ul id="container-temp-uploaded-photo" style="display:none">
     <li class="work-item gallery-photo-review">
         <div class="gallery-item review-post-gallery">
             <div class="gallery-image">

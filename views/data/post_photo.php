@@ -29,17 +29,17 @@ $linkPager = LinkPager::widget([
 ]); ?>
 
 <div class="row mt-10 mb-20">
-    <div class="col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
     	<?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-tab-6 visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -47,7 +47,7 @@ $linkPager = LinkPager::widget([
 </div>
 
 <div class="row" style="position: relative;">
-    <div class="col-xs-12 post-photo-container">
+    <div class="col-12 post-photo-container">
 
     	<div class="overlay" style="display: none;"></div>
 		<div class="loading-img" style="display: none;"></div>
@@ -93,17 +93,17 @@ $linkPager = LinkPager::widget([
 </div>
 
 <div class="row mt-20 mb-10">
-    <div class="col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
         <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-tab-6 visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 

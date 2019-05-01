@@ -338,7 +338,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                             $openAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm');
                                                                             $closeAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
 
-                                                                            $businessHourAdditional .= '<div class="col-xs-offset-5 col-xs-7 p-0">' . $openAt . ' - ' . $closeAt . '</div>';
+                                                                            $businessHourAdditional .= '<div class="col-7 offset-5">' . ($isOpenToday ? '<strong>' . $openAt . ' - ' . $closeAt . '</strong></div>' : $openAt . ' - ' . $closeAt);
 
                                                                             if (date('l') == $day) {
 
@@ -363,7 +363,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                                 <div class="col-7">' .
                                                                                     ($isOpenToday ? '<strong>' . $businessHour . '</strong>' : $businessHour) .
                                                                                 '</div>' .
-                                                                                ($isOpenToday ? '<strong>' . $businessHourAdditional . '</strong>' : $businessHourAdditional) .
+                                                                                $businessHourAdditional .
                                                                             '</div>
                                                                         </li>';
                                                                 }
@@ -427,22 +427,22 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                             <?php
                                             $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . Yii::t('app', 'Online Order'), $ogUrlMenuDetail, [
-                                                'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round'
+                                                'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round'
                                             ]);
 
                                             if (!$isOrderOnline) {
 
                                                 $orderbtn = Html::a('<i class="aicon aicon-icon-cuisine"></i> ' . Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
-                                                    'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round'
+                                                    'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round'
                                                 ]);
                                             }
 
                                             $reportbtn = Html::a('<i class="aicon aicon-warning aicon-1-2x"></i> ' .  Yii::t('app', 'Report'), '', [
-                                                'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round report-business-trigger'
+                                                'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round report-business-trigger'
                                             ]);
 
                                             $messagebtn = Html::a('<i class="aicon aicon-icon-envelope aicon-1-2x"></i> Message', '', [
-                                                'class' => 'btn btn-raised btn-standard btn-d btn-block btn-round message-feature'
+                                                'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round message-feature'
                                             ]); ?>
 
                                             <div class="row mt-10 mb-10">
@@ -599,87 +599,53 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                             endif; ?>
 
                             <div class="row mt-20">
-                                <div class="col-sm-12 col-xs-12">
+                                <div class="col-12">
 
-                                    <div class="view">
-                                        <ul class="nav nav-tabs widget mb-10" role="tablist">
-                                            <li role="presentation" class="active">
-                                                <a href="#view-review" aria-controls="view-review" role="tab" data-toggle="tab">
-                                                    <ul class="link-icon list-inline tab-detail">
-                                                        <li>
-                                                            <ul class="text-center">
-                                                                <li><i class="aicon aicon-document-edit aicon-1-5x"></i><span class="badge total-review"></span></li>
-                                                                <li><?= Yii::t('app', 'Review') ?></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+                                    <div class="card view">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a id="review-tab" class="nav-link active text-center" href="#view-review" aria-controls="view-review" role="tab" data-toggle="tab">
+                                                	<i class="aicon aicon-document-edit aicon-1-5x"></i><span class="badge total-review"></span><br>
+                                                	<?= Yii::t('app', 'Review') ?>
                                                 </a>
                                             </li>
-                                            <li role="presentation">
-                                                <a href="#view-about" aria-controls="view-about" role="tab" data-toggle="tab">
-                                                    <ul class="link-icon list-inline tab-detail">
-                                                        <li>
-                                                            <ul class="text-center">
-                                                                <li><i class="aicon aicon-icon-restaurant aicon-1-5x"></i></li>
-                                                                <li><?= Yii::t('app', 'About') ?></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+                                            <li class="nav-item">
+                                                <a id="about-tab" class="nav-link text-center" href="#view-about" aria-controls="view-about" role="tab" data-toggle="tab">
+                                                    <i class="aicon aicon-icon-restaurant aicon-1-5x"></i><br>
+                                                    <?= Yii::t('app', 'About') ?>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="visible-lg visible-md visible-sm visible-tab">
-                                                <a href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
-                                                    <ul class="link-icon list-inline tab-detail">
-                                                        <li>
-                                                            <ul class="text-center">
-                                                                <li><i class="aicon aicon-camera1 aicon-1-5x"></i><span class="badge total-photo"></span></li>
-                                                                <li><?= Yii::t('app', 'Photo') ?></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+                                            <li class="nav-item d-none d-sm-block">
+                                                <a id="photo-tab" class="nav-link text-center" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
+                                                    <i class="aicon aicon-camera1 aicon-1-5x"></i><span class="badge total-photo"></span><br>
+                                                    <?= Yii::t('app', 'Photo') ?>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="visible-lg visible-md visible-sm visible-tab">
-                                                <a href="#view-map" aria-controls="view-map" role="tab" data-toggle="tab">
-                                                    <ul class="link-icon list-inline tab-detail">
-                                                        <li>
-                                                            <ul class="text-center">
-                                                                <li><i class="aicon aicon-icon-thin-location-line aicon-1-5x"></i></li>
-                                                                <li><?= Yii::t('app', 'Map')?></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+                                            <li class="nav-item d-none d-sm-block">
+                                                <a id="map-tab" class="nav-link text-center" href="#view-map" aria-controls="view-map" role="tab" data-toggle="tab">
+                                                    <i class="aicon aicon-icon-thin-location-line aicon-1-5x"></i><br>
+                                                    <?= Yii::t('app', 'Map') ?>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="dropdown visible-xs">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                                    <ul class="link-icon list-inline tab-detail">
-                                                        <li>
-                                                            <ul class="text-center">
-                                                                <li><i class="fa fa-ellipsis-h aicon-1-5x"></i></li>
-                                                                <li>More <span class="caret"></span></li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+                                            <li class="nav-item dropdown d-block d-sm-none">
+                                                <a class="nav-link dropdown-toggle more-detail-menu text-center" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="aicon aicon-more aicon-1-5x"></i><br>
+                                                    More <span class="caret"></span>
                                                 </a>
-                                                <ul class="dropdown-menu pull-right">
-                                                    <li role="presentation">
-                                                        <a href="#view-photo" aria-controls="view-photo-xs" role="tab" data-toggle="tab">
-                                                        	<h6><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Photo') ?>(<span class="total-photo"></span>)</h6>
-                                                        </a>
-                                                    </li>
-                                                    <li role="presentation">
-                                                       	<a href="#view-map" aria-controls="view-map-xs" role="tab" data-toggle="tab">
-                                                   			<h6><i class="aicon aicon-icon-thin-location-line"></i> <?= Yii::t('app', 'Map')?></h6>
-                                               			</a>
-                                                    </li>
-                                                </ul>
+                                                <div class="dropdown-menu pull-right p-0">
+                                                    <a id="photo-tab" class="dropdown-item" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
+                                                    	<h6><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Photo') ?> (<span class="total-photo"></span>)</h6>
+                                                    </a>
+                                                   	<a id="map-tab" class="dropdown-item" href="#view-map" aria-controls="view-map" role="tab" data-toggle="tab">
+                                               			<h6><i class="aicon aicon-icon-thin-location-line"></i> <?= Yii::t('app', 'Map')?></h6>
+                                           			</a>
+                                                </div>
                                             </li>
                                         </ul>
 
                                         <div class="tab-content">
 
-                                            <div role="tabpanel" class="tab-pane fade in active p-0" id="view-review">
+                                            <div role="tabpanel" class="tab-pane fade show active p-0" id="view-review" aria-labelledby="review-tab">
 
                                                 <?= $this->render('detail/_review.php', [
                                                     'modelBusiness' => $modelBusiness,
@@ -692,7 +658,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                             </div>
 
-                                            <div role="tabpanel" class="tab-pane fade p-0" id="view-about">
+                                            <div role="tabpanel" class="tab-pane fade p-0" id="view-about" aria-labelledby="about-tab">
 
                                                 <?= $this->render('detail/_about.php', [
                                                     'businessAbout' => $modelBusiness['about'],
@@ -701,7 +667,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                             </div>
 
-                                            <div role="tabpanel" class="tab-pane fade p-0" id="view-photo">
+                                            <div role="tabpanel" class="tab-pane fade p-0" id="view-photo" aria-labelledby="photo-tab">
 
                                                 <?= $this->render('detail/_photo.php', [
                                                     'modelBusiness' => $modelBusiness,
@@ -711,7 +677,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                             </div>
 
-                                            <div role="tabpanel" class="tab-pane fade p-0" id="view-map">
+                                            <div role="tabpanel" class="tab-pane fade p-0" id="view-map" aria-labelledby="map-tab">
 
                                                 <?= $this->render('detail/_map.php', [
                                                     'coordinate' => explode(',', $modelBusiness['businessLocation']['coordinate']),
@@ -785,8 +751,7 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
                                 echo Html::hiddenInput('business_id', $modelBusiness['id']);
 
                                 echo Html::label(Yii::t('app', 'This business:'));
-                                echo $form->field($modelUserReport, 'report_status')
-                                    ->radioList([
+                                echo $form->field($modelUserReport, 'report_status')->radioList([
                                         'Closed' => Yii::t('app', 'Closed'),
                                         'Moved'=> Yii::t('app', 'Moved'),
                                         'Duplicate' => Yii::t('app', 'Duplicate'),
@@ -807,8 +772,7 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
                                     ])
                                     ->label(false);
 
-                                echo $form->field($modelUserReport, 'text')
-                                    ->textArea([
+                                echo $form->field($modelUserReport, 'text')->textArea([
                                         'rows' => 4,
                                         'placeholder' => Yii::t('app', 'Tell about your situation or complaint.')
                                     ])
@@ -817,8 +781,8 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
                                 echo '
                             </div>
                             <div class="modal-footer">' .
-                                Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-d btn-round btn-submit-modal-report']) .
-                                Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-round btn-close-modal-report']) . '
+                                Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-raised btn-danger btn-round btn-submit-modal-report']) . '&nbsp&nbsp' .
+                                Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-raised btn-round btn-close-modal-report']) . '
                             </div>';
 
                     ActiveForm::end();
@@ -867,13 +831,27 @@ $jscript = '
 
     $(".see-map-shortcut").on("click", function(event) {
 
-        var xs = $(this).hasClass("xs") ? "-xs" : "";
+        var viewMapElement = "";
 
-        if (!$("a[aria-controls=\"view-map" + xs + "\"]").parent().hasClass("active")) {
+        $("a[aria-controls=\"view-map\"]").each(function() {
 
-            $("a[aria-controls=\"view-map" + xs + "\"]").tab("show");
+            if ($(".more-detail-menu").is(":visible")) {
 
-            $("a[aria-controls=\"view-map" + xs + "\"]").on("shown.bs.tab", function (e) {
+                viewMapElement = $(".more-detail-menu").siblings().find("a[aria-controls=\"view-map\"]");
+            } else {
+
+                if ($(this).hasClass("nav-link")) {
+
+                    viewMapElement = $(this);
+                }
+            }
+        });
+
+        if (!viewMapElement.hasClass("active")) {
+
+            viewMapElement.tab("show");
+
+            viewMapElement.on("shown.bs.tab", function (e) {
 
                 $("html, body").animate({ scrollTop: $("#title-map").offset().top }, "slow");
                 $(this).off("shown.bs.tab");

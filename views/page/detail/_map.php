@@ -6,14 +6,14 @@ use yii\helpers\Html;
 /* @var $coordinate array */ ?>
 
 <div class="row">
-    <div class="col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
             <div class="box-title" id="title-map">
             	<div class="row">
-            		<div class="col-xs-6">
+            		<div class="col-6">
 						<h4 class="mt-0 mb-0 inline-block"><?= Yii::t('app', 'Map') ?></h4>
             		</div>
-            		<div class="col-xs-6 text-right">
+            		<div class="col-6 text-right">
             			<?= Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . Yii::t('app', 'Open Map'), 'https://www.google.com/maps/search/?api=1&query=' . $coordinate[0] . ',' . $coordinate[1] . '', ['class' => 'btn btn-raised btn-small btn-round', 'target' => '_blank']) ?>
             		</div>
             	</div>

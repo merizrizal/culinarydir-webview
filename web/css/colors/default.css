@@ -143,6 +143,10 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
    	padding: 5px 0;
 }
 
+.detail.place-detail .nav-tabs .nav-link {
+	padding: 15px 20px;
+}
+
 /*user profile*/
 .detail.user-profile .box.user-love {
     min-height: 280px;
@@ -518,23 +522,26 @@ a.form-control:hover {
 
 .detail .view .nav-tabs .badge {
     position: absolute;
-    padding: 3px 0;
+    padding: 4px 4px;
     background: rgb(229, 38, 38);
-    width: 2rem;
-    height: 2rem;
-    top: 1rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    top: 0.4rem;
     text-align: center;
     line-height: 15px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     border-radius: 50%;
     color: white;
 }
 
 .detail.place-detail .view .nav-tabs .badge.total-review {
-    left: 5.8rem;
+    right: 1.6rem;
 }
 
-.detail.place-detail .view .nav-tabs .badge.total-photo,
+.detail.place-detail .view .nav-tabs .badge.total-photo {
+	right: 0.9rem;
+}
+
 .detail.user-profile .view .nav-tabs .badge.total-user-photo {
     left: 5.5rem;
 }
@@ -575,18 +582,7 @@ a.form-control:hover {
     padding: 10px 15px;
 }
 
-.detail.menu-list .nav-menu .nav.nav-tabs {
-	border-width: 1px 0px;
-    border-radius: 0px;
-}
-
-.detail.menu-list .nav-menu .nav.nav-tabs .dropdown-menu > li > a {
-    font-size: 14px;
-    padding: 5px 20px;
-}
-
-.detail.menu-list .nav-menu .nav.nav-tabs .dropdown-menu > li > a:hover,
-.detail.user-profile .dropdown-menu.profile-btn >li > a:hover {
+.dropdown-menu .dropdown-item.active {
     background-color: #e52626;
     color: #fff;
 }
