@@ -34,7 +34,7 @@ $linkPager = LinkPager::widget([
     	<?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 d-none d-sm-block">
+    <div class="col-sm-6 d-none d-sm-block d-md-none">
 
         <?= $linkPager; ?>
 
@@ -52,7 +52,7 @@ $linkPager = LinkPager::widget([
     	<div class="overlay" style="display: none;"></div>
 		<div class="loading-img" style="display: none;"></div>
 
-        <ul class="works-grid works-grid-gut works-grid-4" id="photo-gallery">
+        <ul class="works-grid works-grid-gut" id="photo-gallery">
 
             <?php
             if (!empty($modelUserPostMain)):
@@ -75,7 +75,6 @@ $linkPager = LinkPager::widget([
                                         echo Html::a('<i class="aicon aicon-share1"></i>', Yii::$app->urlManager->createAbsoluteUrl([
                                             'page/photo',
                                             'id' => $dataUserPostMain['id'],
-                                            'uniqueName' => $dataUserPostMain['business']['unique_name'],
                                         ]), ['class' => 'btn btn-danger btn-raised btn-small btn-xs btn-circle share-image-trigger']) . '&nbsp'; ?>
 
                                     </div>
@@ -98,7 +97,7 @@ $linkPager = LinkPager::widget([
         <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 d-none d-sm-block text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 

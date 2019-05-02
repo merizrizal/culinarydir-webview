@@ -788,6 +788,7 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
                     ActiveForm::end();
 
                 echo '
+                </div>
             </div>
         </div>
     ';

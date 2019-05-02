@@ -827,7 +827,7 @@ class ActionController extends base\BaseController
             $result['user'] = Yii::$app->user->getIdentity()->full_name;
             $result['userCreated'] = Yii::$app->formatter->asRelativeTime($modelUserPostMain->created_at);
             $result['userPostMain'] = $modelUserPostMain->toArray();
-            $result['userPostComments'] = $this->renderPartial('@frontend/views/data/post_comment', [
+            $result['userPostComments'] = $this->renderPartial('@webview/views/data/post_comment', [
                 'userPostId' => $modelUserPostMain->id,
                 'modelUserPostComment' => $modelUserPostMain->userPostComments,
             ]);

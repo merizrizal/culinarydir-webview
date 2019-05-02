@@ -542,6 +542,10 @@ a.form-control:hover {
 	right: 0.9rem;
 }
 
+.detail.place-detail .post-photo-container .work-item {
+	width: 50%;
+}
+
 .detail.user-profile .view .nav-tabs .badge.total-user-photo {
     left: 5.5rem;
 }

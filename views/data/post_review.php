@@ -37,7 +37,7 @@ $linkPager = LinkPager::widget([
         <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 d-none d-sm-block text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
@@ -98,7 +98,7 @@ $linkPager = LinkPager::widget([
                                 <small><?= Helper::asRelativeTime($dataUserPostMain['created_at']) ?></small>
                             </div>
                         </div>
-                        <div class="col-sm-5 d-none d-sm-block">
+                        <div class="col-sm-5 d-none d-sm-block d-md-none">
                             <div class="rating">
                             	<h4>
                                     <?= Html::tag('span', number_format($overallValue, 1), ['class' => 'badge badge-success']); ?>
@@ -207,11 +207,11 @@ $linkPager = LinkPager::widget([
                         <div class="col-sm-7 col-12">
                             <ul class="list-inline list-review mt-0 mb-0">
                                 <li class="list-inline-item">
-                                    <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round user-likes-review-trigger ' . $selected . ' d-none d-sm-block d-md-none']); ?>
+                                    <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round user-likes-review-trigger ' . $selected . ' d-none d-sm-block d-md-none d-md-none']); ?>
                                     <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], ['class' => 'btn btn-raised btn-small btn-round user-likes-review-trigger ' . $selected . ' d-block d-sm-none']); ?>
                                 </li>
                                 <li class="list-inline-item">
-                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round user-comments-review-trigger d-none d-sm-block']); ?>
+                                    <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', ['class' => 'btn btn-raised btn-small btn-round user-comments-review-trigger d-none d-sm-block d-md-none']); ?>
                                     <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round user-comments-review-trigger d-block d-sm-none']); ?>
                                 </li>
                                 <li class="list-inline-item">
@@ -224,7 +224,7 @@ $linkPager = LinkPager::widget([
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-sm-5 text-right d-none d-sm-block">
+                        <div class="col-sm-5 text-right d-none d-sm-block d-md-none">
                             <ul class="list-inline list-review mt-0 mb-0">
                                 <li>
 
@@ -308,7 +308,7 @@ $linkPager = LinkPager::widget([
         <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 d-none d-sm-block text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 

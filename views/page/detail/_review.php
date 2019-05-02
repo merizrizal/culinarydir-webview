@@ -13,6 +13,8 @@ use yii\widgets\ActiveForm;
 /* @var $dataUserVoteReview array */
 /* @var $queryParams array */
 
+webview\assets\RateyoAsset::register($this);
+
 $urlMyReviewDetail = [
     'page/review',
     'id' => $modelUserPostMain['id'],
@@ -26,13 +28,18 @@ $urlMyReviewDetail = [
             <div class="loading-img" style="display: none;"></div>
 
             <div class="box-title" id="title-write-review">
-                <h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? Yii::t('app', 'Your Review') : Yii::t('app', 'Write a Review') ?></h4>
-                <span class="pull-right inline-block" id="close-review-container"><?= Html::a('<i class="fa fa-close"></i> ' . Yii::t('app', 'Cancel'), '', ['class' => 'text-main']) ?></span>
+            	<div class="row">
+            		<div class="col-6">
+                    	<h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? Yii::t('app', 'Your Review') : Yii::t('app', 'Write a Review') ?></h4>
+                	</div>
+                	<div class="col-6 text-right" id="close-review-container">
+                		<?= Html::a(Yii::t('app', 'Cancel')) ?>
+            		</div>
+                </div>
             </div>
 
             <div class="box-content">
-
-                <div class="form-group" id="edit-review-container">
+                <div class="form-group p-0" id="edit-review-container">
 
                 	<?php
                 	if (!empty(Yii::$app->user->getIdentity())):
@@ -44,56 +51,40 @@ $urlMyReviewDetail = [
 
                         <div class="row">
                             <div class="col-12">
-                                <div class="row mb-10">
-                                    <div class="col-sm-7 col-12">
-                                        <div class="widget">
-                                            <div class="widget-posts-image">
+                                <div class="row">
+                                    <div class="col-sm-7 col-12 mb-10">
+                                        <div class="widget-posts-image">
 
-                                                <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                                                    'class' => 'img-responsive img-circle img-profile-thumb img-component'
-                                                ]), ['user/user-profile', 'user' => Yii::$app->user->getIdentity()->username]) ?>
+                                            <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                                'class' => 'img-fluid rounded-circle'
+                                            ]), ['user/user-profile', 'user' => Yii::$app->user->getIdentity()->username]) ?>
 
-                                            </div>
+                                        </div>
 
-                                            <div class="widget-posts-body">
-                                                <?= Html::a(Yii::$app->user->getIdentity()->full_name, ['user/user-profile', 'user' => Yii::$app->user->getIdentity()->username], ['class' => 'my-review-user-name']) ?>
-                                                <br>
-                                                <small class="my-review-created"><?= Helper::asRelativeTime($modelUserPostMain['created_at']) ?></small>
-                                            </div>
+                                        <div class="widget-posts-body">
+                                            <?= Html::a(Yii::$app->user->getIdentity()->full_name, ['user/user-profile', 'user' => Yii::$app->user->getIdentity()->username], ['class' => 'my-review-user-name']) ?>
+                                            <br>
+                                            <small class="my-review-created"><?= Helper::asRelativeTime($modelUserPostMain['created_at']) ?></small>
                                         </div>
                                     </div>
-                                    <div class="col-sm-5 d-none d-sm-block">
-    									<div class="my-rating">
-                                        	<h3 class="mt-0 mb-0">
-                                                <?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success pt-10']); ?>
-                                        	</h3>
-                     					</div>
+                                    <div class="col-sm-5 d-none d-sm-block d-md-none">
+										<div class="rating my-rating">
+                                        	<h4>
+                                        		<?= Html::tag('span', number_format($overallValue, 1), ['class' => 'badge badge-success']); ?>
+                                            </h4>
+                                        </div>
                                     </div>
                                     <div class="col-12 d-block d-sm-none">
                                     	<ul class="list-inline mt-0 mb-0">
-                                            <li>
-                                                <div class="widget star-rating">
-
-                                                    <?php
-//                                                     StarRating::widget([
-//                                                         'id' => 'my-overall-rating',
-//                                                         'name' => 'rating_' . $modelUserPostMain['id'],
-//                                                         'value' => $overallValue,
-//                                                         'pluginOptions' => [
-//                                                             'displayOnly' => true,
-//                                                             'filledStar' => '<span class="aicon aicon-star-full"></span>',
-//                                                             'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-//                                                             'showCaption' => false,
-//                                                         ]
-//                                                     ]); ?>
-
+                                            <li class="list-inline-item">
+                                                <div class="star-rating-review" data-rating="<?= number_format($overallValue, 1) ?>">
                                                 </div>
                                             </li>
-                                            <li>
-                                                <div class="rating my-rating">
-                                                    <h4 class="mt-0 mb-0">
-                                                    	<?= Html::a(number_format($overallValue, 1), '#', ['class' => 'label label-success']); ?>
-                                                    </h4>
+                                            <li class="list-inline-item">
+                                                <div class="rating my-rating rating-<?= $modelUserPostMain['id']; ?>">
+                                                    <h6 class="mt-0 mb-0">
+                                                    	<?= Html::tag('span', number_format($overallValue, 1), ['class' => 'badge badge-success']); ?>
+                                                    </h6>
                                                 </div>
                                             </li>
                                         </ul>
@@ -117,7 +108,7 @@ $urlMyReviewDetail = [
 
                                                 foreach ($modelUserPostMain['userPostMains'] as $i => $modelUserPostMainChild): ?>
 
-                                                    <li id="image-<?= $modelUserPostMainChild['id'] ?>" class="work-item gallery-photo-review <?= $i > 4 ? 'hidden' : '' ?>">
+                                                    <li id="image-<?= $modelUserPostMainChild['id'] ?>" class="work-item gallery-photo-review <?= $i > 4 ? 'd-none' : '' ?>">
                                                         <div class="gallery-item review-post-gallery">
                                                             <div class="gallery-image">
                                                                 <div class="work-image">
@@ -132,7 +123,7 @@ $urlMyReviewDetail = [
                                                                     	if ($i == 4 && $hiddenPhotos != 0) {
 
                                                                     	    echo Html::a('+' . $hiddenPhotos, Yii::$app->urlManager->createUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle']);
-                                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image hidden']);
+                                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none']);
                                                                     	} else {
 
                                                                     	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
@@ -163,20 +154,20 @@ $urlMyReviewDetail = [
 
                         	    $selected = !empty($modelUserPostMain['userPostLoves'][0]) ? 'selected' : ''; ?>
 
-                                <div class="row d-block d-sm-none">
-                                    <div class="col-3">
+                                <div class="row">
+                                    <div class="col-3 d-block d-sm-none">
                                         <ul class="list-inline mt-0 mb-0">
-                                            <li>
+                                            <li class="list-inline-item">
                                                 <small><?= '<i class="aicon aicon-thumb"></i> <span class="my-total-likes-review">' . $loveCount . '</span>' ?></small>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-9 text-right">
+                                    <div class="col-9 text-right d-block d-sm-none">
                                         <ul class="list-inline mt-0 mb-0">
-                                            <li>
+                                            <li class="list-inline-item">
                                                 <small><?= $commentSpanCount . ' Comment'?></small>
                                             </li>
-                                            <li>
+                                            <li class="list-inline-item">
                                                 <small><?= $photoSpanCount . ' Photo' ?></small>
                                             </li>
                                         </ul>
@@ -186,10 +177,10 @@ $urlMyReviewDetail = [
                                 <div class="row">
                                     <div class="col-sm-6 col-12">
                                         <ul class="list-inline list-review mt-0 mb-0">
-                                            <li>
+                                            <li class="list-inline-item">
 
                                                 <?= Html::a('<i class="aicon aicon-thumb"></i> ' . $loveSpanCount . ' Like', ['action/submit-likes'], [
-                                                    'class' => 'btn btn-raised btn-small btn-round my-likes-review-trigger ' . $selected . ' d-none d-sm-block'
+                                                    'class' => 'btn btn-raised btn-small btn-round my-likes-review-trigger ' . $selected . ' d-none d-sm-block d-md-none'
                                                 ]); ?>
 
                                                 <?= Html::a('<i class="aicon aicon-thumb"></i> Like', ['action/submit-likes'], [
@@ -197,10 +188,10 @@ $urlMyReviewDetail = [
                                                 ]); ?>
 
                                             </li>
-                                            <li>
+                                            <li class="list-inline-item">
 
                                                 <?= Html::a('<i class="aicon aicon-bubbles"></i> ' . $commentSpanCount . ' Comment', '', [
-                                                    'class' => 'btn btn-raised btn-small btn-round my-comments-review-trigger d-none d-sm-block'
+                                                    'class' => 'btn btn-raised btn-small btn-round my-comments-review-trigger d-none d-sm-block d-md-none'
                                                 ]); ?>
 
                                                 <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', [
@@ -208,35 +199,27 @@ $urlMyReviewDetail = [
                                                 ]); ?>
 
                                             </li>
-                                            <li class="d-block d-sm-none">
-                                            	<div class="btn-group">
-                                                	<a class="btn btn-raised btn-small btn-round" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="aicon aicon-more"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu pull-right review-btn">
-                                                        <li>
-                                                        	<?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'share-my-review-trigger']); ?>
-                                                        </li>
-                                                        <li>
-                                                           	<?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i> Edit', '', ['class' => 'edit-my-review-trigger']) ?>
-                                                        </li>
-                                                        <li>
-                                                           	<?= Html::a('<i class="aicon aicon-icon-trash"></i> ' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'delete-my-review-trigger']) ?>
-                                                        </li>
-                                                    </ul>
+                                            <li class="list-inline-item">
+                                            	<a class="btn btn-raised btn-small btn-round dropdown-toogle d-block d-sm-none" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="aicon aicon-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu pull-right review-btn">
+                                                	<?= Html::a('<i class="aicon aicon-share1"></i>&nbsp;Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'share-my-review-trigger dropdown-item']); ?>
+                                                   	<?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i>&nbsp;Edit', '', ['class' => 'edit-my-review-trigger dropdown-item']) ?>
+                                                   	<?= Html::a('<i class="aicon aicon-icon-trash"></i>&nbsp;' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'delete-my-review-trigger dropdown-item']) ?>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-sm-6 text-right d-none d-sm-block">
+                                    <div class="col-sm-6 text-right d-none d-sm-block d-md-none">
                                         <ul class="list-inline list-review mt-0 mb-0">
-                                    		<li>
+                                    		<li class="list-inline-item">
                                                 <?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-small btn-round share-my-review-trigger']) ?>
                                             </li>
-                                            <li>
+                                            <li class="list-inline-item">
                                                 <?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i> Edit', '', ['class' => 'btn btn-raised btn-small btn-round edit-my-review-trigger']) ?>
                                             </li>
-                                            <li>
+                                            <li class="list-inline-item">
                                                 <?= Html::a('<i class="aicon aicon-icon-trash"></i> ' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'btn btn-raised btn-small btn-round delete-my-review-trigger']) ?>
                                             </li>
                                         </ul>
@@ -268,26 +251,24 @@ $urlMyReviewDetail = [
                                                             <div class="comment-post">
                                                                 <div class="row mb-10">
                                                                     <div class="col-12">
-                                                                        <div class="widget">
-                                                                            <div class="widget-comments-image">
+                                                                        <div class="widget-comments-image">
 
-                                                                                <?php
-                                                                                $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=64&h=64' : 'default-avatar.png';
+                                                                            <?php
+                                                                            $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=64&h=64' : 'default-avatar.png';
 
-                                                                                echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
-                                                                                    'class' => 'img-responsive img-circle img-comment-thumb img-component'
-                                                                                ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
+                                                                            echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                                                                'class' => 'img-fluid rounded-circle'
+                                                                            ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
-                                                                            </div>
+                                                                        </div>
 
-                                                                            <div class="widget-comments-body">
-                                                                                <?= Html::a($dataUserPostComment['user']['full_name'], Yii::$app->urlManager->createUrl(['user/user-profile', 'user' => $dataUserPostComment['user']['username']])); ?>&nbsp;&nbsp;&nbsp;
-                                                                                <small><?= Helper::asRelativeTime($dataUserPostComment['created_at']) ?></small>
-                                                                                <br>
-                                                                                <p class="comment-description">
-                                                                                    <?= $dataUserPostComment['text']; ?>
-                                                                                </p>
-                                                                            </div>
+                                                                        <div class="widget-comments-body">
+                                                                            <?= Html::a($dataUserPostComment['user']['full_name'], Yii::$app->urlManager->createUrl(['user/user-profile', 'user' => $dataUserPostComment['user']['username']])); ?>&nbsp;&nbsp;&nbsp;
+                                                                            <small><?= Helper::asRelativeTime($dataUserPostComment['created_at']) ?></small>
+                                                                            <br>
+                                                                            <p class="comment-description">
+                                                                                <?= $dataUserPostComment['text']; ?>
+                                                                            </p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -331,35 +312,18 @@ $urlMyReviewDetail = [
                         <div class="col-sm-6 col-12 mb-20">
                             <div class="row">
                                 <div class="col-6">
+
+                                	<?= Html::hiddenInput('temp_overall_rating', null, ['class' => 'temp-overall-rating']) ?>
+
                                     <span><strong>Overall Rating</strong></span>
-
-                                    <?= Html::hiddenInput('temp_overall_rating', null, ['class' => 'temp-overall-rating']) ?>
-
-                                    <?php
-//                                     StarRating::widget([
-//                                         'id' => 'overall-rating',
-//                                         'name' => 'overall_rating',
-//                                         'value' => !empty($dataUserVoteReview['overallValue']) ? $dataUserVoteReview['overallValue'] : null,
-//                                         'pluginOptions' => [
-//                                             'step' => 1,
-//                                             'filledStar' => '<span class="aicon aicon-star-full"></span>',
-//                                             'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-//                                             'showClear' => false,
-//                                             'clearCaption' => '0',
-//                                             'captionElement' => '.rating-overall',
-//                                             'starCaptions' => new JsExpression('function(val){return val == 1 ? "1" : val;}'),
-//                                             'starCaptionClasses' => new JsExpression('function(val){ return false;}'),
-//                                             'hoverChangeCaption' => false,
-//                                         ]
-//                                     ]); ?>
-
+                                	<div class="overall-rating mt-10"></div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6 pt-10">
                                     <h3 class="rating-overall mt-0 mb-0"></h3>
                                 </div>
                             </div>
 
-                            <div class="row mt-20 mb-20">
+                            <div class="row mt-20">
                                 <div class="col-12">
                                     <span><strong>O R</strong></span>
                                 </div>
@@ -367,66 +331,54 @@ $urlMyReviewDetail = [
 
                             <div class="row form-rating">
                                 <div class="col-12">
-                                    <div class="widget star-rating">
-                                        <ul class="icon-list">
 
-                                            <?php
-                                            if (!empty($modelRatingComponent)):
+                                    <?php
+                                    if (!empty($modelRatingComponent)):
 
-                                                foreach ($modelRatingComponent as $dataRatingComponent):
+                                        foreach ($modelRatingComponent as $dataRatingComponent):
 
-                                                    if (!empty($dataUserVoteReview['ratingComponentValue'])) {
+                                            if (!empty($dataUserVoteReview['ratingComponentValue'])) {
 
-                                                        foreach ($dataUserVoteReview['ratingComponentValue'] as $ratingComponentId => $vote_value) {
+                                                foreach ($dataUserVoteReview['ratingComponentValue'] as $ratingComponentId => $vote_value) {
 
-                                                            if ($dataRatingComponent['id'] == $ratingComponentId) {
+                                                    if ($dataRatingComponent['id'] == $ratingComponentId) {
 
-                                                                $valueRatingComponent = $vote_value;
-                                                            }
-                                                        }
-                                                    } ?>
+                                                        $valueRatingComponent = $vote_value;
+                                                    }
+                                                }
+                                            } ?>
 
-                                                    <li>
-                                                        <div class="row">
-                                                            <div class="col-sm-6 col-6">
+                                            <div class="row">
+                                                <div class="col-6">
 
-                                                                <?= Html::hiddenInput('rating_component_id', $dataRatingComponent['id'], ['class' => 'rating-component-id']) ?>
+                                                	<?php
+                                                    echo Html::hiddenInput('rating_component_id', $dataRatingComponent['id'], ['class' => 'rating-component-id', 'data-prior' => '']);
+                                                    echo Html::hiddenInput('temp_rating_' . $dataRatingComponent['id'], null, ['class' => 'temp-rating-' . $dataRatingComponent['id']]);
 
-                                                                <?= Html::hiddenInput('temp_rating_' . $dataRatingComponent['id'], null, ['class' => 'temp-rating-' . $dataRatingComponent['id']]) ?>
+                                                    echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,]); ?>
 
-                                                                <?= $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,]) ?>
+													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating"></div>
+                                                </div>
 
-                                                                <?php
-//                                                                 StarRating::widget([
-//                                                                     'id' => 'rating-' . $dataRatingComponent['id'],
-//                                                                     'name' => 'rating_' . $dataRatingComponent['id'],
-//                                                                     'value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,
-//                                                                     'pluginOptions' => [
-//                                                                         'step' => 1,
-//                                                                         'filledStar' => '<span class="aicon aicon-star-full"></span>',
-//                                                                         'emptyStar' => '<span class="aicon aicon-star-empty"></span>',
-//                                                                         'showClear' => false,
-//                                                                         'clearCaption' => Yii::t('app', $dataRatingComponent['name']),
-//                                                                         'captionElement' => '.rating-' . $dataRatingComponent['id'],
-//                                                                         'starCaptions' => new JsExpression('function(val){return val == 1 ? "1 &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) . '" : val + " &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) . '";}'),
-//                                                                         'starCaptionClasses' => new JsExpression('function(val){ return false;}'),
-//                                                                     ]
-//                                                                 ]); ?>
+                                                <div class="col-6 business-rating-components p-15">
 
-                                                            </div>
+                                                	<?php
+													if (!empty($valueRatingComponent)) {
 
-                                                            <div class="col-6 business-rating-components">
-                                                                <div class="rating-<?= $dataRatingComponent['id'] ?>"></div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+													    echo $valueRatingComponent == 1 ? '<span>1</span> &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) : '<span>' . $valueRatingComponent . '</span>&nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']);
+													} else {
 
-                                                <?php
-                                                endforeach;
-                                            endif; ?>
+													    echo '<span></span>&nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']);
+													} ?>
 
-                                        </ul>
-                                    </div>
+                                                    <div class="rating-<?= $dataRatingComponent['id'] ?>"></div>
+                                                </div>
+                                            </div>
+
+                                        <?php
+                                        endforeach;
+                                    endif; ?>
+
                                 </div>
                             </div>
                         </div>
@@ -464,7 +416,9 @@ $urlMyReviewDetail = [
                                                             </div>
                                                         </div>
 
-                                                        <?= Html::checkbox('ImageReviewDelete[]', false, ['label' => '<i class="aicon aicon-icon-trash"></i>', 'value' => $modelUserPostMainChild['id']]) ?>
+                                                        <div class="checkbox">
+                                                        	<?= Html::checkbox('ImageReviewDelete[]', false, ['class' => 'report-subject', 'label' => '<i class="aicon aicon-icon-trash"></i>', 'value' => $modelUserPostMainChild['id']]) ?>
+                                                    	</div>
 
                                                     </li>
 
@@ -517,7 +471,7 @@ $urlMyReviewDetail = [
     </div>
 </div>
 
-<ul id="container-temp-uploaded-photo" style="display:none">
+<ul id="container-temp-uploaded-photo" class="d-none">
     <li class="work-item gallery-photo-review">
         <div class="gallery-item review-post-gallery">
             <div class="gallery-image">
@@ -534,6 +488,7 @@ $urlMyReviewDetail = [
 $jscript = '
     var prevReview;
     var cancelWrite;
+    var isSetOverall;
 
     function getBusinessRating(business_id) {
 
@@ -561,7 +516,7 @@ $jscript = '
 
         $(".rating-component-id").each(function() {
 
-            var rating = parseInt($(this).parent().find("#rating-" + $(this).val() + "").val());
+            var rating = parseInt($(this).parent().find("#rating-" + $(this).val()).rateYo("rating"));
 
             overall += rating;
         });
@@ -570,11 +525,11 @@ $jscript = '
 
         if (!isNaN(overall)) {
 
-            $("#overall-rating").rating("update", overall);
-            $(".rating-overall").children("span").html(parseFloat(overall.toFixed(1)));
+            overallRating.rateYo("rating", overall);
+            $(".rating-overall").html(parseFloat(overall.toFixed(1)));
         } else {
 
-            $(".rating-overall").children("span").html("0");
+            $(".rating-overall").html("0");
         }
     }
 
@@ -623,6 +578,27 @@ $jscript = '
 
     ratingColor($(".my-rating"), "a");
 
+    $(".star-rating-review").rateYo({
+        rating: $(".star-rating-review").data("rating"),
+        starWidth: "18px",
+        readOnly: true,
+        "starSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>"
+    });
+
+    var overallRating = $(".overall-rating").rateYo({
+        fullStar: true,
+        starWidth: "25px",
+        "starSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>"
+    });
+
+    $(".component-rating").rateYo({
+        fullStar: true,
+        starWidth: "25px",
+        "starSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>"
+    });
+
+    var priorRating = overallRating.rateYo("rating");
+
     readmoreText({
         element: $(".my-review-description"),
         minChars: 500,
@@ -633,7 +609,58 @@ $jscript = '
 
     $(".total-review").html("' . (!empty($modelUserPostMain) ? 1 : 0) . '");
 
+    $(".overall-rating").rateYo().on("rateyo.change", function(e, data) {
+
+        isSetOverall = false;
+    });
+
+    $(".overall-rating").rateYo().on("rateyo.set", function(e, data) {
+
+        if (!isSetOverall) {
+
+            $(".rating-overall").html(parseFloat(data.rating));
+
+            $(".rating-component-id").each(function() {
+
+                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", data.rating);
+                $(this).parent().find("#post-review-rating-" + $(this).val()).val(data.rating);
+            });
+        }
+    });
+
+    $(".rating-component-id").each(function() {
+
+        var thisObj = $(this);
+
+        $(this).data("prior", thisObj.parent().find("#rating-" + thisObj.val()).rateYo("rating"));
+
+        thisObj.parent().find("#rating-" + thisObj.val()).rateYo().on("rateyo.change", function(e, data) {
+
+            isSetOverall = true;
+        });
+
+        thisObj.parent().find("#rating-" + thisObj.val()).rateYo().on("rateyo.set", function(e, data) {
+
+            if (data.rating == 0) {
+
+                thisObj.parent().siblings(".business-rating-components").children("span").html("");
+            } else {
+
+                thisObj.parent().siblings(".business-rating-components").children("span").html(data.rating);
+            }
+
+            if (isSetOverall) {
+
+                $("#post-review-rating-" + thisObj.val()).val(data.rating);
+
+                setOverall();
+            }
+        });
+    });
+
     $("#close-review-container > a, #cancel-write-review").on("click", function(event) {
+
+        isSetOverall = false;
 
         $("#write-review-container, #close-review-container").fadeOut(100, function() {
 
@@ -654,31 +681,29 @@ $jscript = '
 
         if (tempOverallRating == "") {
 
-            $("#overall-rating").rating("reset");
-            $(".rating-overall").children("span").html(parseFloat(parseFloat($("#overall-rating").val()).toFixed(1)));
+            overallRating.rateYo("rating", priorRating);
+            $(".rating-overall").html(parseFloat(parseFloat(overallRating.rateYo("rating")).toFixed(1)));
         } else {
 
-            $("#overall-rating").rating("update", tempOverallRating);
-            $(".rating-overall").children("span").html(parseFloat(parseFloat(tempOverallRating).toFixed(1)));
+            overallRating.rateYo("rating", tempOverallRating);
+            $(".rating-overall").html(parseFloat(parseFloat(tempOverallRating).toFixed(1)));
         }
 
         $(".rating-component-id").each(function() {
 
             if ($(".temp-rating-" + $(this).val()).val() == "") {
 
-                $(this).parent().find("#rating-" + $(this).val() + "").rating("reset");
-                $("#post-review-rating-" + $(this).val() + "").val($("#rating-" + $(this).val() + "").val());
+                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(this).data("prior"));
+                $("#post-review-rating-" + $(this).val()).val($("#rating-" + $(this).val()).val());
             } else {
 
-                $(this).parent().find("#rating-" + $(this).val() + "").rating("update", $(".temp-rating-" + $(this).val()).val());
-                $("#post-review-rating-" + $(this).val() + "").val($(".temp-rating-" + $(this).val()).val());
+                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(".temp-rating-" + $(this).val()).val());
+                $("#post-review-rating-" + $(this).val()).val($(".temp-rating-" + $(this).val()).val());
             }
         });
 
         $("#post-review-text").val(prevReview);
         $("#post-photo-input").val("");
-
-        $(".facebook-review-share-trigger").prop("checked", false).trigger("change");
 
         return false;
     });
@@ -789,12 +814,12 @@ $jscript = '
                         });
 
                         $(".temp-overall-rating").val(0);
-                        $("#overall-rating").rating("clear");
+                        overallRating.rateYo("rating", 0);
 
                         $(".rating-component-id").each(function() {
 
                             $(".temp-rating-" + $(this).val()).val(0);
-                            $(this).parent().find("#rating-" + $(this).val()).rating("clear");
+                            $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", 0);
                             $("#post-review-rating-" + $(this).val() + "").val($("#rating-" + $(this).val()).val());
                         });
 
@@ -838,18 +863,6 @@ $jscript = '
         return false;
     });
 
-    $("#overall-rating").on("change", function() {
-
-        var thisObj = $(this);
-
-        $(".rating-component-id").each(function() {
-
-            $(this).parent().find("#rating-" + $(this).val() + "").rating("update", thisObj.val());
-
-            $(this).parent().find("#post-review-rating-" + $(this).val() + "").val(thisObj.val());
-        });
-    });
-
     $("form#review-form").on("beforeSubmit", function(event) {
 
         var thisObj = $(this);
@@ -877,7 +890,8 @@ $jscript = '
                         $(".total-review").html(parseInt($(".total-review").html()) + 1);
                     }
 
-                    $(".my-rating").find("a").html(parseFloat($(".rating-overall").text()).toFixed(1));
+                    $(".my-rating").find("span").html(parseFloat($(".rating-overall").text()).toFixed(1));
+                    $(".star-rating-review").rateYo("rating", $(".rating-overall").text());
 
                     $(".my-review-user-name").html(response.user);
                     $(".my-review-created").html(response.userCreated);
@@ -916,10 +930,8 @@ $jscript = '
                         cloneImageFormContainer.find(".review-post-gallery").addClass("mb-10");
                         cloneImageFormContainer.attr("id", "image-" + userPostMainPhoto.id);
                         cloneImageFormContainer.find(".review-post-gallery").find(".work-image").html("<img class=\"img-component\" src=\"" + userPostMainPhoto.image + "\" title=\"\">");
-                        cloneImageFormContainer.append("<label><input class=\"new-image-" + userPostMainPhoto.id + "\" type=\"checkbox\" name=\"ImageReviewDelete[]\" value=\"" + userPostMainPhoto.id + "\"> <i class=\"aicon aicon-icon-trash\"></i></label>");
+                        cloneImageFormContainer.append("<div class=\"checkbox\"><label><input class=\"new-image-" + userPostMainPhoto.id + "\" type=\"checkbox\" name=\"ImageReviewDelete[]\" value=\"" + userPostMainPhoto.id + "\"><span class=\"checkbox-decorator\"><span class=\"check\"></span><div class=\"ripple-container\"></div></span> <i class=\"aicon aicon-icon-trash\"></i></label></div>");
                         cloneImageFormContainer.appendTo($("#form-review-uploaded-photo"));
-
-                        initCustomicheck($(".new-image-" + userPostMainPhoto.id));
                     });
 
                     var countLi = $("#review-uploaded-photo > li").length;
@@ -928,17 +940,17 @@ $jscript = '
 
                         if (i > 4) {
 
-                            $(this).addClass("hidden");
+                            $(this).addClass("d-block");
                         } else {
 
-                            $(this).removeClass("hidden");
+                            $(this).removeClass("d-block");
                         }
 
                         var hiddenPhotos = countLi - (i + 1);
 
                         if (i == 4 && hiddenPhotos != 0) {
 
-                            $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image hidden\" href=\"" + $(this).find("a.show-image").attr("href") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
+                            $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none\" href=\"" + $(this).find("a.show-image").attr("href") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
                             $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").append("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle\" href=\"" + response.shareUrl.notAbsolute + "\">+" + hiddenPhotos + "</a>");
                         } else {
 
@@ -958,8 +970,6 @@ $jscript = '
                     });
 
                     $(".temp-overall-rating").val(tempOverall / parseInt($(".rating-component-id").length));
-
-                    $("#my-overall-rating").rating("update", $(".temp-overall-rating").val());
 
                     getBusinessRating($("#business_id").val());
                     getUserPhoto($("#business_id").val());
@@ -1107,18 +1117,6 @@ $jscript = '
                 }
             });
         }
-    });
-
-    $(".rating-component-id").each(function() {
-
-        var thisObj = $(this);
-
-        thisObj.parent().find("#rating-" + thisObj.val() + "").on("change", function() {
-
-            $("#post-review-rating-" + thisObj.val() + "").val($(this).val());
-
-            setOverall();
-        });
     });
 
     $(".review-section").on("click", ".user-likes-review-trigger", function() {
