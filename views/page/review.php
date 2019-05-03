@@ -59,7 +59,6 @@ $this->registerMetaTag([
 <div class="main bg-main">
 	<section>
         <div class="detail review">
-
         	<div class="row">
                 <div class="col-12">
 
@@ -280,7 +279,6 @@ $this->registerMetaTag([
 
                 </div>
             </div>
-
         </div>
     </section>
 </div>

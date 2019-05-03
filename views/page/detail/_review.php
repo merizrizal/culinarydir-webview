@@ -32,8 +32,8 @@ $urlMyReviewDetail = [
             		<div class="col-6">
                     	<h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? Yii::t('app', 'Your Review') : Yii::t('app', 'Write a Review') ?></h4>
                 	</div>
-                	<div class="col-6 text-right" id="close-review-container">
-                		<?= Html::a(Yii::t('app', 'Cancel')) ?>
+                	<div class="col-6 text-right text-danger" id="close-review-container">
+                		<a class="text-danger" href=""><?= Yii::t('app', 'Cancel') ?></a>
             		</div>
                 </div>
             </div>
@@ -200,7 +200,7 @@ $urlMyReviewDetail = [
 
                                             </li>
                                             <li class="list-inline-item">
-                                            	<a class="btn btn-raised btn-small btn-round dropdown-toogle d-block d-sm-none" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
+                                            	<a class="btn btn-raised btn-small btn-round d-block d-sm-none" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                                                     <i class="aicon aicon-more"></i>
                                                 </a>
                                                 <div class="dropdown-menu pull-right review-btn">
@@ -597,8 +597,6 @@ $jscript = '
         "starSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/><path d=\"M0 0h24v24H0z\" fill=\"none\"/></svg>"
     });
 
-    var priorRating = overallRating.rateYo("rating");
-
     readmoreText({
         element: $(".my-review-description"),
         minChars: 500,
@@ -631,8 +629,6 @@ $jscript = '
     $(".rating-component-id").each(function() {
 
         var thisObj = $(this);
-
-        $(this).data("prior", thisObj.parent().find("#rating-" + thisObj.val()).rateYo("rating"));
 
         thisObj.parent().find("#rating-" + thisObj.val()).rateYo().on("rateyo.change", function(e, data) {
 
@@ -681,7 +677,7 @@ $jscript = '
 
         if (tempOverallRating == "") {
 
-            overallRating.rateYo("rating", priorRating);
+            overallRating.rateYo("rating", 0);
             $(".rating-overall").html(parseFloat(parseFloat(overallRating.rateYo("rating")).toFixed(1)));
         } else {
 
@@ -693,7 +689,7 @@ $jscript = '
 
             if ($(".temp-rating-" + $(this).val()).val() == "") {
 
-                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(this).data("prior"));
+                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", 0);
                 $("#post-review-rating-" + $(this).val()).val($("#rating-" + $(this).val()).val());
             } else {
 
@@ -756,7 +752,7 @@ $jscript = '
             type: "Review"
         });
 
-        $(this).parent().parent().siblings("a").dropdown("toggle");
+        $(this).parent().siblings("a").dropdown("toggle");
 
         return false;
     });
@@ -775,7 +771,16 @@ $jscript = '
 
         cancelWrite = false;
 
-        $(this).parent().parent().siblings("a").dropdown("toggle");
+        $(this).parent().siblings("a").dropdown("toggle");
+
+        isSetOverall = false;
+        overallRating.rateYo("rating", $(".temp-overall-rating").val());
+
+        $(".rating-component-id").each(function() {
+
+            $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(".temp-rating-" + $(this).val()).val());
+            $("#post-review-rating-" + $(this).val()).val($(".temp-rating-" + $(this).val()).val());
+        });
 
         return false;
     });
@@ -858,7 +863,7 @@ $jscript = '
 
         $("#modal-confirmation").modal("show");
 
-        $(this).parent().parent().siblings("a").dropdown("toggle");
+        $(this).parent().siblings("a").dropdown("toggle");
 
         return false;
     });
@@ -867,148 +872,154 @@ $jscript = '
 
         var thisObj = $(this);
 
-        $("#title-write-review").siblings(".overlay").show();
-        $("#title-write-review").siblings(".loading-img").show();
+        if (overallRating.rateYo("rating") == 0) {
 
-        var formData = new FormData(this);
+            messageResponse("aicon aicon-icon-info", "Gagal Submit Review", "Harap mengisi rating terlebih dahulu", "danger");
+        } else {
 
-        $.ajax({
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: "POST",
-            data: formData,
-            url: thisObj.attr("action"),
-            success: function(response) {
+            $("#title-write-review").siblings(".overlay").show();
+            $("#title-write-review").siblings(".loading-img").show();
 
-                $("#post-photo-input").val("");
+            var formData = new FormData(this);
 
-                if (response.success) {
+            $.ajax({
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: "POST",
+                data: formData,
+                url: thisObj.attr("action"),
+                success: function(response) {
 
-                    if (!response.updated) {
+                    $("#post-photo-input").val("");
 
-                        $(".total-review").html(parseInt($(".total-review").html()) + 1);
+                    if (response.success) {
+
+                        if (!response.updated) {
+
+                            $(".total-review").html(parseInt($(".total-review").html()) + 1);
+                        }
+
+                        $(".my-rating").find("span").html(parseFloat($(".rating-overall").text()).toFixed(1));
+                        $(".star-rating-review").rateYo("rating", $(".rating-overall").text());
+
+                        $(".my-review-user-name").html(response.user);
+                        $(".my-review-created").html(response.userCreated);
+                        $(".my-review-description").html(response.userPostMain.text);
+
+                        $(".share-my-review-trigger").attr("href", response.shareUrl.absolute);
+                        $(".delete-my-review-trigger").attr("href", response.deleteUrlReview);
+
+                        readmoreText({
+                            element: $(".my-review-description"),
+                            minChars: 500,
+                            ellipsesText: " . . . ",
+                            moreText: "See more",
+                            lessText: "See less",
+                        });
+
+                        $.each(response.deletedPhotoId, function(i, deletedPhotoId) {
+
+                            $("#review-uploaded-photo").find("li#image-" + deletedPhotoId).remove();
+                            $("#form-review-uploaded-photo").find("li#image-" + deletedPhotoId).remove();
+
+                            $(".my-total-photos-review").html(parseInt($(".my-total-photos-review").html()) - 1);
+                        });
+
+                        $.each(response.userPostMainPhoto, function(i, userPostMainPhoto) {
+
+                            var cloneImageReviewContainer = $("#container-temp-uploaded-photo").find("li").clone();
+                            var cloneImageFormContainer = $("#container-temp-uploaded-photo").find("li").clone();
+
+                            cloneImageReviewContainer.attr("id", "image-" + userPostMainPhoto.id);
+                            cloneImageReviewContainer.find(".review-post-gallery").find(".work-image").html("<img class=\"img-component\" src=\"" + userPostMainPhoto.image + "\" title=\"\">");
+                            cloneImageReviewContainer.find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image\" href=\"" + userPostMainPhoto.image.replace("&w=72&h=72", "") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
+                            cloneImageReviewContainer.appendTo($("#review-uploaded-photo"));
+
+                            cloneImageFormContainer.addClass("text-center");
+                            cloneImageFormContainer.find(".review-post-gallery").addClass("mb-10");
+                            cloneImageFormContainer.attr("id", "image-" + userPostMainPhoto.id);
+                            cloneImageFormContainer.find(".review-post-gallery").find(".work-image").html("<img class=\"img-component\" src=\"" + userPostMainPhoto.image + "\" title=\"\">");
+                            cloneImageFormContainer.append("<div class=\"checkbox\"><label><input class=\"new-image-" + userPostMainPhoto.id + "\" type=\"checkbox\" name=\"ImageReviewDelete[]\" value=\"" + userPostMainPhoto.id + "\"><span class=\"checkbox-decorator\"><span class=\"check\"></span><div class=\"ripple-container\"></div></span> <i class=\"aicon aicon-icon-trash\"></i></label></div>");
+                            cloneImageFormContainer.appendTo($("#form-review-uploaded-photo"));
+                        });
+
+                        var countLi = $("#review-uploaded-photo > li").length;
+
+                        $("#review-uploaded-photo > li").each(function (i) {
+
+                            if (i > 4) {
+
+                                $(this).addClass("d-block");
+                            } else {
+
+                                $(this).removeClass("d-block");
+                            }
+
+                            var hiddenPhotos = countLi - (i + 1);
+
+                            if (i == 4 && hiddenPhotos != 0) {
+
+                                $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none\" href=\"" + $(this).find("a.show-image").attr("href") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
+                                $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").append("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle\" href=\"" + response.shareUrl.notAbsolute + "\">+" + hiddenPhotos + "</a>");
+                            } else {
+
+                                $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image\" href=\"" + $(this).find("a.show-image").attr("href") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
+                            }
+                        });
+
+                        var tempOverall = 0;
+
+                        $(".rating-component-id").each(function() {
+
+                            var tempRating = $("#post-review-rating-" + $(this).val() + "").val();
+
+                            tempOverall += parseInt(tempRating);
+
+                            $(".temp-rating-" + $(this).val()).val(tempRating);
+                        });
+
+                        $(".temp-overall-rating").val(tempOverall / parseInt($(".rating-component-id").length));
+
+                        getBusinessRating($("#business_id").val());
+                        getUserPhoto($("#business_id").val());
+                        initMagnificPopupMyReview();
+
+                        ratingColor($(".my-rating"), "a");
+
+                        $("#edit-review-container").find(".my-total-photos-review").html(parseInt($("#edit-review-container").find(".my-total-photos-review").html()) + parseInt(response.userPostMainPhoto.length));
+                        $("#edit-review-container").find(".my-total-comments-review").html(response.commentCount);
+
+                        $(".my-comment-section").html(response.userPostComments);
+
+                        $("#edit-review-container").find(".my-user-post-main-id").val(response.userPostMain.id);
+
+                        $("#title-write-review").find("h4").html("' . Yii::t('app', 'Your Review') . '");
+
+                        $("#write-review-container, #close-review-container").fadeOut(100, function() {
+
+                            $("#edit-review-container").show();
+                            $("html, body").animate({ scrollTop: $("#title-write-review").offset().top }, "slow");
+                        });
+
+                        messageResponse(response.icon, response.title, response.message, response.type);
+                    } else {
+
+                        messageResponse(response.icon, response.title, response.message, response.type);
                     }
 
-                    $(".my-rating").find("span").html(parseFloat($(".rating-overall").text()).toFixed(1));
-                    $(".star-rating-review").rateYo("rating", $(".rating-overall").text());
+                    $("#title-write-review").siblings(".overlay").hide();
+                    $("#title-write-review").siblings(".loading-img").hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
 
-                    $(".my-review-user-name").html(response.user);
-                    $(".my-review-created").html(response.userCreated);
-                    $(".my-review-description").html(response.userPostMain.text);
+                    messageResponse("aicon aicon-icon-info", xhr.status, xhr.responseText, "danger");
 
-                    $(".share-my-review-trigger").attr("href", response.shareUrl.absolute);
-                    $(".delete-my-review-trigger").attr("href", response.deleteUrlReview);
-
-                    readmoreText({
-                        element: $(".my-review-description"),
-                        minChars: 500,
-                        ellipsesText: " . . . ",
-                        moreText: "See more",
-                        lessText: "See less",
-                    });
-
-                    $.each(response.deletedPhotoId, function(i, deletedPhotoId) {
-
-                        $("#review-uploaded-photo").find("li#image-" + deletedPhotoId).remove();
-                        $("#form-review-uploaded-photo").find("li#image-" + deletedPhotoId).remove();
-
-                        $(".my-total-photos-review").html(parseInt($(".my-total-photos-review").html()) - 1);
-                    });
-
-                    $.each(response.userPostMainPhoto, function(i, userPostMainPhoto) {
-
-                        var cloneImageReviewContainer = $("#container-temp-uploaded-photo").find("li").clone();
-                        var cloneImageFormContainer = $("#container-temp-uploaded-photo").find("li").clone();
-
-                        cloneImageReviewContainer.attr("id", "image-" + userPostMainPhoto.id);
-                        cloneImageReviewContainer.find(".review-post-gallery").find(".work-image").html("<img class=\"img-component\" src=\"" + userPostMainPhoto.image + "\" title=\"\">");
-                        cloneImageReviewContainer.find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image\" href=\"" + userPostMainPhoto.image.replace("&w=72&h=72", "") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
-                        cloneImageReviewContainer.appendTo($("#review-uploaded-photo"));
-
-                        cloneImageFormContainer.addClass("text-center");
-                        cloneImageFormContainer.find(".review-post-gallery").addClass("mb-10");
-                        cloneImageFormContainer.attr("id", "image-" + userPostMainPhoto.id);
-                        cloneImageFormContainer.find(".review-post-gallery").find(".work-image").html("<img class=\"img-component\" src=\"" + userPostMainPhoto.image + "\" title=\"\">");
-                        cloneImageFormContainer.append("<div class=\"checkbox\"><label><input class=\"new-image-" + userPostMainPhoto.id + "\" type=\"checkbox\" name=\"ImageReviewDelete[]\" value=\"" + userPostMainPhoto.id + "\"><span class=\"checkbox-decorator\"><span class=\"check\"></span><div class=\"ripple-container\"></div></span> <i class=\"aicon aicon-icon-trash\"></i></label></div>");
-                        cloneImageFormContainer.appendTo($("#form-review-uploaded-photo"));
-                    });
-
-                    var countLi = $("#review-uploaded-photo > li").length;
-
-                    $("#review-uploaded-photo > li").each(function (i) {
-
-                        if (i > 4) {
-
-                            $(this).addClass("d-block");
-                        } else {
-
-                            $(this).removeClass("d-block");
-                        }
-
-                        var hiddenPhotos = countLi - (i + 1);
-
-                        if (i == 4 && hiddenPhotos != 0) {
-
-                            $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none\" href=\"" + $(this).find("a.show-image").attr("href") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
-                            $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").append("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle\" href=\"" + response.shareUrl.notAbsolute + "\">+" + hiddenPhotos + "</a>");
-                        } else {
-
-                            $(this).find(".review-post-gallery").find(".work-caption").find(".work-descr").html("<a class=\"btn btn-raised btn-danger btn-small btn-xs btn-circle show-image\" href=\"" + $(this).find("a.show-image").attr("href") + "\"><i class=\"aicon aicon-zoomin\"></i></a>");
-                        }
-                    });
-
-                    var tempOverall = 0;
-
-                    $(".rating-component-id").each(function() {
-
-                        var tempRating = $("#post-review-rating-" + $(this).val() + "").val();
-
-                        tempOverall += parseInt(tempRating);
-
-                        $(".temp-rating-" + $(this).val()).val(tempRating);
-                    });
-
-                    $(".temp-overall-rating").val(tempOverall / parseInt($(".rating-component-id").length));
-
-                    getBusinessRating($("#business_id").val());
-                    getUserPhoto($("#business_id").val());
-                    initMagnificPopupMyReview();
-
-                    ratingColor($(".my-rating"), "a");
-
-                    $("#edit-review-container").find(".my-total-photos-review").html(parseInt($("#edit-review-container").find(".my-total-photos-review").html()) + parseInt(response.userPostMainPhoto.length));
-                    $("#edit-review-container").find(".my-total-comments-review").html(response.commentCount);
-
-                    $(".my-comment-section").html(response.userPostComments);
-
-                    $("#edit-review-container").find(".my-user-post-main-id").val(response.userPostMain.id);
-
-                    $("#title-write-review").find("h4").html("' . Yii::t('app', 'Your Review') . '");
-
-                    $("#write-review-container, #close-review-container").fadeOut(100, function() {
-
-                        $("#edit-review-container").show();
-                        $("html, body").animate({ scrollTop: $("#title-write-review").offset().top }, "slow");
-                    });
-
-                    messageResponse(response.icon, response.title, response.message, response.type);
-                } else {
-
-                    messageResponse(response.icon, response.title, response.message, response.type);
+                    $("#title-write-review").siblings(".overlay").hide();
+                    $("#title-write-review").siblings(".loading-img").hide();
                 }
-
-                $("#title-write-review").siblings(".overlay").hide();
-                $("#title-write-review").siblings(".loading-img").hide();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-
-                messageResponse("aicon aicon-icon-info", xhr.status, xhr.responseText, "danger");
-
-                $("#title-write-review").siblings(".overlay").hide();
-                $("#title-write-review").siblings(".loading-img").hide();
-            }
-        });
+            });
+        }
 
         return false;
     });

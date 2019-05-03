@@ -27,8 +27,14 @@ use yii\widgets\ActiveForm;
                 echo Html::hiddenInput('business_id', $modelBusiness['id'], ['id' => 'business_id']); ?>
 
                 <div class="box-title" id="title-post-photo">
-                    <h4 class="mt-0 mb-0 inline-block"><?= Yii::t('app', 'Add Photo') ?></h4>
-                    <span class="pull-right inline-block" id="close-post-photo-container"><a class="text-main" href=""><i class="fa fa-close"></i><?= Yii::t('app', 'Cancel') ?></a></span>
+                	<div class="row">
+                		<div class="col-6">
+                    		<h4 class="mt-0 mb-0"><?= Yii::t('app', 'Add Photo') ?></h4>
+                    	</div>
+                		<div class="col-6 text-right">
+                    		<span id="close-post-photo-container"><a class="text-danger" href=""><?= Yii::t('app', 'Cancel') ?></a></span>
+            			</div>
+                    </div>
                 </div>
 
                 <div class="box-content">
@@ -53,7 +59,7 @@ use yii\widgets\ActiveForm;
                             ]); ?>
 
                             <div class="form-group">
-                                <?= Html::submitButton('<i class="aicon aicon-share"></i> Upload ' . Yii::t('app', 'Photo'), ['id' => 'submit-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
+                                <?= Html::submitButton('<i class="aicon aicon-share"></i> Upload ' . Yii::t('app', 'Photo'), ['id' => 'submit-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>&nbsp;
                                 <?= Html::a('<i class="aicon aicon-cross"></i> ' . Yii::t('app', 'Cancel'), null, ['id' => 'cancel-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
                             </div>
                         </div>
@@ -118,8 +124,6 @@ $jscript = '
         $("#post-photo-container").find(".form-group").removeClass("has-success");
         $("#post-photo-container").find(".form-group").removeClass("has-error");
         $("#post-photo-container").find(".form-group").find(".help-block").html("");
-
-        $(".facebook-photo-share-trigger").prop("checked", false).trigger("change");
 
         return false;
     });

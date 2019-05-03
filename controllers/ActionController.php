@@ -443,12 +443,14 @@ class ActionController extends base\BaseController
                 ->setSubject(Yii::$app->name . ' Promo Code')
                 ->send();
 
+                $result['success'] = true;
                 $result['icon'] = 'aicon aicon-icon-tick-in-circle';
                 $result['title'] = 'Claim Promo Berhasil';
                 $result['message'] = 'Harap periksa email anda untuk mendapatkan kode promo.';
                 $result['type'] = 'success';
             } else {
 
+                $result['success'] = false;
                 $result['icon'] = 'aicon aicon-icon-info';
                 $result['title'] = 'Claim Promo Gagal';
                 $result['message'] = 'Anda gagal mengklaim promo ini.';
@@ -456,6 +458,7 @@ class ActionController extends base\BaseController
             }
         } else {
 
+            $result['success'] = false;
             $result['icon'] = 'aicon aicon-icon-info';
             $result['title'] = 'Claim Promo Gagal';
             $result['message'] = 'Promo sudah habis.';

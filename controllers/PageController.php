@@ -450,7 +450,7 @@ class PageController extends base\BaseController
             ->joinWith([
                 'transactionItems' => function ($query) {
 
-                    $query->orderBy(['transaction_item.id' => SORT_ASC]);
+                    $query->orderBy(['transaction_item.created_at' => SORT_ASC]);
                 },
                 'business'
             ])
@@ -494,17 +494,45 @@ class PageController extends base\BaseController
     public function actionDetailPromo($id)
     {
         $modelPromo = Promo::find()
-            ->joinWith(['userPromoItems'])
-            ->andWhere(['id' => $id])
-            ->asArray()->one();
+        ->joinWith(['userPromoItems'])
+        ->andWhere(['id' => $id])
+        ->asArray()->one();
 
         if (empty($modelPromo)) {
 
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
+        $countUserClaimed = count($modelPromo['userPromoItems']);
+        $claimInfo = \Yii::t('app', '{userClaimed} user have claimed this promo', ['userClaimed' => $countUserClaimed]);
+
+        if ($countUserClaimed == 0) {
+
+            $claimInfo = \Yii::t('app', 'No user has claimed this promo yet');
+        }
+
+        if (!empty(\Yii::$app->user->getIdentity()->id)) {
+
+            foreach ($modelPromo['userPromoItems'] as $dataUserPromoItem) {
+
+                if ($dataUserPromoItem['user_id'] == \Yii::$app->user->getIdentity()->id) {
+
+                    $claimInfo = \Yii::t('app', 'You and {userClaimed} other user have claimed this promo', ['userClaimed' => $countUserClaimed - 1]);
+
+                    if (($countUserClaimed - 1) == 0) {
+
+                        $claimInfo = \Yii::t('app', 'You have claimed this promo');
+                    }
+
+                    break;
+                }
+            }
+        }
+
         return $this->render('detail_promo', [
-           'modelPromo' => $modelPromo
+            'modelPromo' => $modelPromo,
+            'claimInfo' => $claimInfo,
+            'countUserClaimed' => $countUserClaimed
         ]);
     }
 }

@@ -63,22 +63,19 @@ $this->registerMetaTag([
     <section>
         <div class="detail place-detail">
             <div class="row mb-20">
-                <div class="col-xs-12">
-
+                <div class="col-12">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <div class="view">
-                                <!-- Nav tabs -->
+                        <div class="col-12">
+                            <div class="card view">
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="nav-item active">
-                                        <a class="nav-link" href="#photo" aria-controls="photo" role="tab" data-toggle="tab"><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Photo') ?></a>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#photo" aria-controls="photo" role="tab" data-toggle="tab"><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Photo') ?></a>
                                     </li>
                                 </ul>
-
-                                <div class="tab-content box bg-white">
-                                    <div role="tabpanel" class="tab-pane fade in active" id="photo">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="photo" role="tabpanel">
                                         <div class="row">
-                                            <div class="col-xs-12 text-center">
+                                            <div class="col-12 text-center">
                                             	<div class="business-promo-image-container owl-carousel owl-theme">
                                                     <?= Html::img(null, ['class' => 'owl-lazy', 'data-src' => Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image']]); ?>
                                                 </div>
@@ -91,11 +88,11 @@ $this->registerMetaTag([
                     </div>
 
                     <div class="row mt-20">
-                        <div class="col-xs-12">
-                            <div class="box bg-white">
+                        <div class="col-12">
+                            <div class="card box">
                                 <div class="box-title">
                                     <div class="row">
-                                        <div class="col-xs-12">
+                                        <div class="col-12">
                                             <h4 class="m-0"><?= $modelBusinessPromo['title']; ?></h4>
                                         </div>
                                     </div>
@@ -111,13 +108,13 @@ $this->registerMetaTag([
 
                                 <div class="box-content">
                                     <div class="row">
-                                        <div class="col-xs-12">
-                                            <h4 class="visible-tab m-0"><small><?= $promoRange ?></small></h4>
-                                            <small class="visible-xs"><?= $promoRange ?></small>
+                                        <div class="col-12">
+                                            <h4 class="m-0 d-none d-sm-block d-md-none"><small><?= $promoRange ?></small></h4>
+                                            <small class="d-block d-sm-none"><?= $promoRange ?></small>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-12">
+                                        <div class="col-12">
                                             <?= $modelBusinessPromo['description'] ?>
                                         </div>
                                     </div>
@@ -125,13 +122,10 @@ $this->registerMetaTag([
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </section>
-
 </div>
 
 <?php
