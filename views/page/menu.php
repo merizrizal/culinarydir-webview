@@ -2,8 +2,7 @@
 
 use yii\web\View;
 use yii\helpers\Html;
-use kartik\touchspin\TouchSpin;
-use frontend\components\GrowlCustom;
+use webview\components\GrowlCustom;
 use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
@@ -36,7 +35,7 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
                     					<div class="nav-menu view">
                         					<ul class="nav nav-tabs" role="tablist">
                         						<li class="nav-item">
-                        							<a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        							<a class="nav-link active dropdown-toggle m-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                                         <?= Yii::t('app', 'Category') ?>
                                                     </a>
 
@@ -145,6 +144,14 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
                                                                 'class' => 'form-control transaction-item-notes',
                                                                 'placeholder' => Yii::t('app', 'Note'),
                                                                 'data-url' => Yii::$app->urlManager->createUrl(['order-action/save-notes'])
+                                                            ]);
+
+                                                            $amountField = Html::input('number', 'transaction_item_amount', $transactionItemAmount, [
+                                                                'class' => 'transaction-item-amount',
+                                                                'data-url' => Yii::$app->urlManager->createUrl(['order-action/change-qty']),
+                                                                'style' => 'width: 100%',
+                                                                'min' => 1,
+                                                                'max' => 50,
                                                             ]); ?>
 
                                                             <div class="business-menu-group">
@@ -185,28 +192,11 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
                                                                     			<div class="loading-text" style="display: none;"></div>
                                                                     			<?= $notesField ?>
                                                                     		</div>
-                                                                        	<div class="col-sm-3">
+                                                                        	<div class="col-sm-3 mt-10">
                                                                     			<div class="overlay" style="display: none;"></div>
                                                                     			<div class="loading-text" style="display: none;"></div>
 
-                                                                                <?= TouchSpin::widget([
-                                                                                    'name' => 'transaction_item_amount',
-                                                                                    'value' => $transactionItemAmount,
-                                                                                    'options' => [
-                                                                                        'class' => 'transaction-item-amount text-right input-sm',
-                                                                                        'data-url' => Yii::$app->urlManager->createUrl(['order-action/change-qty'])
-                                                                                    ],
-                                                                                    'pluginOptions' => [
-                                                                                        'style' => 'width: 30%',
-                                                                                        'min' => 1,
-                                                                                        'max' => 50,
-                                                                                        'step' => 1,
-                                                                                        'buttonup_txt' => '<i class="glyphicon glyphicon-plus"></i>',
-                                                                                        'buttondown_txt' => '<i class="glyphicon glyphicon-minus"></i>',
-                                                                                        'buttondown_class' => "btn btn-default text-center",
-                                                                                        'buttonup_class' => "btn btn-default text-center"
-                                                                                    ],
-                                                                                ]); ?>
+                                                                    			<?= $amountField ?>
 
                                                                     		</div>
                                                                         </div>
@@ -256,24 +246,7 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
                                                                     			<div class="overlay" style="display: none;"></div>
                                                                     			<div class="loading-text" style="display: none;"></div>
 
-                                                                                <?= TouchSpin::widget([
-                                                                                    'name' => 'transaction_item_amount',
-                                                                                    'value' => $transactionItemAmount,
-                                                                                    'options' => [
-                                                                                        'class' => 'transaction-item-amount text-right input-sm',
-                                                                                        'data-url' => Yii::$app->urlManager->createUrl(['order-action/change-qty'])
-                                                                                    ],
-                                                                                    'pluginOptions' => [
-                                                                                        'style' => 'width: 30%',
-                                                                                        'min' => 1,
-                                                                                        'max' => 50,
-                                                                                        'step' => 1,
-                                                                                        'buttonup_txt' => '<i class="glyphicon glyphicon-plus"></i>',
-                                                                                        'buttondown_txt' => '<i class="glyphicon glyphicon-minus"></i>',
-                                                                                        'buttondown_class' => "btn btn-default text-center",
-                                                                                        'buttonup_class' => "btn btn-default text-center"
-                                                                                    ],
-                                                                                ]); ?>
+                                                                                <?= $amountField ?>
 
                                                                     		</div>
                                                                         </div>
@@ -338,8 +311,6 @@ GrowlCustom::widget();
 
 $this->registerJsFile(Yii::$app->homeUrl . '/lib/jquery-currency/jquery.currency.js', ['depends' => 'yii\web\YiiAsset']);
 $this->registerJs(Snackbar::messageResponse() . GrowlCustom::stickyResponse(), View::POS_HEAD);
-
-$totalPrice = !empty($modelTransactionSession['total_price']) ? Yii::$app->formatter->asCurrency($modelTransactionSession['total_price']) : '';
 
 $jscript .= '
     $(window).scroll(function() {
@@ -493,8 +464,8 @@ $jscript .= '
             },
             beforeSend: function(xhr) {
 
-                thisObj.siblings(".overlay").show();
-                thisObj.siblings(".loading-text").show();
+                thisObj.parent().siblings(".overlay").show();
+                thisObj.parent().siblings(".loading-text").show();
             },
             success: function(response) {
 
@@ -505,15 +476,15 @@ $jscript .= '
 
                 thisObj.parents(".business-menu-group").find(".transaction-item-notes").val(notes);
 
-                thisObj.siblings(".overlay").hide();
-                thisObj.siblings(".loading-text").hide();
+                thisObj.parent().siblings(".overlay").hide();
+                thisObj.parent().siblings(".loading-text").hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
 
                 messageResponse("aicon aicon-icon-info", xhr.status, xhr.responseText, "danger");
 
-                thisObj.siblings(".overlay").hide();
-                thisObj.siblings(".loading-text").hide();
+                thisObj.parent().siblings(".overlay").hide();
+                thisObj.parent().siblings(".loading-text").hide();
             }
         });
     });
