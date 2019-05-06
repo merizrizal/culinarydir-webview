@@ -2,6 +2,7 @@
 
 use common\components\Helper;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -247,6 +248,7 @@ $linkPager = LinkPager::widget([
                                     <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
                                     &nbsp;&nbsp;&nbsp;
                                     <?= Html::textInput('comment_input', null, [
+                                        'id' => 'input-comments-review',
                                         'class' => 'form-control input-comments-review',
                                         'placeholder' => Yii::t('app', 'Write a Comment')
                                     ]); ?>
@@ -387,5 +389,9 @@ $jscript = '
 ';
 
 $this->registerJs($jscript);
+
+$this->registerJs('
+    $(".review-section").bootstrapMaterialDesign();
+', View::POS_END);
 
 Pjax::end(); ?>
