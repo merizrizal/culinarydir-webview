@@ -147,6 +147,27 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 	padding: 15px 20px;
 }
 
+.detail.checkout-order .card,
+.detail.checkout-order .bmd-form-group .radio label,
+.detail.menu-list .card {
+	font-size: 13px;
+}
+
+.detail.checkout-order .bmd-form-group .radio,
+.detail.checkout-order .bmd-form-group .radio label {
+	color: black;
+	font-weight: 1000;
+}
+
+.detail.menu-list .nav-tabs .nav-link {
+	font-size: 13px;
+	font-weight: 1000;
+}
+
+.detail.checkout-order .bmd-form-group {
+	padding: 0;
+}
+
 /*user profile*/
 .detail.user-profile .box.user-love {
     min-height: 280px;

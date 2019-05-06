@@ -1,39 +1,19 @@
 <?php
 namespace webview\components;
 
-use Yii;
 use yii\base\Widget;
 
-class Snackbar extends Widget
+class GrowlCustom extends Widget
 {
+
     public function init()
     {
         parent::init();
 
-        $this->getView()->registerJsFile(Yii::$app->homeUrl . 'lib/snackbarjs/snackbar.min.js', ['depends' => 'yii\web\JqueryAsset']);
+        \kartik\growl\GrowlAsset::register($this->getView());
     }
 
-    public static function messageResponse()
-    {
-        return '
-            function messageResponse(icon, title, message, type) {
-
-                if (title != "302") {
-
-                    $.snackbar({
-                        content:
-                            "<div class=\"bg-" + type + " list-group\">" +
-                                "<div class=\"list-group-item\"><i class=\"" + icon + "\"></i>" + title + "</div>" +
-                                "<div class=\"list-group-item\">" + message + "</div>" +
-                            "</div>",
-                        htmlAllowed: true
-                    });
-                }
-            }
-        ';
-    }
-
-    public static function stickySnackbar()
+    public static function stickyResponse()
     {
         return '
             function stickyGrowl(icon, title, message, type) {
@@ -42,7 +22,7 @@ class Snackbar extends Widget
                         icon: icon,
                         title: title,
                         message: message,
-                        url: "' . Yii::$app->urlManager->createUrl(['order/checkout']) . '"
+                        url: "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '"
                     },{
                         element: "body",
                         position: null,
@@ -56,7 +36,7 @@ class Snackbar extends Widget
                         },
                         offset: {
                             x: 0,
-                            y: ' . (Yii::$app->request->getUserAgent() == 'com.asikmakan.app' ? 60 : 0) . '
+                            y: ' . (\Yii::$app->request->getUserAgent() == 'com.asikmakan.app' ? 60 : 0) . '
                         },
                         spacing: 0,
                         z_index: 1031,

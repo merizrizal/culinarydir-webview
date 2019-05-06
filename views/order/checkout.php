@@ -1,6 +1,5 @@
 <?php
 
-use kartik\touchspin\TouchSpin;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
@@ -47,7 +46,21 @@ $this->title = 'Checkout'; ?>
                                         <?php
                                         if (!empty($modelTransactionSession)):
 
-                                            foreach ($modelTransactionSession['transactionItems'] as $dataTransactionItem): ?>
+                                            foreach ($modelTransactionSession['transactionItems'] as $dataTransactionItem):
+
+                                                $notesField = Html::textInput('transaction_item_notes', $dataTransactionItem['note'], [
+                                                    'class' => 'form-control transaction-item-notes',
+                                                    'placeholder' => Yii::t('app', 'Note'),
+                                                    'data-url' => Yii::$app->urlManager->createUrl(['order-action/save-notes'])
+                                                ]);
+
+                                                $amountField = Html::input('number', 'transaction_item_amount', $dataTransactionItem['amount'], [
+                                                    'class' => 'transaction-item-amount',
+                                                    'data-url' => \Yii::$app->urlManager->createUrl(['order-action/change-qty']),
+                                                    'style' => 'width:100%',
+                                                    'min' => 1,
+                                                    'max' => 50
+                                                ]); ?>
 
                                                 <div class="business-menu-group">
 
@@ -56,10 +69,10 @@ $this->title = 'Checkout'; ?>
                                                     <div class="business-menu mb-20 d-none d-sm-block d-md-none">
                                                         <div class="row">
                                                             <div class="col-sm-8">
-                                                                <strong><?= $dataTransactionItem['businessProduct']['name'] ?></strong>
+                                                                <h5><?= $dataTransactionItem['businessProduct']['name'] ?></h5>
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                <strong><?= \Yii::$app->formatter->asCurrency($dataTransactionItem['price']) ?></strong>
+                                                                <h5><?= \Yii::$app->formatter->asCurrency($dataTransactionItem['price']) ?></h5>
                                                             </div>
                                                             <div class="col-sm-1 text-right">
                                                                 <div class="overlay" style="display: none;"></div>
@@ -77,36 +90,15 @@ $this->title = 'Checkout'; ?>
                                                                 <div class="overlay" style="display: none;"></div>
                                                                 <div class="loading-text" style="display: none;"></div>
 
-                                                                <?= Html::textInput('transaction_item_notes', $dataTransactionItem['note'], [
-                                                                    'class' => 'form-control transaction-item-notes',
-                                                                    'placeholder' => \Yii::t('app', 'Note'),
-                                                                    'data-url' => \Yii::$app->urlManager->createUrl(['order-action/save-notes'])
-                                                                ]); ?>
+                                                                <?= $notesField ?>
 
                                                             </div>
-                                                            <div class="col-sm-3">
+                                                            <div class="col-sm-3 mt-10">
 
                                                                 <div class="overlay" style="display: none;"></div>
                                                                 <div class="loading-text" style="display: none;"></div>
 
-                                                                <?= TouchSpin::widget([
-                                                                    'name' => 'transaction_item_amount',
-                                                                    'value' => $dataTransactionItem['amount'],
-                                                                    'options' => [
-                                                                        'class' => 'transaction-item-amount text-right input-sm',
-                                                                        'data-url' => \Yii::$app->urlManager->createUrl(['order-action/change-qty'])
-                                                                    ],
-                                                                    'pluginOptions' => [
-                                                                        'style' => 'width: 30%',
-                                                                        'min' => 1,
-                                                                        'max' => 50,
-                                                                        'step' => 1,
-                                                                        'buttonup_txt' => '<i class="glyphicon glyphicon-plus"></i>',
-                                                                        'buttondown_txt' => '<i class="glyphicon glyphicon-minus"></i>',
-                                                                        'buttondown_class' => "btn btn-default text-center",
-                                                                        'buttonup_class' => "btn btn-default text-center"
-                                                                    ],
-                                                                ]); ?>
+                                                                <?= $amountField ?>
 
                                                             </div>
                                                         </div>
@@ -132,11 +124,7 @@ $this->title = 'Checkout'; ?>
                                                                 <div class="overlay" style="display: none;"></div>
                                                                 <div class="loading-text" style="display: none;"></div>
 
-                                                                <?= Html::textInput('transaction_item_notes', $dataTransactionItem['note'], [
-                                                                    'class' => 'form-control transaction-item-notes',
-                                                                    'placeholder' => \Yii::t('app', 'Note'),
-                                                                    'data-url' => \Yii::$app->urlManager->createUrl(['order-action/save-notes'])
-                                                                ]); ?>
+                                                                <?= $notesField ?>
 
                                                             </div>
                                                             <div class="col-7">
@@ -147,24 +135,7 @@ $this->title = 'Checkout'; ?>
                                                                 <div class="overlay" style="display: none;"></div>
                                                                 <div class="loading-text" style="display: none;"></div>
 
-                                                                <?= TouchSpin::widget([
-                                                                    'name' => 'transaction_item_amount',
-                                                                    'value' => $dataTransactionItem['amount'],
-                                                                    'options' => [
-                                                                        'class' => 'transaction-item-amount text-right input-sm',
-                                                                        'data-url' => \Yii::$app->urlManager->createUrl(['order-action/change-qty'])
-                                                                    ],
-                                                                    'pluginOptions' => [
-                                                                        'style' => 'width: 30%',
-                                                                        'min' => 1,
-                                                                        'max' => 50,
-                                                                        'step' => 1,
-                                                                        'buttonup_txt' => '<i class="glyphicon glyphicon-plus"></i>',
-                                                                        'buttondown_txt' => '<i class="glyphicon glyphicon-minus"></i>',
-                                                                        'buttondown_class' => "btn btn-default text-center",
-                                                                        'buttonup_class' => "btn btn-default text-center"
-                                                                    ],
-                                                                ]); ?>
+                                                                <?= $amountField ?>
 
                                                             </div>
                                                         </div>
@@ -238,8 +209,9 @@ $this->title = 'Checkout'; ?>
                                                                             <div class="row mb-20">
                                                                                 <div class="col-12">' .
 
-                                                                                    $form->field($modelTransactionSessionOrder, 'business_delivery_id')->radio([
-                                                                                        'class' => 'report-subject',
+                                                                                    $form->field($modelTransactionSessionOrder, 'business_delivery_id', [
+                                                                                        'template' => '<div class="radio">{input}{label}</div>',
+                                                                                    ])->radio([
                                                                                         'label' => $data['deliveryMethod']['delivery_name'],
                                                                                         'value' => $data['id'],
                                                                                         'uncheck' => null
@@ -287,13 +259,13 @@ $this->title = 'Checkout'; ?>
                                                                             <div class="row mb-20">
                                                                                 <div class="col-12">' .
 
-                                                                                        $form->field($modelTransactionSessionOrder, 'business_payment_id')->radio([
-                                                                                            'class' => 'report-subject',
-                                                                                            'label' => $data['paymentMethod']['payment_name'],
-                                                                                            'value' => $data['id'],
-                                                                                            'uncheck' => null
-                                                                                        ])->error(false) .
-
+                                                                                    $form->field($modelTransactionSessionOrder, 'business_payment_id', [
+                                                                                        'template' => '<div class="radio">{input}{label}</div>',
+                                                                                    ])->radio([
+                                                                                        'label' => $data['paymentMethod']['payment_name'],
+                                                                                        'value' => $data['id'],
+                                                                                        'uncheck' => null
+                                                                                    ])->error(false) .
 
                                                                                 '</div>
                                                                                 <div class="col-12">' .
@@ -364,7 +336,6 @@ $this->title = 'Checkout'; ?>
             </div>
         </div>
     </section>
-
 </div>
 
 <div class="order-confirmation-modal" style="display:none">
@@ -508,7 +479,7 @@ $jscript = '
         allowClear: true
     });
 
-    $(".transaction-item-amount").on("change", function() {
+    $(".transaction-item-amount").on("focusout click", function() {
 
         var thisObj = $(this);
         var amount = parseInt(thisObj.val());
@@ -563,7 +534,7 @@ $jscript = '
         });
     });
 
-    $(".transaction-item-notes").on("change", function() {
+    $(".transaction-item-notes").on("focusout", function() {
 
         var thisObj = $(this);
         var notes = thisObj.val();
@@ -579,8 +550,8 @@ $jscript = '
             },
             beforeSend: function(xhr) {
 
-                thisObj.siblings(".overlay").show();
-                thisObj.siblings(".loading-text").show();
+                thisObj.parent().siblings(".overlay").show();
+                thisObj.parent().siblings(".loading-text").show();
             },
             success: function(response) {
 
@@ -592,15 +563,15 @@ $jscript = '
                 thisObj.parents(".business-menu-group").find(".transaction-item-notes").val(notes);
                 $("#item-" + transactionItemId).find(".item-note").html(notes);
 
-                thisObj.siblings(".overlay").hide();
-                thisObj.siblings(".loading-text").hide();
+                thisObj.parent().siblings(".overlay").hide();
+                thisObj.parent().siblings(".loading-text").hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
 
                 messageResponse("aicon aicon-icon-info", xhr.status, xhr.responseText, "danger");
 
-                thisObj.siblings(".overlay").hide();
-                thisObj.siblings(".loading-text").hide();
+                thisObj.parent().siblings(".overlay").hide();
+                thisObj.parent().siblings(".loading-text").hide();
             }
         });
     });
