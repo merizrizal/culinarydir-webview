@@ -254,13 +254,6 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
     margin-top: 7px;
 }
 
-.detail.review .review-container .rating .badge {
-	display: inline;
-    padding: .4em;
-    line-height: 1.2;
-    vertical-align: top;
-}
-
 /*photo*/
 .detail.photo .widget-posts-image {
     width: 50px;
@@ -467,6 +460,15 @@ a.form-control:hover {
 
 .file-drop-zone-title {
     padding: 0;
+}
+
+.detail.review .review-container .rating .badge,
+.detail.place-detail .review-post .rating .badge,
+.detail.place-detail .rating.my-rating .badge {
+	display: inline;
+    padding: .4em;
+    line-height: 1.2;
+    vertical-align: top;
 }
 
 /*general - box*/
