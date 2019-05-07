@@ -362,7 +362,7 @@ $urlMyReviewDetail = [
                                                     echo Html::hiddenInput('rating_component_id', $dataRatingComponent['id'], ['class' => 'rating-component-id', 'data-prior' => '']);
                                                     echo Html::hiddenInput('temp_rating_' . $dataRatingComponent['id'], null, ['class' => 'temp-rating-' . $dataRatingComponent['id']]);
 
-                                                    echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,]); ?>
+                                                    echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null]); ?>
 
 													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating" data-rating=<?= !empty($valueRatingComponent) ? $valueRatingComponent : 0 ?>></div>
                                                 </div>

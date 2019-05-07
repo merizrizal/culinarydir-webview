@@ -1,0 +1,36 @@
+.touchspin {
+    width: 100%;
+}
+
+.touchspin .input-group-btn-vertical {
+    height: 100%;
+    z-index: 11;
+    width: 2em;
+    border: none;
+    background: none;
+}
+
+.touchspin .input-group-btn-vertical > .btn {
+    position: absolute;
+    right: 0;
+    height: 50%;
+    width: 2em;
+    padding: 0;
+    text-align: center;
+    line-height: 0.4;
+}
+
+.touchspin .input-group-btn-vertical > .btn i {
+    font-size: 9px;
+}
+
+.touchspin .input-group-btn-vertical .touchspin-up {
+    border-radius: 0 4px 0 0;
+    top: 0;
+}
+
+.touchspin .input-group-btn-vertical .touchspin-down {
+    border-radius: 0 0 4px 0;
+    border-top: none;
+    bottom: 0;
+}

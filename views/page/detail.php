@@ -91,7 +91,7 @@ foreach ($modelBusiness['businessImages'] as $dataImageThumbail) {
     }
 }
 
-$ogUrlMenuDetail = ['page/menu', 'uniqueName' => $modelBusiness['unique_name']];
+$ogUrlMenuDetail = ['page/menu', 'id' => $modelBusiness['id']];
 
 $this->registerMetaTag([
     'property' => 'og:url',
