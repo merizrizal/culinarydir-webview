@@ -11,7 +11,7 @@ webview\assets\RateyoAsset::register($this); ?>
     <div class="col-6 text-right">
         <div class="rating">
             <h3 class="mb-0"><span class="badge badge-success pt-10"><?= number_format(!empty($modelBusinessDetail['vote_value']) ? $modelBusinessDetail['vote_value'] : 0, 1) ?></span></h3>
-            <?= Yii::t('app', '{value, plural, =0{# Vote} =1{# Vote} other{# Votes}}', ['value' => !empty($modelBusinessDetail['voters']) ? $modelBusinessDetail['voters'] : 0]) ?>
+            <?= \Yii::t('app', '{value, plural, =0{# Vote} =1{# Vote} other{# Votes}}', ['value' => !empty($modelBusinessDetail['voters']) ? $modelBusinessDetail['voters'] : 0]) ?>
         </div>
     </div>
     <div class="col-6">
@@ -51,7 +51,7 @@ webview\assets\RateyoAsset::register($this); ?>
                             </div>
 
                             <div class="col-6">
-                                <?= number_format($ratingValue, 1) . ' &nbsp; ' . Yii::t('app', $dataBusinessDetailVote['ratingComponent']['name']) ?>
+                                <?= number_format($ratingValue, 1) . ' &nbsp; ' . \Yii::t('app', $dataBusinessDetailVote['ratingComponent']['name']) ?>
                             </div>
                         </div>
                     </li>
@@ -71,7 +71,7 @@ webview\assets\RateyoAsset::register($this); ?>
                             </div>
 
                             <div class="col-6">
-                                <?= 0 . ' &nbsp; ' . Yii::t('app', $dataBusinessDetailVote['ratingComponent']['name']) ?>
+                                <?= 0 . ' &nbsp; ' . \Yii::t('app', $dataBusinessDetailVote['ratingComponent']['name']) ?>
                             </div>
                         </div>
                     </li>

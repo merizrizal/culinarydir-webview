@@ -30,10 +30,10 @@ $urlMyReviewDetail = [
             <div class="box-title" id="title-write-review">
             	<div class="row">
             		<div class="col-6">
-                    	<h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? Yii::t('app', 'Your Review') : Yii::t('app', 'Write a Review') ?></h4>
+                    	<h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? \Yii::t('app', 'Your Review') : \Yii::t('app', 'Write a Review') ?></h4>
                 	</div>
                 	<div class="col-6 text-right text-danger" id="close-review-container">
-                		<a class="text-danger" href=""><?= Yii::t('app', 'Cancel') ?></a>
+                		<a class="text-danger" href=""><?= \Yii::t('app', 'Cancel') ?></a>
             		</div>
                 </div>
             </div>
@@ -42,9 +42,9 @@ $urlMyReviewDetail = [
                 <div class="form-group p-0" id="edit-review-container">
 
                 	<?php
-                	if (!empty(Yii::$app->user->getIdentity())):
+                	if (!empty(\Yii::$app->user->getIdentity())):
 
-            	        $img = !empty(Yii::$app->user->getIdentity()->image) ? Yii::$app->user->getIdentity()->image . '&w=64&h=64' : 'default-avatar.png';
+            	        $img = !empty(\Yii::$app->user->getIdentity()->image) ? \Yii::$app->user->getIdentity()->image . '&w=64&h=64' : 'default-avatar.png';
                     	$overallValue = !empty($dataUserVoteReview['overallValue']) ? $dataUserVoteReview['overallValue'] : 0;
 
                     	echo Html::hiddenInput('user_post_main_id', $modelUserPostMain['id'], ['class' => 'my-user-post-main-id']); ?>
@@ -55,14 +55,14 @@ $urlMyReviewDetail = [
                                     <div class="col-sm-7 col-12 mb-10">
                                         <div class="widget-posts-image">
 
-                                            <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                            <?= Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
                                                 'class' => 'img-fluid rounded-circle'
-                                            ]), ['user/user-profile', 'user' => Yii::$app->user->getIdentity()->username]) ?>
+                                            ]), ['user/user-profile', 'user' => \Yii::$app->user->getIdentity()->username]) ?>
 
                                         </div>
 
                                         <div class="widget-posts-body">
-                                            <?= Html::a(Yii::$app->user->getIdentity()->full_name, ['user/user-profile', 'user' => Yii::$app->user->getIdentity()->username], ['class' => 'my-review-user-name']) ?>
+                                            <?= Html::a(\Yii::$app->user->getIdentity()->full_name, ['user/user-profile', 'user' => \Yii::$app->user->getIdentity()->username], ['class' => 'my-review-user-name']) ?>
                                             <br>
                                             <small class="my-review-created"><?= Helper::asRelativeTime($modelUserPostMain['created_at']) ?></small>
                                         </div>
@@ -112,7 +112,7 @@ $urlMyReviewDetail = [
                                                         <div class="gallery-item review-post-gallery">
                                                             <div class="gallery-image">
                                                                 <div class="work-image">
-                                                                    <?= Html::img(Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=72&h=72', ['class' => 'img-component']); ?>
+                                                                    <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=72&h=72', ['class' => 'img-component']); ?>
                                                                 </div>
                                                                 <div class="work-caption">
                                                                     <div class="work-descr">
@@ -122,11 +122,11 @@ $urlMyReviewDetail = [
 
                                                                     	if ($i == 4 && $hiddenPhotos != 0) {
 
-                                                                    	    echo Html::a('+' . $hiddenPhotos, Yii::$app->urlManager->createUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle']);
-                                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none']);
+                                                                    	    echo Html::a('+' . $hiddenPhotos, \Yii::$app->urlManager->createUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle']);
+                                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none']);
                                                                     	} else {
 
-                                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
+                                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
                                                                     	} ?>
 
                                                                     </div>
@@ -204,9 +204,9 @@ $urlMyReviewDetail = [
                                                     <i class="aicon aicon-more"></i>
                                                 </a>
                                                 <div class="dropdown-menu pull-right review-btn">
-                                                	<?= Html::a('<i class="aicon aicon-share1"></i>&nbsp;Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'share-my-review-trigger dropdown-item']); ?>
+                                                	<?= Html::a('<i class="aicon aicon-share1"></i>&nbsp;Share', \Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'share-my-review-trigger dropdown-item']); ?>
                                                    	<?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i>&nbsp;Edit', '', ['class' => 'edit-my-review-trigger dropdown-item']) ?>
-                                                   	<?= Html::a('<i class="aicon aicon-icon-trash"></i>&nbsp;' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'delete-my-review-trigger dropdown-item']) ?>
+                                                   	<?= Html::a('<i class="aicon aicon-icon-trash"></i>&nbsp;' . \Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'delete-my-review-trigger dropdown-item']) ?>
                                                 </div>
                                             </li>
                                         </ul>
@@ -214,13 +214,13 @@ $urlMyReviewDetail = [
                                     <div class="col-sm-6 text-right d-none d-sm-block d-md-none">
                                         <ul class="list-inline list-review mt-0 mb-0">
                                     		<li class="list-inline-item">
-                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-small btn-round share-my-review-trigger']) ?>
+                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', \Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-small btn-round share-my-review-trigger']) ?>
                                             </li>
                                             <li class="list-inline-item">
                                                 <?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i> Edit', '', ['class' => 'btn btn-raised btn-small btn-round edit-my-review-trigger']) ?>
                                             </li>
                                             <li class="list-inline-item">
-                                                <?= Html::a('<i class="aicon aicon-icon-trash"></i> ' . Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'btn btn-raised btn-small btn-round delete-my-review-trigger']) ?>
+                                                <?= Html::a('<i class="aicon aicon-icon-trash"></i> ' . \Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'btn btn-raised btn-small btn-round delete-my-review-trigger']) ?>
                                             </li>
                                         </ul>
                                     </div>
@@ -256,14 +256,14 @@ $urlMyReviewDetail = [
                                                                             <?php
                                                                             $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=64&h=64' : 'default-avatar.png';
 
-                                                                            echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                                                            echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
                                                                                 'class' => 'img-fluid rounded-circle'
                                                                             ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
                                                                         </div>
 
                                                                         <div class="widget-comments-body">
-                                                                            <?= Html::a($dataUserPostComment['user']['full_name'], Yii::$app->urlManager->createUrl(['user/user-profile', 'user' => $dataUserPostComment['user']['username']])); ?>&nbsp;&nbsp;&nbsp;
+                                                                            <?= Html::a($dataUserPostComment['user']['full_name'], \Yii::$app->urlManager->createUrl(['user/user-profile', 'user' => $dataUserPostComment['user']['username']])); ?>&nbsp;&nbsp;&nbsp;
                                                                             <small><?= Helper::asRelativeTime($dataUserPostComment['created_at']) ?></small>
                                                                             <br>
                                                                             <p class="comment-description">
@@ -297,7 +297,7 @@ $urlMyReviewDetail = [
                         &nbsp;&nbsp;&nbsp;
                         <?= Html::textInput('', null, [
                             'class' => 'form-control',
-                            'placeholder' => Yii::t('app', 'Share your experience here')
+                            'placeholder' => \Yii::t('app', 'Share your experience here')
                         ]); ?>
 
                     </div>
@@ -362,7 +362,7 @@ $urlMyReviewDetail = [
                                                     echo Html::hiddenInput('rating_component_id', $dataRatingComponent['id'], ['class' => 'rating-component-id', 'data-prior' => '']);
                                                     echo Html::hiddenInput('temp_rating_' . $dataRatingComponent['id'], null, ['class' => 'temp-rating-' . $dataRatingComponent['id']]);
 
-                                                    echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,]); ?>
+                                                    echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null]); ?>
 
 													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating" data-rating=<?= !empty($valueRatingComponent) ? $valueRatingComponent : 0 ?>></div>
                                                 </div>
@@ -372,10 +372,10 @@ $urlMyReviewDetail = [
                                                 	<?php
 													if (!empty($valueRatingComponent)) {
 
-													    echo $valueRatingComponent == 1 ? '<span>1</span> &nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']) : '<span>' . $valueRatingComponent . '</span>&nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']);
+													    echo $valueRatingComponent == 1 ? '<span>1</span> &nbsp;&nbsp;&nbsp;' . \Yii::t('app', $dataRatingComponent['name']) : '<span>' . $valueRatingComponent . '</span>&nbsp;&nbsp;&nbsp;' . \Yii::t('app', $dataRatingComponent['name']);
 													} else {
 
-													    echo '<span></span>&nbsp;&nbsp;&nbsp;' . Yii::t('app', $dataRatingComponent['name']);
+													    echo '<span></span>&nbsp;&nbsp;&nbsp;' . \Yii::t('app', $dataRatingComponent['name']);
 													} ?>
 
                                                     <div class="rating-<?= $dataRatingComponent['id'] ?>"></div>
@@ -395,7 +395,7 @@ $urlMyReviewDetail = [
 
                                 <?= $form->field($modelPost, '[review]text')->textarea([
                                     'class' => 'form-control',
-                                    'placeholder' => Yii::t('app', 'What do you like about this place? Criticism and suggestions for improvement?'),
+                                    'placeholder' => \Yii::t('app', 'What do you like about this place? Criticism and suggestions for improvement?'),
                                     'rows' => 6,
                                 ]); ?>
 
@@ -418,7 +418,7 @@ $urlMyReviewDetail = [
                                                         <div class="gallery-item review-post-gallery mb-10">
                                                             <div class="gallery-image">
                                                                 <div class="work-image">
-                                                                    <?= Html::img(Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=72&h=72', ['class' => 'img-component']); ?>
+                                                                    <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=72&h=72', ['class' => 'img-component']); ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -449,7 +449,7 @@ $urlMyReviewDetail = [
                             </div>
                             <div class="form-group">
                                 <?= Html::submitButton('<i class="aicon aicon-icon-share"></i> Post review', ['id' => 'submit-write-review', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
-                                <?= Html::a('<i class="aicon aicon-cross"></i> ' . Yii::t('app', 'Cancel'), '', ['id' => 'cancel-write-review', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
+                                <?= Html::a('<i class="aicon aicon-cross"></i> ' . \Yii::t('app', 'Cancel'), '', ['id' => 'cancel-write-review', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
                             </div>
                         </div>
                     </div>
@@ -466,7 +466,7 @@ $urlMyReviewDetail = [
     <div class="col-12">
         <div class="card box">
             <div class="box-title">
-                <h4 class="mt-0 mb-0 inline-block"><?= Yii::t('app', 'Review') ?></h4>
+                <h4 class="mt-0 mb-0 inline-block"><?= \Yii::t('app', 'Review') ?></h4>
             </div>
 
             <hr class="divider-w">
@@ -505,7 +505,7 @@ $jscript = '
             data: {
                 "business_id": business_id
             },
-            url: "' . Yii::$app->urlManager->createUrl(['data/business-rating']) . '",
+            url: "' . \Yii::$app->urlManager->createUrl(['data/business-rating']) . '",
             success: function(response) {
 
                 $(".business-rating").html(response);
@@ -566,11 +566,7 @@ $jscript = '
     $.ajax({
         cache: false,
         type: "GET",
-        url: "' . Yii::$app->urlManager->createUrl([
-            'data/post-review',
-            'city' => Inflector::slug($modelBusiness['businessLocation']['city']['name']),
-            'uniqueName' => $modelBusiness['unique_name']
-        ]) . (!empty($queryParams['redirect']) && $queryParams['redirect'] == 'review' ? '?page=' . $queryParams['page'] . '&per-page=' . $queryParams['per-page'] : '') . '",
+        url: "' . \Yii::$app->urlManager->createUrl(['data/post-review', 'id' => $modelBusiness['id']]) . '",
         success: function(response) {
 
             $(".review-section").html(response);
@@ -716,7 +712,7 @@ $jscript = '
         $.ajax({
             cache: false,
             type: "POST",
-            url: "' . Yii::$app->urlManager->createUrl(['redirect/write-review']) . '",
+            url: "' . \Yii::$app->urlManager->createUrl(['redirect/write-review']) . '",
             success: function(response) {
 
                 $("#write-review-trigger").fadeOut(100, function() {
@@ -742,7 +738,7 @@ $jscript = '
         var url = $(this).attr("href");
         var title = "Rating " + $("#edit-review-container").find(".my-rating > h3").text().trim() + " untuk " + $(".business-name").text().trim();
         var description = $(".my-review-description").text();
-        var image = "' . Yii::$app->params['endPointLoadImage'] . 'user-post?image=";
+        var image = "' . \Yii::$app->params['endPointLoadImage'] . 'user-post?image=";
 
         if ($("#review-uploaded-photo").children(".gallery-photo-review").length) {
 
@@ -815,7 +811,7 @@ $jscript = '
                 },
                 success: function(response) {
 
-                    $("#title-write-review").find("h4").html("' . Yii::t('app', 'Write a Review') . '");
+                    $("#title-write-review").find("h4").html("' . \Yii::t('app', 'Write a Review') . '");
 
                     if (response.success) {
 
@@ -1004,7 +1000,7 @@ $jscript = '
 
                         $("#edit-review-container").find(".my-user-post-main-id").val(response.userPostMain.id);
 
-                        $("#title-write-review").find("h4").html("' . Yii::t('app', 'Your Review') . '");
+                        $("#title-write-review").find("h4").html("' . \Yii::t('app', 'Your Review') . '");
 
                         $("#write-review-container, #close-review-container").fadeOut(100, function() {
 
@@ -1091,7 +1087,7 @@ $jscript = '
                     "user_post_main_id": $(".my-user-post-main-id").val(),
                     "text": $(this).val(),
                 },
-                url: "' . Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
+                url: "' . \Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
                 beforeSend: function(xhr) {
 
                     $(".my-comment-section").siblings(".overlay").show();
@@ -1109,7 +1105,7 @@ $jscript = '
                             data: {
                                 "user_post_main_id": response.user_post_main_id
                             },
-                            url: "' . Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
+                            url: "' . \Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
                             success: function(response) {
 
                                 $(".my-comment-section").html(response);
@@ -1201,7 +1197,7 @@ $jscript = '
                     "user_post_main_id": thisObj.parents(".review-post").find(".user-post-main-id").val(),
                     "text": $(this).val(),
                 },
-                url: "' . Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
+                url: "' . \Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
                 beforeSend: function(xhr) {
 
                     thisObj.parent().siblings(".overlay").show();
@@ -1219,7 +1215,7 @@ $jscript = '
                             data: {
                                 "user_post_main_id": response.user_post_main_id
                             },
-                            url: "' . Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
+                            url: "' . \Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
                             success: function(response) {
 
                                 thisObj.parent().siblings(".comment-section").html(response);
@@ -1255,7 +1251,7 @@ $jscript = '
         var url = $(this).attr("href");
         var title = "Rating " + $(this).parents(".review-post").find(".rating > h3").text().trim() + " untuk " + $(".business-name").text().trim();
         var description = $(this).parents(".review-post").find(".review-description").text();
-        var image = "' . Yii::$app->params['endPointLoadImage'] . 'user-post?image=";
+        var image = "' . \Yii::$app->params['endPointLoadImage'] . 'user-post?image=";
 
         var userPhotoList = $(this).parents(".review-post").find(".gallery-photo-review");
 

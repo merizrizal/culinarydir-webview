@@ -1,7 +1,6 @@
 <?php
 
 use frontend\components\AddressType;
-use frontend\components\GrowlCustom;
 use webview\components\Snackbar;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
@@ -26,7 +25,7 @@ common\assets\OwlCarouselAsset::register($this);
 
 $this->title = $modelBusiness['name'];
 
-$ogUrl = Yii::$app->urlManager->createAbsoluteUrl([
+$ogUrl = \Yii::$app->urlManager->createAbsoluteUrl([
     'page/detail',
     'city' => Inflector::slug($modelBusiness['businessLocation']['city']['name']),
     'uniqueName' => $modelBusiness['unique_name']
@@ -44,7 +43,7 @@ $ogPriceRange = '-';
 $ogProductCategory = '';
 $ogFacility = '';
 
-$ogImage = Yii::$app->params['endPointLoadImage'] . 'registry-business/image=&w=786&h=425';
+$ogImage = \Yii::$app->params['endPointLoadImage'] . 'registry-business/image=&w=786&h=425';
 
 $ogBusinessHour = null;
 
@@ -60,13 +59,13 @@ foreach ($modelBusiness['businessCategories'] as $dataBusinessCategory) {
 
 if (!empty($modelBusiness['businessDetail']['price_min']) && !empty($modelBusiness['businessDetail']['price_max'])) {
 
-    $ogPriceRange = Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_min']) . ' - ' . Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_max']);
+    $ogPriceRange = \Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_min']) . ' - ' . \Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_max']);
 } else if (empty($modelBusiness['businessDetail']['price_min']) && !empty($modelBusiness['businessDetail']['price_max'])) {
 
-    $ogPriceRange =  Yii::t('app', 'Under') . ' ' . Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_max']);
+    $ogPriceRange =  \Yii::t('app', 'Under') . ' ' . \Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_max']);
 } else if (empty($modelBusiness['businessDetail']['price_max']) && !empty($modelBusiness['businessDetail']['price_min'])) {
 
-    $ogPriceRange =  Yii::t('app', 'Above') . ' ' . Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_min']);
+    $ogPriceRange =  \Yii::t('app', 'Above') . ' ' . \Yii::$app->formatter->asShortCurrency($modelBusiness['businessDetail']['price_min']);
 }
 
 foreach ($modelBusiness['businessProductCategories'] as $dataBusinessProductCategory) {
@@ -86,12 +85,12 @@ foreach ($modelBusiness['businessImages'] as $dataImageThumbail) {
 
     if ($dataImageThumbail['is_primary']) {
 
-        $ogImage = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $dataImageThumbail['image'];
+        $ogImage = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $dataImageThumbail['image'];
         break;
     }
 }
 
-$ogUrlMenuDetail = ['page/menu', 'uniqueName' => $modelBusiness['unique_name']];
+$ogUrlMenuDetail = ['page/menu', 'id' => $modelBusiness['id']];
 
 $this->registerMetaTag([
     'property' => 'og:url',
@@ -118,7 +117,7 @@ $this->registerMetaTag([
     'content' => $ogImage
 ]);
 
-$noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=756&h=425'; ?>
+$noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=756&h=425'; ?>
 
 <div class="main bg-main">
 
@@ -137,7 +136,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li class="nav-item">
-                                                <a id="photo-tab" href="#photo" class="nav-link active" data-toggle="tab" role="tab" aria-controls="photo" aria-selected="true"><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Ambience') ?></a>
+                                                <a id="photo-tab" href="#photo" class="nav-link active" data-toggle="tab" role="tab" aria-controls="photo" aria-selected="true"><i class="aicon aicon-camera1"></i> <?= \Yii::t('app', 'Ambience') ?></a>
                                             </li>
                                             <li class="nav-item">
                                                 <a id="menu-tab" href="#menu" class="nav-link" data-toggle="tab" role="tab" aria-controls="#menu" aria-selected="false"><i class="aicon aicon-icon-budicon"></i> Menu</a>
@@ -168,7 +167,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                                     if (!empty($businessImage['image'])) {
 
-                                                                        $img = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $businessImage['image'] . '&w=1252&h=706';
+                                                                        $img = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $businessImage['image'] . '&w=1252&h=706';
                                                                     }
 
                                                                     echo Html::img(null, ['class' => 'owl-lazy', 'data-src' => $img]);
@@ -205,7 +204,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                                     if (!empty($businessImage['image'])) {
 
-                                                                        $img = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $businessImage['image'] . '&w=1252&h=706';
+                                                                        $img = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $businessImage['image'] . '&w=1252&h=706';
                                                                     }
 
                                                                     echo Html::img(null, ['class' => 'owl-lazy', 'data-src' => $img]);
@@ -278,7 +277,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                             echo !empty($modelBusiness['businessLocation']['address_info']) ? '<br>' . $modelBusiness['businessLocation']['address_info'] : '';
 
-                                                            echo Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . Yii::t('app', 'See Map'), '', ['class' => 'btn btn-small btn-xs btn-round see-map-shortcut']); ?>
+                                                            echo Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . \Yii::t('app', 'See Map'), '', ['class' => 'btn btn-small btn-xs btn-round see-map-shortcut']); ?>
 
                                                         </li>
                                                         <li>
@@ -288,18 +287,18 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                         	<i class="aicon aicon-icon-phone-fill"></i> <?= !empty($modelBusiness['phone1']) ? $modelBusiness['phone1'] : '-' ?>
                                                     	</li>
                                                         <li>
-                                                        	<i class="aicon aicon-clock"></i> <?= Yii::t('app', 'Operational Hours') ?>
+                                                        	<i class="aicon aicon-clock"></i> <?= \Yii::t('app', 'Operational Hours') ?>
 
                                                         	<?php
                                                             if (!empty($modelBusiness['businessHours'])):
 
-                                                                $days = Yii::$app->params['days'];
+                                                                $days = \Yii::$app->params['days'];
 
-                                                                Yii::$app->formatter->timeZone = 'Asia/Jakarta';
+                                                                \Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
-                                                                $now = Yii::$app->formatter->asTime(time());
+                                                                $now = \Yii::$app->formatter->asTime(time());
 
-                                                                Yii::$app->formatter->timeZone = 'UTC';
+                                                                \Yii::$app->formatter->timeZone = 'UTC';
 
                                                                 $isOpen = false;
                                                                 $listSchedule = '';
@@ -312,13 +311,13 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                                     $day = $days[$dataBusinessHour['day'] - 1];
 
-                                                                    $openAt = Yii::$app->formatter->asTime($dataBusinessHour['open_at'], 'HH:mm');
-                                                                    $closeAt = Yii::$app->formatter->asTime($dataBusinessHour['close_at'], 'HH:mm');
+                                                                    $openAt = \Yii::$app->formatter->asTime($dataBusinessHour['open_at'], 'HH:mm');
+                                                                    $closeAt = \Yii::$app->formatter->asTime($dataBusinessHour['close_at'], 'HH:mm');
 
                                                                     $isOpenToday = false;
                                                                     $is24Hour = (($dataBusinessHour['open_at'] == '00:00:00') && ($dataBusinessHour['close_at'] == '24:00:00'));
 
-                                                                    $businessHour = $is24Hour ? Yii::t('app','24 Hours') : ($openAt . ' - ' . $closeAt);
+                                                                    $businessHour = $is24Hour ? \Yii::t('app','24 Hours') : ($openAt . ' - ' . $closeAt);
                                                                     $businessHourAdditional = '';
 
                                                                     if (date('l') == $day) {
@@ -335,14 +334,14 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                                         foreach ($dataBusinessHour['businessHourAdditionals'] as $dataBusinessHourAdditional) {
 
-                                                                            $openAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm');
-                                                                            $closeAt = Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
+                                                                            $openAt = \Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm');
+                                                                            $closeAt = \Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
 
                                                                             $businessHourAdditional .= '<div class="col-7 offset-5">' . ($isOpenToday ? '<strong>' . $openAt . ' - ' . $closeAt . '</strong></div>' : $openAt . ' - ' . $closeAt);
 
                                                                             if (date('l') == $day) {
 
-                                                                                $hourAdditional .= '<br>' . Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm') . ' - ' . Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
+                                                                                $hourAdditional .= '<br>' . \Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm') . ' - ' . \Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
 
                                                                                 if (!$isOpen) {
 
@@ -358,7 +357,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                         <li>
                                                                             <div class="row">
                                                                                 <div class="col-5">
-                                                                                    <span class="pl-3">' . ($isOpenToday ? '<strong>' . Yii::t('app', $day) . '</strong>' : Yii::t('app', $day)) . '</span>
+                                                                                    <span class="pl-3">' . ($isOpenToday ? '<strong>' . \Yii::t('app', $day) . '</strong>' : \Yii::t('app', $day)) . '</span>
                                                                                 </div>
                                                                                 <div class="col-7">' .
                                                                                     ($isOpenToday ? '<strong>' . $businessHour . '</strong>' : $businessHour) .
@@ -372,7 +371,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
 																<div class="dropdown inline-block">
                                                                     <button id="dropdown-business-hour" type="button" class="btn btn-small btn-xs btn-round <?= $isOpen ? 'btn-success' : 'btn-danger' ?> active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <?= $isOpen ? Yii::t('app', 'Open') : Yii::t('app', 'Closed') ?> <span class="caret"></span>
+                                                                        <?= $isOpen ? \Yii::t('app', 'Open') : \Yii::t('app', 'Closed') ?> <span class="caret"></span>
                                                                     </button>
                                                                     <ul class="dropdown-menu list-inline" aria-labelledby="dropdown-business-hour">
                                                                         <?= $listSchedule ?>
@@ -384,7 +383,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
 
                                                                     <table style="margin-left: 18px">
                                                                         <tr>
-																			<td valign="top"><?= Yii::t('app', 'Today') ?></td>
+																			<td valign="top"><?= \Yii::t('app', 'Today') ?></td>
 																			<td valign="top">&nbsp; : &nbsp;</td>
 																			<td>
 																				<?= $hour . $hourAdditional ?>
@@ -396,7 +395,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                 endif;
                                                             else:
 
-                                                                echo '<br><span style="margin-left: 18px">' . Yii::t('app', 'Data Not Available') . '</span>';
+                                                                echo '<br><span style="margin-left: 18px">' . \Yii::t('app', 'Data Not Available') . '</span>';
                                                             endif; ?>
 
                                                         </li>
@@ -426,18 +425,18 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                             </div>
 
                                             <?php
-                                            $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . Yii::t('app', 'Online Order'), $ogUrlMenuDetail, [
+                                            $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . \Yii::t('app', 'Online Order'), $ogUrlMenuDetail, [
                                                 'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round'
                                             ]);
 
                                             if (!$isOrderOnline) {
 
-                                                $orderbtn = Html::a('<i class="aicon aicon-icon-cuisine"></i> ' . Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
+                                                $orderbtn = Html::a('<i class="aicon aicon-icon-cuisine"></i> ' . \Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
                                                     'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round'
                                                 ]);
                                             }
 
-                                            $reportbtn = Html::a('<i class="aicon aicon-warning aicon-1-2x"></i> ' .  Yii::t('app', 'Report'), '', [
+                                            $reportbtn = Html::a('<i class="aicon aicon-warning aicon-1-2x"></i> ' .  \Yii::t('app', 'Report'), '', [
                                                 'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round report-business-trigger'
                                             ]);
 
@@ -541,7 +540,7 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                     <div class="col-12">
                                         <div class="card box">
                                             <div class="box-title">
-                                                <h6 class="m-0"><?= Yii::t('app', 'Special & Discount') ?> !!</h6>
+                                                <h6 class="m-0"><?= \Yii::t('app', 'Special & Discount') ?> !!</h6>
                                             </div>
 
                                             <hr class="divider-w">
@@ -557,10 +556,10 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                         'uniqueName' => $modelBusiness['unique_name'],
                                                     ];
 
-                                                    $img = Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $dataBusinessPromo['image'] . '&w=1252&h=706';
+                                                    $img = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $dataBusinessPromo['image'] . '&w=1252&h=706';
 
-                                                    $dateStart = Yii::$app->formatter->asDate($dataBusinessPromo['date_start'], 'medium');
-                                                    $dateEnd = Yii::$app->formatter->asDate($dataBusinessPromo['date_end'], 'medium'); ?>
+                                                    $dateStart = \Yii::$app->formatter->asDate($dataBusinessPromo['date_start'], 'medium');
+                                                    $dateEnd = \Yii::$app->formatter->asDate($dataBusinessPromo['date_end'], 'medium'); ?>
 
                                                     <div class="row mb-10">
                                                         <div class="col-sm-5 col-12">
@@ -577,10 +576,10 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                                 <?= $dataBusinessPromo['short_description'] ?>
                                                             </p>
                                                             <p>
-                                                                <?= Yii::t('app', 'Valid from {dateStart} until {dateEnd}', ['dateStart' => $dateStart, 'dateEnd' => $dateEnd]); ?>
+                                                                <?= \Yii::t('app', 'Valid from {dateStart} until {dateEnd}', ['dateStart' => $dateStart, 'dateEnd' => $dateEnd]); ?>
                                                             </p>
                                                             <p>
-                                                                <?= Html::a('<span class="text-danger"><i class="aicon aicon-circle-right"></i> ' . Yii::t('app', 'View Details') . '</span>', $urlPromoDetail) ?>
+                                                                <?= Html::a('<span class="text-danger"><i class="aicon aicon-circle-right"></i> ' . \Yii::t('app', 'View Details') . '</span>', $urlPromoDetail) ?>
 															</p>
                                                         </div>
                                                     </div>
@@ -606,25 +605,25 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                             <li class="nav-item">
                                                 <a id="review-tab" class="nav-link active text-center" href="#view-review" aria-controls="view-review" role="tab" data-toggle="tab">
                                                 	<i class="aicon aicon-document-edit aicon-1-5x"></i><span class="badge total-review"></span><br>
-                                                	<?= Yii::t('app', 'Review') ?>
+                                                	<?= \Yii::t('app', 'Review') ?>
                                                 </a>
                                             </li>
                                             <li class="nav-item">
                                                 <a id="about-tab" class="nav-link text-center" href="#view-about" aria-controls="view-about" role="tab" data-toggle="tab">
                                                     <i class="aicon aicon-icon-restaurant aicon-1-5x"></i><br>
-                                                    <?= Yii::t('app', 'About') ?>
+                                                    <?= \Yii::t('app', 'About') ?>
                                                 </a>
                                             </li>
                                             <li class="nav-item d-none d-sm-block">
                                                 <a id="photo-tab" class="nav-link text-center" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
                                                     <i class="aicon aicon-camera1 aicon-1-5x"></i><span class="badge total-photo"></span><br>
-                                                    <?= Yii::t('app', 'Photo') ?>
+                                                    <?= \Yii::t('app', 'Photo') ?>
                                                 </a>
                                             </li>
                                             <li class="nav-item d-none d-sm-block">
                                                 <a id="map-tab" class="nav-link text-center" href="#view-map" aria-controls="view-map" role="tab" data-toggle="tab">
                                                     <i class="aicon aicon-icon-thin-location-line aicon-1-5x"></i><br>
-                                                    <?= Yii::t('app', 'Map') ?>
+                                                    <?= \Yii::t('app', 'Map') ?>
                                                 </a>
                                             </li>
                                             <li class="nav-item dropdown d-block d-sm-none">
@@ -634,10 +633,10 @@ $noImg = Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=75
                                                 </a>
                                                 <div class="dropdown-menu pull-right p-0">
                                                     <a id="photo-tab" class="dropdown-item" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
-                                                    	<h6><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Photo') ?> (<span class="total-photo"></span>)</h6>
+                                                    	<h6><i class="aicon aicon-camera1"></i> <?= \Yii::t('app', 'Photo') ?> (<span class="total-photo"></span>)</h6>
                                                     </a>
                                                    	<a id="map-tab" class="dropdown-item" href="#view-map" aria-controls="view-map" role="tab" data-toggle="tab">
-                                               			<h6><i class="aicon aicon-icon-thin-location-line"></i> <?= Yii::t('app', 'Map')?></h6>
+                                               			<h6><i class="aicon aicon-icon-thin-location-line"></i> <?= \Yii::t('app', 'Map')?></h6>
                                            			</a>
                                                 </div>
                                             </li>
@@ -711,7 +710,7 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">' . Yii::t('app', 'Coming Soon') . '</h6>
+                        <h6 class="modal-title">' . \Yii::t('app', 'Coming Soon') . '</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -739,7 +738,7 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
 
                         echo '
                             <div class="modal-header">
-                                <h6 class="modal-title"><i class="aicon aicon-warning"></i> ' . Yii::t('app', 'Report') . '</h6>
+                                <h6 class="modal-title"><i class="aicon aicon-warning"></i> ' . \Yii::t('app', 'Report') . '</h6>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -750,12 +749,12 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
 
                                 echo Html::hiddenInput('business_id', $modelBusiness['id']);
 
-                                echo Html::label(Yii::t('app', 'This business:'));
+                                echo Html::label(\Yii::t('app', 'This business:'));
                                 echo $form->field($modelUserReport, 'report_status')->radioList([
-                                        'Closed' => Yii::t('app', 'Closed'),
-                                        'Moved'=> Yii::t('app', 'Moved'),
-                                        'Duplicate' => Yii::t('app', 'Duplicate'),
-                                        'Inaccurate' => Yii::t('app', 'Inaccurate'),
+                                        'Closed' => \Yii::t('app', 'Closed'),
+                                        'Moved'=> \Yii::t('app', 'Moved'),
+                                        'Duplicate' => \Yii::t('app', 'Duplicate'),
+                                        'Inaccurate' => \Yii::t('app', 'Inaccurate'),
                                     ],
                                     [
                                         'item' => function ($index, $label, $name, $checked, $value) {
@@ -774,15 +773,15 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
 
                                 echo $form->field($modelUserReport, 'text')->textArea([
                                         'rows' => 4,
-                                        'placeholder' => Yii::t('app', 'Tell about your situation or complaint.')
+                                        'placeholder' => \Yii::t('app', 'Tell about your situation or complaint.')
                                     ])
                                     ->label(false);
 
                                 echo '
                             </div>
                             <div class="modal-footer">' .
-                                Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-raised btn-danger btn-round btn-submit-modal-report']) . '&nbsp&nbsp' .
-                                Html::a(Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-raised btn-round btn-close-modal-report']) . '
+                                Html::submitButton(\Yii::t('app', 'Submit'), ['class' => 'btn btn-raised btn-danger btn-round btn-submit-modal-report']) . '&nbsp&nbsp' .
+                                Html::a(\Yii::t('app', 'Cancel'), null, ['class' => 'btn btn-raised btn-round btn-close-modal-report']) . '
                             </div>';
 
                     ActiveForm::end();
@@ -798,17 +797,17 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">' . Yii::t('app', 'Confirmation') . '</h6>
+                        <h6 class="modal-title">' . \Yii::t('app', 'Confirmation') . '</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        ' . Yii::t('app', 'Are you sure want to delete this?') . '
+                        ' . \Yii::t('app', 'Are you sure want to delete this?') . '
                     </div>
                     <div class="modal-footer">
-                        <button id="btn-delete" class="btn btn-danger btn-raised" type="button">' . Yii::t('app', 'Delete') .'</button><br>
-                        <button class="btn btn-raised" data-dismiss="modal" type="button">' . Yii::t('app', 'Cancel') .'</button>
+                        <button id="btn-delete" class="btn btn-danger btn-raised" type="button">' . \Yii::t('app', 'Delete') .'</button><br>
+                        <button class="btn btn-raised" data-dismiss="modal" type="button">' . \Yii::t('app', 'Cancel') .'</button>
                     </div>
                 </div>
             </div>
@@ -816,16 +815,16 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
     ';
 };
 
-$this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
+$this->registerCssFile(\Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
 Snackbar::widget();
 webview\components\RatingColor::widget();
 frontend\components\Readmore::widget();
 frontend\components\FacebookShare::widget();
 
-$this->registerJs(Snackbar::messageResponse() . GrowlCustom::stickyResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse(), View::POS_HEAD);
 
-$this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
+$this->registerJsFile(\Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
 
 $jscript = '
     $("#img-for-share-link").hide();

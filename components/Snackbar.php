@@ -1,7 +1,6 @@
 <?php
 namespace webview\components;
 
-use Yii;
 use yii\base\Widget;
 
 class Snackbar extends Widget
@@ -10,7 +9,7 @@ class Snackbar extends Widget
     {
         parent::init();
 
-        $this->getView()->registerJsFile(Yii::$app->homeUrl . 'lib/snackbarjs/snackbar.min.js', ['depends' => 'yii\web\JqueryAsset']);
+        $this->getView()->registerJsFile(\Yii::$app->homeUrl . 'lib/snackbarjs/snackbar.min.js', ['depends' => 'yii\web\JqueryAsset']);
     }
 
     public static function messageResponse()

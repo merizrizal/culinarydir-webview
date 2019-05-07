@@ -15,11 +15,11 @@ $ogUrl = [
     'uniqueName' => $modelBusinessPromo['business']['unique_name']
 ];
 
-$ogImage = Yii::$app->params['endPointLoadImage'] . 'business-promo?image=&w=490&h=276';
+$ogImage = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=&w=490&h=276';
 
 if (!empty($modelBusinessPromo['image'])) {
 
-    $ogImage = Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image'];
+    $ogImage = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image'];
 }
 
 $ogDescription = !empty($modelBusinessPromo['short_description']) ? $modelBusinessPromo['short_description'] : $this->title;
@@ -36,7 +36,7 @@ $this->registerMetaTag([
 
 $this->registerMetaTag([
     'property' => 'og:url',
-    'content' => Yii::$app->urlManager->createAbsoluteUrl($ogUrl)
+    'content' => \Yii::$app->urlManager->createAbsoluteUrl($ogUrl)
 ]);
 
 $this->registerMetaTag([
@@ -69,7 +69,7 @@ $this->registerMetaTag([
                             <div class="card view">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#photo" aria-controls="photo" role="tab" data-toggle="tab"><i class="aicon aicon-camera1"></i> <?= Yii::t('app', 'Photo') ?></a>
+                                        <a class="nav-link active" href="#photo" aria-controls="photo" role="tab" data-toggle="tab"><i class="aicon aicon-camera1"></i> <?= \Yii::t('app', 'Photo') ?></a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -77,7 +77,7 @@ $this->registerMetaTag([
                                         <div class="row">
                                             <div class="col-12 text-center">
                                             	<div class="business-promo-image-container owl-carousel owl-theme">
-                                                    <?= Html::img(null, ['class' => 'owl-lazy', 'data-src' => Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image']]); ?>
+                                                    <?= Html::img(null, ['class' => 'owl-lazy', 'data-src' => \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image']]); ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,9 +101,9 @@ $this->registerMetaTag([
                                 <hr class="divider-w">
 
 								<?php
-								$promoRange = Yii::t('app', 'Valid from {dateStart} until {dateEnd}', [
-								    'dateStart' => Yii::$app->formatter->asDate($modelBusinessPromo['date_start'], 'medium'),
-								    'dateEnd' => Yii::$app->formatter->asDate($modelBusinessPromo['date_end'], 'medium')
+								$promoRange = \Yii::t('app', 'Valid from {dateStart} until {dateEnd}', [
+								    'dateStart' => \Yii::$app->formatter->asDate($modelBusinessPromo['date_start'], 'medium'),
+								    'dateEnd' => \Yii::$app->formatter->asDate($modelBusinessPromo['date_end'], 'medium')
 								]); ?>
 
                                 <div class="box-content">

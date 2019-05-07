@@ -22,7 +22,7 @@ if (!empty($modelUserPostComment)): ?>
                             <?php
                             $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
-                            echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                            echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
                                 'class' => 'img-fluid rounded-circle'
                             ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 

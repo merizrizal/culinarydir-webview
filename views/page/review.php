@@ -11,9 +11,9 @@ use yii\web\View;
 
 webview\assets\RateyoAsset::register($this);
 
-$this->title = Yii::t('app', 'Review') . ' ' . $modelUserPostMain['business']['name'];
+$this->title = \Yii::t('app', 'Review') . ' ' . $modelUserPostMain['business']['name'];
 
-$ogUrl = Yii::$app->urlManager->createAbsoluteUrl([
+$ogUrl = \Yii::$app->urlManager->createAbsoluteUrl([
     'page/review',
     'id' => $modelUserPostMain['id'],
     'uniqueName' => $modelUserPostMain['business']['unique_name'],
@@ -24,11 +24,11 @@ $ogTitle = !empty($modelUserPostMain['business']['name']) && !empty($dataUserVot
 $ogDescription = !empty($modelUserPostMain['text']) ? $modelUserPostMain['text'] : $this->title;
 $ogDescription = StringHelper::truncate(preg_replace('/[\r\n]+/','' , $ogDescription), 300);
 
-$ogImage = Yii::$app->params['endPointLoadImage'] . 'user-post?image=&w=490&h=276';
+$ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=&w=490&h=276';
 
 if (!empty($modelUserPostMain['userPostMains'][0]['image'])) {
 
-    $ogImage = Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['userPostMains'][0]['image'];
+    $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['userPostMains'][0]['image'];
 }
 
 $this->registerMetaTag([
@@ -81,7 +81,7 @@ $this->registerMetaTag([
                                                 <div class="col-sm-7 col-12">
                                                     <div class="widget-posts-image">
 
-    												    <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+    												    <?= Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
     												        'class' => 'img-fluid rounded-circle'
     												    ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
 
@@ -138,11 +138,11 @@ $this->registerMetaTag([
                                                                     <div class="gallery-item post-gallery">
                                                                         <div class="gallery-image">
                                                                             <div class="work-image">
-                                                                                <?= Html::img(Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=200&h=200', ['class' => 'img-fluid']); ?>
+                                                                                <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'] . '&w=200&h=200', ['class' => 'img-fluid']); ?>
                                                                             </div>
                                                                             <div class="work-caption">
                                                                                 <div class="work-descr">
-                                                                                	<a class="btn btn-d btn-small btn-xs btn-circle show-image" href="<?= Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image']; ?>"><i class="aicon aicon-zoomin"></i></a>
+                                                                                	<a class="btn btn-d btn-small btn-xs btn-circle show-image" href="<?= \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image']; ?>"><i class="aicon aicon-zoomin"></i></a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -222,7 +222,7 @@ $this->registerMetaTag([
                                                         <div class="input-group mt-10 mb-10">
                                                             <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
                                                             &nbsp;&nbsp;&nbsp;
-                                                            <?= Html::textInput('comment_input', null, ['id' => 'input-comments-review', 'class' => 'form-control', 'placeholder' => Yii::t('app', 'Write a Comment')]); ?>
+                                                            <?= Html::textInput('comment_input', null, ['id' => 'input-comments-review', 'class' => 'form-control', 'placeholder' => \Yii::t('app', 'Write a Comment')]); ?>
                                                         </div>
 
                                                         <div class="overlay" style="display: none;"></div>
@@ -241,7 +241,7 @@ $this->registerMetaTag([
                                                                                 <?php
                                                                                 $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
-                                                                                echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                                                                echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
                                                                                     'class' => 'img-fluid rounded-circle'
                                                                                 ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
@@ -284,7 +284,7 @@ $this->registerMetaTag([
 </div>
 
 <?php
-$this->registerCssFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
+$this->registerCssFile(\Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
 Snackbar::widget();
 webview\components\RatingColor::widget();
@@ -293,7 +293,7 @@ frontend\components\FacebookShare::widget();
 
 $this->registerJs(Snackbar::messageResponse(), View::POS_HEAD);
 
-$this->registerJsFile(Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
+$this->registerJsFile(\Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
 
 $jscript = '
     var reviewId = $(".user-post-main-id");
@@ -372,7 +372,7 @@ $jscript = '
                     "user_post_main_id": reviewId.val(),
                     "text": $(this).val(),
                 },
-                url: "' . Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
+                url: "' . \Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
                 beforeSend: function(xhr) {
 
                     $(".comment-section").siblings(".overlay").show();
@@ -390,7 +390,7 @@ $jscript = '
                             data: {
                                 "user_post_main_id": response.user_post_main_id
                             },
-                            url: "' . Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
+                            url: "' . \Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
                             success: function(response) {
 
                                 $(".comment-section").html(response);

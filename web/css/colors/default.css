@@ -47,12 +47,21 @@ body {
   	background-image: linear-gradient(to top, rgba(229, 38, 38, 0.9) 2px, rgba(0, 150, 136, 0) 2px), linear-gradient(to top, rgba(0, 0, 0, 0.26) 1px, transparent 1px); 
 }
 
-.radio label input[type="radio"]:checked ~ .bmd-radio::before, 
+.checkbox label input[type="checkbox"]:checked + .checkbox-decorator .check {
+	color: white;
+}
+
+.checkbox label input[type="checkbox"]:checked + .checkbox-decorator .check::before {
+	color: rgb(229, 38, 38);
+}
+
+.radio label input[type="radio"]:checked ~ .bmd-radio::before,
 label.radio-inline input[type="radio"]:checked ~ .bmd-radio::before {
 	background-color: rgb(229, 38, 38);
 }
 
-.radio label input[type="radio"]:checked ~ .bmd-radio::after, 
+.checkbox label input[type="checkbox"]:checked + .checkbox-decorator .check,
+.radio label input[type="radio"]:checked ~ .bmd-radio::after,
 label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 	border-color: rgb(229, 38, 38);
 }

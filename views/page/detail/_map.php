@@ -11,10 +11,10 @@ use yii\helpers\Html;
             <div class="box-title" id="title-map">
             	<div class="row">
             		<div class="col-6">
-						<h4 class="mt-0 mb-0 inline-block"><?= Yii::t('app', 'Map') ?></h4>
+						<h4 class="mt-0 mb-0 inline-block"><?= \Yii::t('app', 'Map') ?></h4>
             		</div>
             		<div class="col-6 text-right">
-            			<?= Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . Yii::t('app', 'Open Map'), 'https://www.google.com/maps/search/?api=1&query=' . $coordinate[0] . ',' . $coordinate[1] . '', ['class' => 'btn btn-raised btn-small btn-round', 'target' => '_blank']) ?>
+            			<?= Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . \Yii::t('app', 'Open Map'), 'https://www.google.com/maps/search/?api=1&query=' . $coordinate[0] . ',' . $coordinate[1] . '', ['class' => 'btn btn-raised btn-small btn-round', 'target' => '_blank']) ?>
             		</div>
             	</div>
             </div>
@@ -51,7 +51,7 @@ $jscript = '
         position: coordinate,
         map: seeMap,
         icon: {
-            url: "' . Yii::$app->request->baseUrl . '/media/img/marker.png",
+            url: "' . \Yii::$app->request->baseUrl . '/media/img/marker.png",
             scaledSize: new google.maps.Size(32, 32),
             origin: new google.maps.Point(0,0),
             anchor: new google.maps.Point(15, 32)
