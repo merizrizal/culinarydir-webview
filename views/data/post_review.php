@@ -35,7 +35,7 @@ $linkPager = LinkPager::widget([
 <div class="row mt-10 mb-20">
     <div class="col-sm-6 col-12 mb-10">
 
-        <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
     <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
@@ -90,7 +90,7 @@ $linkPager = LinkPager::widget([
                     <div class="row mb-10">
                         <div class="col-sm-7 col-12">
                             <div class="widget-posts-image">
-                                <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img fluid rounded-circle']), ['user/user-profile', 'user' => $dataUserPostMain['user']['username']]) ?>
+                                <?= Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img fluid rounded-circle']), ['user/user-profile', 'user' => $dataUserPostMain['user']['username']]) ?>
                             </div>
 
                             <div class="widget-posts-body">
@@ -144,7 +144,7 @@ $linkPager = LinkPager::widget([
                                             <div class="gallery-item post-gallery">
                                                 <div class="gallery-image">
                                                     <div class="work-image">
-                                                        <?= Html::img(Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'] . '&w=72&h=72', ['class' => 'img-component']); ?>
+                                                        <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'] . '&w=72&h=72', ['class' => 'img-component']); ?>
                                                     </div>
                                                     <div class="work-caption">
                                                         <div class="work-descr">
@@ -153,10 +153,10 @@ $linkPager = LinkPager::widget([
                                                         	if ($i == 4) {
 
                                                         	    echo Html::a('+' . (count($dataUserPostMain['userPostMains']) - $i), ['page/review', 'id' => $dataUserPostMain['id']], ['class' => 'btn btn-d btn-small btn-xs btn-circle']);
-                                                        	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image hidden']);
+                                                        	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image hidden']);
                                                         	} else {
 
-                                                        	    echo Html::a('<i class="aicon aicon-zoomin"></i>', Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
+                                                        	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
                                                         	} ?>
 
                                                         </div>
@@ -217,7 +217,7 @@ $linkPager = LinkPager::widget([
                                 </li>
                                 <li class="list-inline-item">
 
-                                    <?= Html::a('<i class="aicon aicon-share1"></i> ', Yii::$app->urlManager->createAbsoluteUrl([
+                                    <?= Html::a('<i class="aicon aicon-share1"></i> ', \Yii::$app->urlManager->createAbsoluteUrl([
                                         'page/review',
                                         'id' => $dataUserPostMain['id'],
                                     ]), ['class' => 'btn btn-raised btn-small btn-round share-review-trigger d-block d-sm-none']); ?>
@@ -229,7 +229,7 @@ $linkPager = LinkPager::widget([
                             <ul class="list-inline list-review mt-0 mb-0">
                                 <li>
 
-                                    <?= Html::a('<i class="aicon aicon-share1"></i> Share', Yii::$app->urlManager->createAbsoluteUrl([
+                                    <?= Html::a('<i class="aicon aicon-share1"></i> Share', \Yii::$app->urlManager->createAbsoluteUrl([
                                         'page/review',
                                         'id' => $dataUserPostMain['id'],
                                     ]), ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
@@ -250,7 +250,7 @@ $linkPager = LinkPager::widget([
                                     <?= Html::textInput('comment_input', null, [
                                         'id' => 'input-comments-review',
                                         'class' => 'form-control input-comments-review',
-                                        'placeholder' => Yii::t('app', 'Write a Comment')
+                                        'placeholder' => \Yii::t('app', 'Write a Comment')
                                     ]); ?>
 
                                 </div>
@@ -270,7 +270,7 @@ $linkPager = LinkPager::widget([
 
                                                         <?php
                                                         $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=64&h=64' : 'default-avatar.png';
-                                                        echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img-fluid rounded-circle']), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
+                                                        echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img-fluid rounded-circle']), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
                                                     </div>
 
@@ -307,7 +307,7 @@ $linkPager = LinkPager::widget([
 <div class="row mt-20 mb-10">
     <div class="col-sm-6 col-12 mb-10">
 
-        <?= Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
     <div class="col-sm-6 d-none d-sm-block d-md-none text-right">

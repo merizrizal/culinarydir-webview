@@ -11,14 +11,14 @@ AppAsset::register($this); ?>
 
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= \Yii::$app->language ?>">
     <head>
-        <meta charset="<?= Yii::$app->charset ?>"/>
+        <meta charset="<?= \Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="app" content="<?= Html::encode(Yii::$app->name) ?>">
+        <meta name="app" content="<?= Html::encode(\Yii::$app->name) ?>">
         <?= Html::csrfMetaTags() ?>
 
-        <title><?= Html::encode(Yii::$app->name) . ' - ' . Html::encode($this->title) ?></title>
+        <title><?= Html::encode(\Yii::$app->name) . ' - ' . Html::encode($this->title) ?></title>
         <?php $this->head(); ?>
     </head>
     <body>

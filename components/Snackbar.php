@@ -1,7 +1,6 @@
 <?php
 namespace webview\components;
 
-use Yii;
 use yii\base\Widget;
 
 class Snackbar extends Widget
@@ -10,7 +9,7 @@ class Snackbar extends Widget
     {
         parent::init();
 
-        $this->getView()->registerJsFile(Yii::$app->homeUrl . 'lib/snackbarjs/snackbar.min.js', ['depends' => 'yii\web\JqueryAsset']);
+        $this->getView()->registerJsFile(\Yii::$app->homeUrl . 'lib/snackbarjs/snackbar.min.js', ['depends' => 'yii\web\JqueryAsset']);
     }
 
     public static function messageResponse()
@@ -42,7 +41,7 @@ class Snackbar extends Widget
                         icon: icon,
                         title: title,
                         message: message,
-                        url: "' . Yii::$app->urlManager->createUrl(['order/checkout']) . '"
+                        url: "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '"
                     },{
                         element: "body",
                         position: null,
@@ -56,7 +55,7 @@ class Snackbar extends Widget
                         },
                         offset: {
                             x: 0,
-                            y: ' . (Yii::$app->request->getUserAgent() == 'com.asikmakan.app' ? 60 : 0) . '
+                            y: ' . (\Yii::$app->request->getUserAgent() == 'com.asikmakan.app' ? 60 : 0) . '
                         },
                         spacing: 0,
                         z_index: 1031,

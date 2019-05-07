@@ -10,7 +10,6 @@ use core\models\TransactionSession;
 use core\models\UserPostMain;
 use core\models\UserReport;
 use frontend\models\Post;
-use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
@@ -40,7 +39,7 @@ class PageController extends base\BaseController
 
     public function actionDetail($id)
     {
-        Yii::$app->formatter->timeZone = 'Asia/Jakarta';
+        \Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
         $modelBusiness = Business::find()
             ->joinWith([
@@ -89,7 +88,7 @@ class PageController extends base\BaseController
                 },
                 'businessPromos' => function ($query) {
 
-                    $query->andOnCondition(['>=', 'business_promo.date_end', Yii::$app->formatter->asDate(time())])
+                    $query->andOnCondition(['>=', 'business_promo.date_end', \Yii::$app->formatter->asDate(time())])
                         ->andOnCondition(['business_promo.not_active' => false]);
                 },
                 'membershipType' => function ($query) {
@@ -108,7 +107,7 @@ class PageController extends base\BaseController
                 'userLoves' => function ($query) {
 
                     $query->andOnCondition([
-                        'user_love.user_id' => ! empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null
+                        'user_love.user_id' => ! empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null
                     ])
                         ->andOnCondition([
                         'user_love.is_active' => true
@@ -116,7 +115,7 @@ class PageController extends base\BaseController
                 },
                 'userVisits' => function ($query) {
 
-                    $query->andOnCondition(['user_visit.user_id' => ! empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+                    $query->andOnCondition(['user_visit.user_id' => ! empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
                         ->andOnCondition(['user_visit.is_active' => true]);
                 }
             ])
@@ -161,7 +160,7 @@ class PageController extends base\BaseController
                 },
                 'userPostLoves' => function ($query) {
 
-                    $query->andOnCondition(['user_post_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+                    $query->andOnCondition(['user_post_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
                         ->andOnCondition(['user_post_love.is_active' => true]);
                 },
                 'userPostComments' => function ($query) {
@@ -172,7 +171,7 @@ class PageController extends base\BaseController
             ])
             ->andWhere(['user_post_main.parent_id' => null])
             ->andWhere(['user_post_main.business_id' => $modelBusiness['id']])
-            ->andWhere(['user_post_main.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+            ->andWhere(['user_post_main.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
             ->andWhere(['user_post_main.type' => 'Review'])
             ->andWhere(['user_post_main.is_publish' => true])
             ->asArray()->one();
@@ -184,7 +183,7 @@ class PageController extends base\BaseController
 
         $modelTransactionSession = TransactionSession::find()
             ->joinWith(['business'])
-            ->andWhere(['transaction_session.user_ordered' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+            ->andWhere(['transaction_session.user_ordered' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
             ->andWhere(['transaction_session.is_closed' => false])
             ->asArray()->one();
 
@@ -232,7 +231,7 @@ class PageController extends base\BaseController
             $dataBusinessImage[$businessImage['category']][] = $businessImage;
         }
 
-        Yii::$app->formatter->timeZone = 'UTC';
+        \Yii::$app->formatter->timeZone = 'UTC';
 
         return $this->render('detail', [
             'modelBusiness' => $modelBusiness,
@@ -244,7 +243,7 @@ class PageController extends base\BaseController
             'modelRatingComponent' => $modelRatingComponent,
             'modelUserReport' => $modelUserReport,
             'modelTransactionSession' => $modelTransactionSession,
-            'queryParams' => Yii::$app->request->getQueryParams(),
+            'queryParams' => \Yii::$app->request->getQueryParams(),
             'isOrderOnline' => $isOrderOnline
         ]);
     }
@@ -306,7 +305,7 @@ class PageController extends base\BaseController
                 'userPostLoves' => function ($query) {
 
                     $query->andOnCondition([
-                        'user_post_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null,
+                        'user_post_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null,
                         'user_post_love.is_active' => true
                     ]);
                 },
@@ -369,7 +368,7 @@ class PageController extends base\BaseController
                 'userPostLoves' => function ($query) {
 
                     $query->andOnCondition([
-                        'user_post_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null,
+                        'user_post_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null,
                         'user_post_love.is_active' => true
                     ]);
                 },
@@ -454,7 +453,7 @@ class PageController extends base\BaseController
                 },
                 'business'
             ])
-            ->andWhere(['transaction_session.user_ordered' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+            ->andWhere(['transaction_session.user_ordered' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
             ->andWhere(['transaction_session.is_closed' => false])
             ->asArray()->one();
 

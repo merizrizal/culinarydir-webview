@@ -29,10 +29,10 @@ use yii\widgets\ActiveForm;
                 <div class="box-title" id="title-post-photo">
                 	<div class="row">
                 		<div class="col-6">
-                    		<h4 class="mt-0 mb-0"><?= Yii::t('app', 'Add Photo') ?></h4>
+                    		<h4 class="mt-0 mb-0"><?= \Yii::t('app', 'Add Photo') ?></h4>
                     	</div>
                 		<div class="col-6 text-right">
-                    		<span id="close-post-photo-container"><a class="text-danger" href=""><?= Yii::t('app', 'Cancel') ?></a></span>
+                    		<span id="close-post-photo-container"><a class="text-danger" href=""><?= \Yii::t('app', 'Cancel') ?></a></span>
             			</div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
                 <div class="box-content">
 
                     <div class="form-group">
-                        <button id="post-photo-trigger" type="button" class="btn btn-raised btn-round btn-danger"><i class="aicon aicon-plus"></i> <?= Yii::t('app', 'Add Photo') ?></button>
+                        <button id="post-photo-trigger" type="button" class="btn btn-raised btn-round btn-danger"><i class="aicon aicon-plus"></i> <?= \Yii::t('app', 'Add Photo') ?></button>
                     </div>
 
                     <div class="row" id="post-photo-container">
@@ -49,7 +49,7 @@ use yii\widgets\ActiveForm;
                         	<?php
                             echo $form->field($modelPostPhoto, 'text')->textInput([
                                 'class' => 'form-control',
-                                'placeholder' => Yii::t('app', 'Photo Caption'),
+                                'placeholder' => \Yii::t('app', 'Photo Caption'),
                             ]);
 
                             echo $form->field($modelPostPhoto, 'image')->fileInput([
@@ -59,8 +59,8 @@ use yii\widgets\ActiveForm;
                             ]); ?>
 
                             <div class="form-group">
-                                <?= Html::submitButton('<i class="aicon aicon-share"></i> Upload ' . Yii::t('app', 'Photo'), ['id' => 'submit-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>&nbsp;
-                                <?= Html::a('<i class="aicon aicon-cross"></i> ' . Yii::t('app', 'Cancel'), null, ['id' => 'cancel-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
+                                <?= Html::submitButton('<i class="aicon aicon-share"></i> Upload ' . \Yii::t('app', 'Photo'), ['id' => 'submit-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>&nbsp;
+                                <?= Html::a('<i class="aicon aicon-cross"></i> ' . \Yii::t('app', 'Cancel'), null, ['id' => 'cancel-post-photo', 'class' => 'btn btn-raised btn-standard btn-round']) ?>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@ $jscript = '
         $.ajax({
             cache: false,
             type: "GET",
-            url: "' . Yii::$app->urlManager->createUrl([
+            url: "' . \Yii::$app->urlManager->createUrl([
                 'data/post-photo',
                 'city' => Inflector::slug($modelBusiness['businessLocation']['city']['name']),
                 'uniqueName' => $modelBusiness['unique_name']
@@ -135,7 +135,7 @@ $jscript = '
         $.ajax({
             cache: false,
             type: "POST",
-            url: "' . Yii::$app->urlManager->createUrl(['redirect/add-photo']) . '",
+            url: "' . \Yii::$app->urlManager->createUrl(['redirect/add-photo']) . '",
             success: function(response) {
 
                 thisObj.fadeOut(100, function() {

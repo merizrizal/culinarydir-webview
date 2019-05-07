@@ -6,7 +6,6 @@ use core\models\BusinessDetailVote;
 use core\models\RatingComponent;
 use core\models\UserPostComment;
 use core\models\UserPostMain;
-use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 
@@ -37,9 +36,9 @@ class DataController extends base\BaseController
 
     public function actionPostReview($city, $uniqueName)
     {
-        if (!Yii::$app->request->isAjax) {
+        if (!\Yii::$app->request->isAjax) {
 
-            $queryParams = Yii::$app->request->getQueryParams();
+            $queryParams = \Yii::$app->request->getQueryParams();
 
             $this->redirect(['page/detail',
                 'city' => $city,
@@ -71,7 +70,7 @@ class DataController extends base\BaseController
                 'userPostLoves' => function ($query) {
 
                     $query->andOnCondition([
-                        'user_post_love.user_id' => !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null,
+                        'user_post_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null,
                         'user_post_love.is_active' => true
                     ]);
                 },
@@ -83,7 +82,7 @@ class DataController extends base\BaseController
             ->andWhere(['user_post_main.is_publish' => true])
             ->andWhere(['business.unique_name' => $uniqueName])
             ->andWhere(['lower(city.name)' => str_replace('-', ' ', $city)])
-            ->andFilterWhere(['<>', 'user_post_main.user_id', !empty(Yii::$app->user->getIdentity()->id) ? Yii::$app->user->getIdentity()->id : null])
+            ->andFilterWhere(['<>', 'user_post_main.user_id', !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
             ->orderBy(['user_post_main.created_at' => SORT_DESC])
             ->distinct()
             ->asArray();
@@ -102,7 +101,7 @@ class DataController extends base\BaseController
         $startItem = !empty($modelUserPostMain) ? $offset + 1 : 0;
         $endItem = min(($offset + $pageSize), $totalCount);
 
-        Yii::$app->formatter->timeZone = 'Asia/Jakarta';
+        \Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
         return $this->render('post_review', [
             'modelUserPostMain' => $modelUserPostMain,
@@ -115,9 +114,9 @@ class DataController extends base\BaseController
 
     public function actionPostPhoto($city, $uniqueName)
     {
-        if (!Yii::$app->request->isAjax) {
+        if (!\Yii::$app->request->isAjax) {
 
-            $queryParams = Yii::$app->request->getQueryParams();
+            $queryParams = \Yii::$app->request->getQueryParams();
 
             $this->redirect(['page/detail',
                 'city' => $city,
@@ -159,7 +158,7 @@ class DataController extends base\BaseController
         $startItem = !empty($modelUserPostMain) ? $offset + 1 : 0;
         $endItem = min(($offset + $pageSize), $totalCount);
 
-        Yii::$app->formatter->timeZone = 'Asia/Jakarta';
+        \Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
         return $this->render('post_photo', [
             'modelUserPostMain' => $modelUserPostMain,
@@ -179,15 +178,15 @@ class DataController extends base\BaseController
                 'user',
                 'userPostMain',
             ])
-            ->andWhere(['user_post_comment.user_post_main_id' => Yii::$app->request->post('user_post_main_id')])
+            ->andWhere(['user_post_comment.user_post_main_id' => \Yii::$app->request->post('user_post_main_id')])
             ->orderBy(['user_post_comment.created_at' => SORT_ASC])
             ->distinct()
             ->asArray()->all();
 
-        Yii::$app->formatter->timeZone = 'Asia/Jakarta';
+        \Yii::$app->formatter->timeZone = 'Asia/Jakarta';
 
         return $this->render('post_comment', [
-            'userPostId' => Yii::$app->request->post('user_post_main_id'),
+            'userPostId' => \Yii::$app->request->post('user_post_main_id'),
             'modelUserPostComment' => $modelUserPostComment,
         ]);
     }
@@ -197,7 +196,7 @@ class DataController extends base\BaseController
         $this->layout = 'ajax';
 
         $modelBusinessDetail = BusinessDetail::find()
-            ->andWhere(['business_detail.business_id' => Yii::$app->request->post('business_id')])
+            ->andWhere(['business_detail.business_id' => \Yii::$app->request->post('business_id')])
             ->asArray()->one();
 
         $modelBusinessDetailVote = BusinessDetailVote::find()
@@ -207,7 +206,7 @@ class DataController extends base\BaseController
                     $query->andOnCondition(['is_active' => true]);
                 }
             ])
-            ->andWhere(['business_detail_vote.business_id' => Yii::$app->request->post('business_id')])
+            ->andWhere(['business_detail_vote.business_id' => \Yii::$app->request->post('business_id')])
             ->asArray()->all();
 
         $modelRatingComponent = RatingComponent::find()

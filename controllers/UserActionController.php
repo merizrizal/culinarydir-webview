@@ -9,7 +9,6 @@ use core\models\TransactionSession;
 use core\models\UserPostLove;
 use core\models\UserPostMain;
 use core\models\UserVote;
-use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
@@ -76,13 +75,13 @@ class UserActionController extends base\BaseController
             $result['type'] = 'danger';
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        \Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
     }
 
     public function actionDeleteUserPost($id)
     {
-        $transaction = Yii::$app->db->beginTransaction();
+        $transaction = \Yii::$app->db->beginTransaction();
         $flag = false;
 
         $modelUserPostMain = UserPostMain::find()
@@ -207,7 +206,7 @@ class UserActionController extends base\BaseController
             $result['type'] = 'danger';
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        \Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
     }
 
@@ -216,13 +215,13 @@ class UserActionController extends base\BaseController
         $return = [];
 
         $modelTransactionSession = TransactionSession::find()
-            ->andWhere(['user_ordered' => Yii::$app->user->getIdentity()->id])
+            ->andWhere(['user_ordered' => \Yii::$app->user->getIdentity()->id])
             ->andWhere(['is_closed' => false])
             ->asArray()->one();
 
         if (!empty($modelTransactionSession)) {
 
-            if ($modelTransactionSession['id'] == Yii::$app->request->post('id')) {
+            if ($modelTransactionSession['id'] == \Yii::$app->request->post('id')) {
 
                 return $this->redirect(['order/checkout']);
             }
@@ -234,13 +233,13 @@ class UserActionController extends base\BaseController
             $return['text'] = 'Silahkan selesaikan pesanan anda terlebih dahulu.';
         } else {
 
-            $transaction = Yii::$app->db->beginTransaction();
+            $transaction = \Yii::$app->db->beginTransaction();
 
             $flag = false;
 
             $oldModelTransaction = TransactionSession::find()
                 ->joinWith(['transactionItems'])
-                ->andWhere(['transaction_session.id' => Yii::$app->request->post('id')])
+                ->andWhere(['transaction_session.id' => \Yii::$app->request->post('id')])
                 ->one();
 
             $newModelTransactionSession = new TransactionSession();
@@ -286,7 +285,7 @@ class UserActionController extends base\BaseController
             }
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        \Yii::$app->response->format = Response::FORMAT_JSON;
         return $return;
     }
 }

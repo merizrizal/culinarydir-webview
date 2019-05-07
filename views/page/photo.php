@@ -10,9 +10,9 @@ use yii\web\View;
 
 common\assets\OwlCarouselAsset::register($this);
 
-$this->title = Yii::t('app', 'Photo') . ' ' . $modelUserPostMain['business']['name'];
+$this->title = \Yii::t('app', 'Photo') . ' ' . $modelUserPostMain['business']['name'];
 
-$ogUrl = Yii::$app->urlManager->createAbsoluteUrl([
+$ogUrl = \Yii::$app->urlManager->createAbsoluteUrl([
     'page/photo',
     'id' => $modelUserPostMain['id'],
     'uniqueName' => $modelUserPostMain['business']['unique_name'],
@@ -20,11 +20,11 @@ $ogUrl = Yii::$app->urlManager->createAbsoluteUrl([
 
 $ogTitle = !empty($modelUserPostMain['business']['name']) ? 'Foto untuk ' . $modelUserPostMain['business']['name'] : 'Foto di Asikmakan';
 $ogDescription = !empty($modelUserPostMain['text']) ? $modelUserPostMain['text'] : $this->title;
-$ogImage = Yii::$app->params['endPointLoadImage'] . 'user-post?image=&w=490&h=276';
+$ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=&w=490&h=276';
 
 if (!empty($modelUserPostMain['image'])) {
 
-    $ogImage = Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image'];
+    $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image'];
 }
 
 $this->registerMetaTag([
@@ -85,7 +85,7 @@ $this->registerMetaTag([
                                                 <div class="col-sm-7 col-12">
                                                     <div class="widget-posts-image">
 
-    												    <?= Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+    												    <?= Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
     												        'class' => 'img-fluid rounded-circle'
     												    ]), ['user/user-profile', 'user' => $modelUserPostMain['user']['username']]) ?>
 
@@ -103,7 +103,7 @@ $this->registerMetaTag([
                                                 <div class="col-12">
                                                     <div class="photo-review mt-10 mb-10">
                                                     	<div class="owl-carousel owl-theme">
-                                                        	<?= Html::img(null, ['class' => 'owl-lazy img-fluid', 'data-src' => Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image']]) ?>
+                                                        	<?= Html::img(null, ['class' => 'owl-lazy img-fluid', 'data-src' => \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image']]) ?>
                                                         </div>
                                                     </div>
 
@@ -171,7 +171,7 @@ $this->registerMetaTag([
         														<div class="input-group mt-10 mb-10">
                                                                     <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
                                                                     &nbsp;&nbsp;&nbsp;
-                                                                    <?= Html::textInput('comment_input', null, ['id' => 'input-comments-photo', 'class' => 'form-control', 'placeholder' => Yii::t('app', 'Write a Comment')]); ?>
+                                                                    <?= Html::textInput('comment_input', null, ['id' => 'input-comments-photo', 'class' => 'form-control', 'placeholder' => \Yii::t('app', 'Write a Comment')]); ?>
                                                                 </div>
 
                                                                 <div class="overlay" style="display: none;"></div>
@@ -190,7 +190,7 @@ $this->registerMetaTag([
                                                                                         <?php
                                                                                         $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=200&h=200' : 'default-avatar.png';
 
-                                                                                        echo Html::a(Html::img(Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                                                                        echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
                                                                                             'class' => 'img-fluid rounded-circle'
                                                                                         ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
@@ -298,7 +298,7 @@ $jscript = '
                     "user_post_main_id": photoId.val(),
                     "text": $(this).val(),
                 },
-                url: "' . Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
+                url: "' . \Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
                 beforeSend: function(xhr) {
 
                     $(".comment-section").siblings(".overlay").show();
@@ -316,7 +316,7 @@ $jscript = '
                             data: {
                                 "user_post_main_id": response.user_post_main_id
                             },
-                            url: "' . Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
+                            url: "' . \Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
                             success: function(response) {
 
                                 $(".comment-section").html(response);
