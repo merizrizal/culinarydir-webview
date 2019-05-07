@@ -291,9 +291,16 @@ $urlMyReviewDetail = [
 
                 </div>
 
-                <div class="form-group has-feedback" id="write-review-trigger">
-                    <i class="aicon aicon-pencil form-control-feedback"></i>
-                    <input type="text" class="form-control" placeholder="<?= Yii::t('app', 'Share your experience here') ?>"/>
+                <div id="write-review-trigger">
+                	<div class="input-group mt-10">
+                        <span class="input-group-text"><i class="aicon aicon-pencil"></i></span>
+                        &nbsp;&nbsp;&nbsp;
+                        <?= Html::textInput('', null, [
+                            'class' => 'form-control',
+                            'placeholder' => Yii::t('app', 'Share your experience here')
+                        ]); ?>
+
+                    </div>
                 </div>
 
                 <?php
@@ -357,7 +364,7 @@ $urlMyReviewDetail = [
 
                                                     echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null,]); ?>
 
-													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating"></div>
+													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating" data-rating=<?= !empty($valueRatingComponent) ? $valueRatingComponent : 0 ?>></div>
                                                 </div>
 
                                                 <div class="col-6 business-rating-components p-15">
@@ -656,8 +663,6 @@ $jscript = '
 
     $("#close-review-container > a, #cancel-write-review").on("click", function(event) {
 
-        isSetOverall = false;
-
         $("#write-review-container, #close-review-container").fadeOut(100, function() {
 
             if (cancelWrite) {
@@ -693,8 +698,8 @@ $jscript = '
                 $("#post-review-rating-" + $(this).val()).val($("#rating-" + $(this).val()).val());
             } else {
 
-                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(".temp-rating-" + $(this).val()).val());
-                $("#post-review-rating-" + $(this).val()).val($(".temp-rating-" + $(this).val()).val());
+                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(this).siblings(".component-rating").rateYo("rating"));
+                $("#post-review-rating-" + $(this).val()).val($(this).siblings(".component-rating").rateYo("rating"));
             }
         });
 
@@ -773,13 +778,17 @@ $jscript = '
 
         $(this).parent().siblings("a").dropdown("toggle");
 
-        isSetOverall = false;
-        overallRating.rateYo("rating", $(".temp-overall-rating").val());
+        isSetOverall = true;
+        overallRating.rateYo("rating", $(".star-rating-review").rateYo("rating"));
 
         $(".rating-component-id").each(function() {
 
-            $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(".temp-rating-" + $(this).val()).val());
-            $("#post-review-rating-" + $(this).val()).val($(".temp-rating-" + $(this).val()).val());
+            $(this).siblings(".component-rating").rateYo("rating", $(this).siblings(".component-rating").data("rating"));
+
+            var dataRating = $(this).siblings(".component-rating").rateYo("rating");
+
+            $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", dataRating);
+            $("#post-review-rating-" + $(this).val()).val(dataRating);
         });
 
         return false;
@@ -977,6 +986,7 @@ $jscript = '
                             tempOverall += parseInt(tempRating);
 
                             $(".temp-rating-" + $(this).val()).val(tempRating);
+                            $(this).siblings(".component-rating").data("rating", tempRating);
                         });
 
                         $(".temp-overall-rating").val(tempOverall / parseInt($(".rating-component-id").length));

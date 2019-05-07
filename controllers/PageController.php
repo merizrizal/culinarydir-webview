@@ -391,7 +391,7 @@ class PageController extends base\BaseController
         ]);
     }
 
-    public function actionMenu($uniqueName)
+    public function actionMenu($id)
     {
         $modelBusiness = Business::find()
             ->joinWith([
@@ -424,7 +424,7 @@ class PageController extends base\BaseController
                         ->andOnCondition(['product_service.not_active' => false]);
                 },
             ])
-            ->andWhere(['business.unique_name' => $uniqueName])
+            ->andWhere(['business.id' => $id])
             ->asArray()->one();
 
         $isOrderOnline = false;
