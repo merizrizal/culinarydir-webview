@@ -321,17 +321,6 @@ $jscript .= '
 
             $(".nav-tabs").addClass("nav-tabs-fixed");
             $(".nav-menu").addClass("stick");
-
-            setInterval(function () {
-
-                if ($(".navbar-up").length) {
-
-                    $(".nav-tabs").removeClass("nav-tabs-up");
-                } else {
-
-                    $(".nav-tabs").addClass("nav-tabs-up");
-                }
-            }, 250);
         } else {
 
             $(".nav-tabs").removeClass("nav-tabs-fixed");
