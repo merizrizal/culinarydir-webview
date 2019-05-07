@@ -494,9 +494,9 @@ class PageController extends base\BaseController
     public function actionDetailPromo($id)
     {
         $modelPromo = Promo::find()
-        ->joinWith(['userPromoItems'])
-        ->andWhere(['id' => $id])
-        ->asArray()->one();
+            ->joinWith(['userPromoItems'])
+            ->andWhere(['id' => $id])
+            ->asArray()->one();
 
         if (empty($modelPromo)) {
 

@@ -2,7 +2,6 @@
 
 use yii\web\View;
 use yii\helpers\Html;
-use webview\components\GrowlCustom;
 use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
@@ -21,9 +20,6 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
             		<div class="row">
             			<div class="col-12">
             				<div class="card box">
-            					<div class="box-title">
-    								<h4 class="font-alt text-center"><?= Yii::t('app', 'Product') . ' ' . $modelBusiness['name'] ?></h4>
-            					</div>
 
             					<?php
             					if (!empty($dataMenuCategorised)):
@@ -102,7 +98,7 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
 
                                                         <div class="row" id="menu-<?= $productCategoryId ?>">
                                                         	<div class="col-12">
-                                                        		<h4><?= $productCategoryName ?></h4>
+                                                        		<h5><?= $productCategoryName ?></h5>
                                                             	<hr class="divider-w mb-10">
                                                     		</div>
                                                         </div>
@@ -110,7 +106,7 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
                                                     	<?php
                                                         foreach ($dataMenu as $dataBusinessProduct):
 
-                                                            $existOrderClass = 'hidden';
+                                                            $existOrderClass = 'd-none';
                                                             $addOrderClass = '';
                                                             $transactionItemId = null;
                                                             $transactionItemNotes = null;
@@ -123,7 +119,7 @@ $this->title = Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
                                                                     if ($dataBusinessProduct['id'] === $dataTransactionItem['business_product_id']) {
 
                                                                         $existOrderClass = '';
-                                                                        $addOrderClass = 'hidden';
+                                                                        $addOrderClass = 'd-none';
                                                                         $transactionItemId = $dataTransactionItem['id'];
                                                                         $transactionItemNotes = $dataTransactionItem['note'];
                                                                         $transactionItemAmount = $dataTransactionItem['amount'];
@@ -307,10 +303,9 @@ if (Yii::$app->request->getUserAgent() == 'com.asikmakan.app') {
 $this->registerCss($cssScript);
 
 Snackbar::widget();
-GrowlCustom::widget();
 
 $this->registerJsFile(Yii::$app->homeUrl . '/lib/jquery-currency/jquery.currency.js', ['depends' => 'yii\web\YiiAsset']);
-$this->registerJs(Snackbar::messageResponse() . GrowlCustom::stickyResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse() . Snackbar::stickySnackbar(), View::POS_HEAD);
 
 $jscript .= '
     $(window).scroll(function() {
@@ -330,17 +325,25 @@ $jscript .= '
 
     var cart = null;
     var totalPrice = "";
+    var snackbarId;
 
     if ($(".transaction-session-id").length) {
 
         totalPrice = $("<span>").html("' . $modelTransactionSession['total_price'] . '").currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
 
-        cart = stickyGrowl(
+        cart = stickySnackbar(
             "aicon aicon-icon-online-ordering aicon-1x",
-            "' . $modelTransactionSession['total_amount'] . '" + " menu | total : " + totalPrice,
+            "<b>' . $modelTransactionSession['total_amount'] . '" + " menu | Total : " + totalPrice + "</b>",
             "' . $modelTransactionSession['business']['name'] . '",
             "info"
         );
+
+        snackbarId = $(".snackbar-cart").parent().parent().attr("id");
+
+        $("#" + snackbarId).on("click", function() {
+
+            window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
+        });
     }
 
     $(".add-item").on("click", function() {
@@ -364,23 +367,30 @@ $jscript .= '
 
                     if (cart != null) {
 
-                        cart.update("title", "<b>" + response.total_amount + " menu" + " | total : " + totalPrice + "</b>");
+                        $(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
                     } else {
 
-                        cart = stickyGrowl(
+                        cart = stickySnackbar(
                             "aicon aicon-icon-online-ordering aicon-1x",
-                            "<b>" + response.total_amount + " menu | total : " + totalPrice + "</b>",
+                            "<b>" + response.total_amount + " menu | Total : " + totalPrice + "</b>",
                             $(".business-name").val(),
                             "info"
                         );
+
+                        snackbarId = $(".snackbar-cart").parent().parent().attr("id");
+
+                        $("#" + snackbarId).on("click", function() {
+
+                            window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
+                        });
                     }
 
                     var parentClass = thisObj.parents(".business-menu-group");
 
-                    parentClass.find(".add-item").parent().parent().addClass("hidden");
-                    parentClass.find(".input-order").removeClass("hidden");
-                    parentClass.find(".remove-item").parent().removeClass("hidden");
-                    parentClass.find(".product-price").addClass("hidden");
+                    parentClass.find(".add-item").parent().parent().addClass("d-none");
+                    parentClass.find(".input-order").removeClass("d-none");
+                    parentClass.find(".remove-item").parent().removeClass("d-none");
+                    parentClass.find(".product-price").addClass("d-none");
                     parentClass.find(".transaction-item-id").val(response.item_id);
                 } else {
 
@@ -417,7 +427,7 @@ $jscript .= '
                 if (response.success) {
 
                     totalPrice = $("<span>").html(response.total_price).currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
-                    cart.update("title", "<b>" + response.total_amount + " menu" + " | total : " + totalPrice + "</b>");
+                    $(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
 
                     thisObj.parents(".business-menu-group").find(".transaction-item-amount").val(amount);
                 } else {
@@ -500,20 +510,21 @@ $jscript .= '
 
                     if (!response.total_amount) {
 
-                        cart.close();
+                        $("#snackbar-container .snackbar").remove();
+
                         cart = null;
                     } else {
 
                         totalPrice = $("<span>").html(response.total_price).currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
-                        cart.update("title", "<b>" + response.total_amount + " menu" + " | total : " + totalPrice + "</b>");
+                        $(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
                     }
 
                     var parentClass = thisObj.parents(".business-menu-group");
 
-                    parentClass.find(".remove-item").parent().addClass("hidden");
-                    parentClass.find(".input-order").addClass("hidden");
-                    parentClass.find(".add-item").parent().parent().removeClass("hidden");
-                    parentClass.find(".product-price").removeClass("hidden");
+                    parentClass.find(".remove-item").parent().addClass("d-none");
+                    parentClass.find(".input-order").addClass("d-none");
+                    parentClass.find(".add-item").parent().parent().removeClass("d-none");
+                    parentClass.find(".product-price").removeClass("d-none");
                     parentClass.find(".transaction-item-id").val("");
                     parentClass.find(".transaction-item-notes").val("");
                     parentClass.find(".transaction-item-amount").val(1);

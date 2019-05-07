@@ -69,6 +69,23 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 	margin-right: 0.5rem;
 }
 
+.snackbar-cart {
+	padding: 0;
+}
+
+.snackbar-cart > .list-group-item {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.snackbar-cart > .list-group-item.title-container {
+	padding-bottom: 5px;
+}
+
+.sticky-cart {
+	min-width: 100%;
+}
+
 /*place detail*/
 .detail.place-detail .view .box .widget.star-rating {
     font-size: 14px;
@@ -156,25 +173,23 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 	padding: 15px 20px;
 }
 
-.detail.checkout-order .card,
-.detail.checkout-order .bmd-form-group .radio label,
-.detail.menu-list .card {
-	font-size: 13px;
-}
-
 .detail.checkout-order .bmd-form-group .radio,
 .detail.checkout-order .bmd-form-group .radio label {
 	color: black;
 	font-weight: 1000;
 }
 
-.detail.menu-list .nav-tabs .nav-link {
-	font-size: 13px;
-	font-weight: 1000;
-}
-
 .detail.checkout-order .bmd-form-group {
 	padding: 0;
+}
+
+.detail.checkout-order .form-group.field-transactionsessionorder-business_delivery_id,
+.detail.checkout-order .form-group.field-transactionsessionorder-business_payment_id {
+	margin-bottom: 0;
+}
+
+.has-error .help-block {
+	color: #a94442;
 }
 
 /*user profile*/
@@ -852,7 +867,7 @@ a.form-control:hover {
 
 .order-confirmation-modal .modal-header-search {
    	margin-top: 62px;
-   	margin-left: 10px;
+   	margin-left: 33px;
 }
 
 .search-box-modal .facility-collapse label {

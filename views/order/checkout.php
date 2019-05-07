@@ -12,9 +12,6 @@ use webview\components\Snackbar;
 /* @var $promoItemClaimed Array */
 /* @var $dataOption Array */
 
-kartik\select2\Select2Asset::register($this);
-kartik\select2\ThemeKrajeeAsset::register($this);
-
 $this->title = 'Checkout'; ?>
 
 <div class="main bg-main">
@@ -23,9 +20,6 @@ $this->title = 'Checkout'; ?>
             <div class="row">
                 <div class="col-12">
                     <div class="card box">
-                        <div class="box-title">
-                            <h4 class="font-alt text-center"><?= \Yii::t('app', 'Order Confirmation') ?></h4>
-                        </div>
 
                         <hr class="divider-w">
 
@@ -160,7 +154,7 @@ $this->title = 'Checkout'; ?>
                                                                 }
                                                             ),
                                                             [
-                                                                'prompt' => '',
+                                                                'prompt' => Yii::t('app', 'Promo Code'),
                                                                 'class' => 'promo-code-field form-control',
                                                                 'options' => $dataOption,
                                                                 'style' => 'width:100%'
@@ -343,7 +337,7 @@ $this->title = 'Checkout'; ?>
 		<div class="col-12">
 			<div class="modal-header-search">
     			<div class="row">
-    				<div class="offset-1 col-10">
+    				<div class="col-10">
                         <div class="input-group">
                         	<div class="input-group-addon">
                         		<button type="button" class="close btn-close text-danger"><i class="aicon aicon-arrow-left2"></i></button>
@@ -471,13 +465,6 @@ $jscript = '
         $(".promo-amount-confirm").children().last().html(amount).currency({' . \Yii::$app->params['currencyOptions'] . '});
         $(".grand-total-confirm").children().last().html(grandTotal).currency({' . \Yii::$app->params['currencyOptions'] . '});
     }
-
-    $(".promo-code-field").select2({
-        theme: "krajee",
-        placeholder: "' . \Yii::t('app', 'Promo Code') . '",
-        minimumResultsForSearch: "Infinity",
-        allowClear: true
-    });
 
     $(".transaction-item-amount").on("focusout click", function() {
 
@@ -643,42 +630,36 @@ $jscript = '
         return false;
     });
 
-    $(".promo-code-field").on("select2:select", function() {
+    $(".promo-code-field").on("change", function() {
 
-        var amount = $(this).find(":selected").data("amount");
+        if ($(this).val() == "") {
 
-        var grandTotal = totalPrice - amount < 0 ? 0 : totalPrice - amount;
+            $(".promo-amount").hide();
+            $(".grand-total").hide();
 
-        $(".promo-amount").show();
-        $(".grand-total").show();
-        $(".promo-amount").children().last().html(amount).currency({' . \Yii::$app->params['currencyOptions'] . '});
-        $(".grand-total").children().last().html(grandTotal).currency({' . \Yii::$app->params['currencyOptions'] . '});
+            $(".promo-amount-confirm").hide();
+            $(".grand-total-confirm").hide();
 
-        $(".promo-amount-confirm").show();
-        $(".grand-total-confirm").show();
-        $(".promo-amount-confirm").children().last().html(amount).currency({' . \Yii::$app->params['currencyOptions'] . '});
-        $(".grand-total-confirm").children().last().html(grandTotal).currency({' . \Yii::$app->params['currencyOptions'] . '});
+            $(this).parent().siblings("span").html("");
+        } else {
 
-        var minOrder = $("<span>").html($(this).find(":selected").data("minimum-order")).currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
-        $(this).parent().siblings("span").html("*Minimal pembelian sebesar " + minOrder);
-    });
+            var amount = $(this).find(":selected").data("amount");
 
-    $(".promo-code-field").on("select2:unselect", function() {
+            var grandTotal = totalPrice - amount < 0 ? 0 : totalPrice - amount;
 
-        var thisObj = $(this);
+            $(".promo-amount").show();
+            $(".grand-total").show();
+            $(".promo-amount").children().last().html(amount).currency({' . \Yii::$app->params['currencyOptions'] . '});
+            $(".grand-total").children().last().html(grandTotal).currency({' . \Yii::$app->params['currencyOptions'] . '});
 
-        $(".promo-amount").hide();
-        $(".grand-total").hide();
+            $(".promo-amount-confirm").show();
+            $(".grand-total-confirm").show();
+            $(".promo-amount-confirm").children().last().html(amount).currency({' . \Yii::$app->params['currencyOptions'] . '});
+            $(".grand-total-confirm").children().last().html(grandTotal).currency({' . \Yii::$app->params['currencyOptions'] . '});
 
-        $(".promo-amount-confirm").hide();
-        $(".grand-total-confirm").hide();
-
-        thisObj.parent().siblings("span").html("");
-
-        setTimeout(function() {
-
-            thisObj.select2("close");
-        }, 0);
+            var minOrder = $("<span>").html($(this).find(":selected").data("minimum-order")).currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
+            $(this).parent().siblings("span").html("*Minimal pembelian sebesar " + minOrder);
+        }
     });
 
     $("#checkout-form").on("beforeSubmit", function(event) {
