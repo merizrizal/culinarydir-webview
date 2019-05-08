@@ -1,9 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
-use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $pagination yii\data\Pagination */
@@ -141,6 +141,12 @@ $jscript = '
 
         $(".post-photo-container").children(".overlay").hide();
         $(".post-photo-container").children(".loading-img").hide();
+    });
+
+    $("#pjax-photo-container").off("pjax:end");
+    $("#pjax-photo-container").on("pjax:end", function (event) {
+
+        $(".post-photo-container").bootstrapMaterialDesign();
     });
 
     $("#pjax-photo-container").off("pjax:error");

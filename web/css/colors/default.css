@@ -3,6 +3,11 @@ body {
 	height: 100%;
 }
 
+b, strong, h1, h2, h3, h4, h5, h6 {
+    font-family: "Museo Sans Cyrl 700";
+    font-weight: normal;
+}
+
 .main {
 	min-height: 100%;
 }
@@ -93,6 +98,7 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 
 .sticky-cart {
 	min-width: 100%;
+	cursor: pointer;
 }
 
 /*place detail*/

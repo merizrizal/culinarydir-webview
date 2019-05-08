@@ -2,7 +2,6 @@
 
 use common\components\Helper;
 use yii\helpers\Html;
-use yii\helpers\Inflector;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -30,7 +29,7 @@ $urlMyReviewDetail = [
             <div class="box-title" id="title-write-review">
             	<div class="row">
             		<div class="col-6">
-                    	<h4 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? \Yii::t('app', 'Your Review') : \Yii::t('app', 'Write a Review') ?></h4>
+                    	<h6 class="mt-0 mb-0"><?= !empty($modelUserPostMain) ? \Yii::t('app', 'Your Review') : \Yii::t('app', 'Write a Review') ?></h6>
                 	</div>
                 	<div class="col-6 text-right text-danger" id="close-review-container">
                 		<a class="text-danger" href=""><?= \Yii::t('app', 'Cancel') ?></a>
@@ -466,7 +465,7 @@ $urlMyReviewDetail = [
     <div class="col-12">
         <div class="card box">
             <div class="box-title">
-                <h4 class="mt-0 mb-0 inline-block"><?= \Yii::t('app', 'Review') ?></h4>
+                <h6 class="mt-0 mb-0 inline-block"><?= \Yii::t('app', 'Review') ?></h6>
             </div>
 
             <hr class="divider-w">
@@ -570,6 +569,7 @@ $jscript = '
         success: function(response) {
 
             $(".review-section").html(response);
+            $(".review-section").find(".post-review-container").bootstrapMaterialDesign();
         },
         error: function(xhr, ajaxOptions, thrownError) {
 

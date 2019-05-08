@@ -2,7 +2,6 @@
 
 use common\components\Helper;
 use yii\helpers\Html;
-use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -374,16 +373,16 @@ $jscript = '
         $(".post-review-container").children(".loading-img").hide();
     });
 
+    $("#pjax-review-container").off("pjax:end");
+    $("#pjax-review-container").on("pjax:end", function (event) {
+
+        $(".post-review-container").bootstrapMaterialDesign();
+    });
+
     $("#pjax-review-container").off("pjax:error");
     $("#pjax-review-container").on("pjax:error", function (event) {
 
         event.preventDefault();
-    });
-
-    $("#pjax-review-container").off("ready pjax:end");
-    $("#pjax-review-container").on("ready pjax:end", function (event) {
-
-        $(event.target).bootstrapMaterialDesign();
     });
 
     $(".rating").children().children(".label").on("click", function() {

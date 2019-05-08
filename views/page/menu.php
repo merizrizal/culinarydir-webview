@@ -1,8 +1,8 @@
 <?php
 
-use yii\web\View;
-use yii\helpers\Html;
 use webview\components\Snackbar;
+use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $modelBusiness core\models\Business */
@@ -270,30 +270,6 @@ $this->title = \Yii::t('app', 'Product') . ' ' . $modelBusiness['name']; ?>
 </div>
 
 <?php
-$cssScript = '';
-$jscript = '
-    var navMenuOffsetTop = 0;
-';
-
-if (\Yii::$app->request->getUserAgent() == 'com.asikmakan.app') {
-
-    $cssScript .= '
-        .nav-tabs-fixed {
-            top: 50px;
-        }
-
-        .menu-list .blank-space {
-            padding-top: 64px
-        }
-    ';
-
-    $jscript .= '
-        navMenuOffsetTop = -50;
-    ';
-}
-
-$this->registerCss($cssScript);
-
 Snackbar::widget();
 
 $this->registerJsFile(Yii::$app->homeUrl . '/lib/jquery-currency/jquery.currency.js', ['depends' => 'yii\web\YiiAsset']);
@@ -301,7 +277,7 @@ $this->registerJsFile(Yii::$app->homeUrl . '/lib/touchspin/touchspin.js', ['depe
 
 $this->registerJs(Snackbar::messageResponse() . Snackbar::stickySnackbar(), View::POS_HEAD);
 
-$jscript .= '
+$jscript = '
     $(".transaction-item-amount").each(function() {
 
         $(this).TouchSpin({
@@ -309,8 +285,8 @@ $jscript .= '
             "max": 50,
             "buttonup_txt": "<i class=\"aicon aicon-plus\"></i>",
             "buttondown_txt": "<i class=\"aicon aicon-minus\"></i>",
-            "buttondown_class": "btn btn-small btn-raised",
-            "buttonup_class": "btn btn-small btn-raised"
+            "buttondown_class": "btn btn-raised btn-small",
+            "buttonup_class": "btn btn-raised btn-small"
         });
     });
 
@@ -318,7 +294,7 @@ $jscript .= '
 
         var st = $(this).scrollTop();
 
-        if (st > $(".nav-menu").offset().top + navMenuOffsetTop) {
+        if (st > $(".nav-menu").offset().top) {
 
             $(".nav-tabs").addClass("nav-tabs-fixed");
             $(".nav-menu").addClass("stick");

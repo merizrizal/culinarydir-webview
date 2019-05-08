@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
                 <div class="box-title" id="title-post-photo">
                 	<div class="row">
                 		<div class="col-6">
-                    		<h4 class="mt-0 mb-0"><?= \Yii::t('app', 'Add Photo') ?></h4>
+                    		<h6 class="mt-0 mb-0"><?= \Yii::t('app', 'Add Photo') ?></h6>
                     	</div>
                 		<div class="col-6 text-right">
                     		<span id="close-post-photo-container"><a class="text-danger" href=""><?= \Yii::t('app', 'Cancel') ?></a></span>
@@ -93,6 +93,7 @@ $jscript = '
             success: function(response) {
 
                 $(".gallery-section").html(response);
+                $(".gallery-section").find(".post-photo-container").bootstrapMaterialDesign();
             },
             error: function(xhr, ajaxOptions, thrownError) {
 

@@ -9,7 +9,7 @@
             <div class="box-title">
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="mt-0 mb-0 inline-block"><?= \Yii::t('app', 'About') . ' ' . $businessName ?> </h4>
+                        <h6 class="mt-0 mb-0 inline-block"><?= \Yii::t('app', 'About') . ' ' . $businessName ?> </h6>
                     </div>
                 </div>
             </div>
