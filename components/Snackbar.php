@@ -37,7 +37,7 @@ class Snackbar extends Widget
         return '
             function stickySnackbar(icon, title, message, type) {
 
-                return $.snackbar({
+                var snackbar = $.snackbar({
                     content:
                         "<div class=\"bg-" + type + " list-group snackbar-cart\">" +
                             "<div class=\"list-group-item title-container\"><i class=\"" + icon + "\"></i><span class=\"snackbar-title\">" + title + "</span></div>" +
@@ -47,6 +47,13 @@ class Snackbar extends Widget
                     timeout: 0,
                     style: "sticky-cart"
                 });
+
+                $(document).on("click", "#snackbar-container .snackbar.sticky-cart", function() {
+
+                    $(this).snackbar("show");
+                });
+
+                return snackbar;
             }
         ';
     }

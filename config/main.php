@@ -14,6 +14,13 @@ return [
     'controllerNamespace' => 'webview\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'container' => [
+        'definitions' => [
+            'yii\data\Pagination' => [
+                'pageSize' => 1
+            ]
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-webview-asikmakan-synctech',

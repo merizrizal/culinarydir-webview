@@ -244,7 +244,7 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                                         $categories .= $dataBusinessCategory['category']['name'] . ' / ';
                                                     } ?>
 
-                                                    <h5><small><?= trim($categories, ' / ') ?></small></h5>
+                                                    <h6><small><?= trim($categories, ' / ') ?></small></h6>
                                                 </div>
                                             </div>
                                         </div>
