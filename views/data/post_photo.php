@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -66,7 +67,7 @@ $linkPager = LinkPager::widget([
                                     <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMain['image'] . '&w=200&h=200', ['class' => 'img-component', 'data-id' => $dataUserPostMain['id']]) ?>
                                 </div>
                                 <div class="work-caption">
-                                    <div class="work-descr photo-caption hidden-xs"><?= !empty($dataUserPostMain['text']) ? $dataUserPostMain['text'] : '' ?></div>
+                                    <div class="work-descr photo-caption d-none d-sm-block d-md-none"><?= !empty($dataUserPostMain['text']) ? $dataUserPostMain['text'] : '' ?></div>
                                     <div class="work-descr">
 
                                         <?php
@@ -142,6 +143,12 @@ $jscript = '
         $(".post-photo-container").children(".loading-img").hide();
     });
 
+    $("#pjax-photo-container").off("pjax:end");
+    $("#pjax-photo-container").on("pjax:end", function (event) {
+
+        $(".post-photo-container").bootstrapMaterialDesign();
+    });
+
     $("#pjax-photo-container").off("pjax:error");
     $("#pjax-photo-container").on("pjax:error", function (event) {
 
@@ -150,5 +157,9 @@ $jscript = '
 ';
 
 $this->registerJs($jscript);
+
+$this->registerJs('
+    $(".gallery-section").bootstrapMaterialDesign();
+', View::POS_END);
 
 Pjax::end(); ?>

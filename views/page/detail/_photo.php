@@ -93,6 +93,7 @@ $jscript = '
             success: function(response) {
 
                 $(".gallery-section").html(response);
+                $(".gallery-section").find(".post-photo-container").bootstrapMaterialDesign();
             },
             error: function(xhr, ajaxOptions, thrownError) {
 

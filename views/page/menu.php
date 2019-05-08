@@ -322,6 +322,7 @@ $jscript = '
         cart.on("click", function() {
 
             window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
+            $(this).snackbar("show");
         });
     }
 
@@ -359,6 +360,7 @@ $jscript = '
                         cart.on("click", function() {
 
                             window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
+                            $(this).snackbar("show");
                         });
                     }
 

@@ -658,6 +658,10 @@ a.form-control:hover {
 	overflow-y: auto;
 }
 
+.detail.menu-list .transaction-item-amount {
+	margin-bottom: 2px;	
+}
+
 /*general - overlay & blueimp*/
 .overlay,
 .loading-img,
