@@ -234,7 +234,7 @@ $urlMyReviewDetail = [
                                             <div class="input-group mt-10 mb-10">
                                                 <span class="input-group-text"><i class="aicon aicon-bubble"></i></span>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <?= Html::textInput('comment_input', null, ['id' => 'input-my-comments-review', 'class' => 'form-control', 'placeholder' => 'Tuliskan komentar']); ?>
+                                                <?= Html::textInput('comment_input', null, ['id' => 'input-my-comments-review', 'class' => 'form-control', 'placeholder' => \Yii::t('app', 'Write a Comment')]); ?>
                                             </div>
 
                                             <div class="overlay" style="display: none;"></div>
