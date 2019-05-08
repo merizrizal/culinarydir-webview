@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Inflector;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */

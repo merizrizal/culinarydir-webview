@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $pagination yii\data\Pagination */
@@ -66,7 +67,7 @@ $linkPager = LinkPager::widget([
                                     <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMain['image'] . '&w=200&h=200', ['class' => 'img-component', 'data-id' => $dataUserPostMain['id']]) ?>
                                 </div>
                                 <div class="work-caption">
-                                    <div class="work-descr photo-caption hidden-xs"><?= !empty($dataUserPostMain['text']) ? $dataUserPostMain['text'] : '' ?></div>
+                                    <div class="work-descr photo-caption d-none d-sm-block d-md-none"><?= !empty($dataUserPostMain['text']) ? $dataUserPostMain['text'] : '' ?></div>
                                     <div class="work-descr">
 
                                         <?php
@@ -150,5 +151,9 @@ $jscript = '
 ';
 
 $this->registerJs($jscript);
+
+$this->registerJs('
+    $(".gallery-section").bootstrapMaterialDesign();
+', View::POS_END);
 
 Pjax::end(); ?>

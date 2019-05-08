@@ -2,6 +2,7 @@
 
 use common\components\Helper;
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $modelUserPostComment core\models\UserPostComment */
@@ -12,6 +13,8 @@ if (!empty($modelUserPostComment)): ?>
     <div class="comment-container">
 
         <?php
+        echo Html::hiddenInput('commentCount', (!empty($modelUserPostComment) ? count($modelUserPostComment) : '0'), ['class' => 'comment-count']);
+
         foreach ($modelUserPostComment as $dataUserPostComment): ?>
 
             <div class="comment-post">
@@ -52,4 +55,8 @@ $jscript = '
     var commentCount = ' . (!empty($modelUserPostComment) ? count($modelUserPostComment) : '0') . ';
 ';
 
-$this->registerJs($jscript); ?>
+$this->registerJs($jscript);
+
+$this->registerJs('
+    $(".comment-section").bootstrapMaterialDesign();
+', View::POS_END); ?>

@@ -309,8 +309,8 @@ $jscript .= '
             "max": 50,
             "buttonup_txt": "<i class=\"aicon aicon-plus\"></i>",
             "buttondown_txt": "<i class=\"aicon aicon-minus\"></i>",
-            "buttondown_class": "btn btn-small",
-            "buttonup_class": "btn btn-small"
+            "buttondown_class": "btn btn-small btn-raised",
+            "buttonup_class": "btn btn-small btn-raised"
         });
     });
 
@@ -331,7 +331,6 @@ $jscript .= '
 
     var cart = null;
     var totalPrice = "";
-    var snackbarId;
 
     if ($(".transaction-session-id").length) {
 
@@ -344,11 +343,10 @@ $jscript .= '
             "info"
         );
 
-        snackbarId = $(".snackbar-cart").parent().parent().attr("id");
-
-        $("#" + snackbarId).on("click", function() {
+        cart.on("click", function() {
 
             window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
+            $(this).snackbar("show");
         });
     }
 
@@ -383,11 +381,10 @@ $jscript .= '
                             "info"
                         );
 
-                        snackbarId = $(".snackbar-cart").parent().parent().attr("id");
-
-                        $("#" + snackbarId).on("click", function() {
+                        cart.on("click", function() {
 
                             window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
+                            $(this).snackbar("show");
                         });
                     }
 
