@@ -101,7 +101,7 @@ $img = (!empty($modelTransactionSession['business']['businessImages']) ? $modelT
                             	<div class="col-sm-4 col-12">
 
                             		<?= Html::a($modelTransactionSession['is_closed'] ? \Yii::t('app', 'Reorder') : \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
-                                        'class' => 'btn btn-raised btn-block btn-round btn-reorder',
+                                        'class' => 'btn btn-raised btn-danger btn-block btn-round btn-reorder',
                                         'data-id' => $modelTransactionSession['id']
                                     ]); ?>
 

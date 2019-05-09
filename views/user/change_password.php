@@ -1,9 +1,9 @@
 <?php
 
-use frontend\components\GrowlCustom;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelChangePassword frontend\models\ChangePassword */
@@ -20,15 +20,15 @@ $this->registerMetaTag([
     'content' => 'Temukan Bisnis Kuliner Favorit Anda di Asikmakan.com'
 ]); ?>
 
-<div class="main">
-    <section class="module-extra-small bg-main">
-        <div class="container register">
+<div class="main bg-main">
+    <section>
+        <div class="register">
             <div class="row">
-                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12">
-                    <div class="box bg-white">
+                <div class="col-12">
+                    <div class="card box">
                         <div class="box-content">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <h4 class="font-alt"><?= \Yii::t('app', 'Change Password') ?></h4>
                                     <hr class="divider-w mb-20">
 
@@ -42,7 +42,7 @@ $this->registerMetaTag([
                                     ]); ?>
 
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-12">
 
                                                 <?= $form->field($modelChangePassword, 'current_pass')->passwordInput([
                                                     'placeholder' => 'Current Password'
@@ -59,10 +59,11 @@ $this->registerMetaTag([
                                             </div>
                                         </div>
                                         <div class="row mb-30">
-                                            <div class="col-md-12">
+                                            <div class="col-12">
 
-                                                <?= Html::submitButton('Update', ['class' => 'btn btn-round btn-d']) ?>
-                                            	<?= Html::a(\Yii::t('app', 'Cancel'), ['user/index'], ['class' => 'btn btn-round btn-default']) ?>
+                                                <?= Html::submitButton('Update', ['class' => 'btn btn-raised btn-round btn-danger']) ?>
+                                                &nbsp;&nbsp;
+                                            	<?= Html::a(\Yii::t('app', 'Cancel'), ['user/index'], ['class' => 'btn btn-raised btn-round btn-default']) ?>
 
                                             </div>
                                         </div>
@@ -81,9 +82,9 @@ $this->registerMetaTag([
 </div>
 
 <?php
-GrowlCustom::widget();
+Snackbar::widget();
 
-$this->registerJs(GrowlCustom::messageResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse(), View::POS_HEAD);
 
 $jscript = '';
 

@@ -8,13 +8,13 @@
     <div class="col-12">
         <ul class="view-journey nav nav-tabs mb-10" role="tablist">
             <li class="nav-item">
-                <a id="review-tab" class="nav-link active" href="#view-review" aria-controls="view-review" role="tab" data-toggle="tab"><i class="aicon aicon-document-edit"></i> <?= \Yii::t('app', 'Review') ?> (<span class="total-user-post"></span>)</a>
+                <a id="review-tab" class="nav-link active" href="#view-review" aria-controls="view-review" role="tab" data-toggle="tab" aria-selected="true"><i class="aicon aicon-document-edit"></i> <?= \Yii::t('app', 'Review') ?> (<span class="total-user-post"></span>)</a>
             </li>
             <li class="nav-item">
-                <a id="love-tab" class="nav-link" href="#view-love" aria-controls="view-love" role="tab" data-toggle="tab"><i class="aicon aicon-heart1"></i> Love (<span class="total-user-love"></span>)</a>
+                <a id="love-tab" class="nav-link" href="#view-love" aria-controls="view-love" role="tab" data-toggle="tab" aria-selected="false"><i class="aicon aicon-heart1"></i> Love (<span class="total-user-love"></span>)</a>
             </li>
             <li class="nav-item">
-                <a id="visit-tab" class="nav-link" href="#view-been-there" aria-controls="view-been-there" role="tab" data-toggle="tab"><i class="aicon aicon-icon-been-there"></i> Visit (<span class="total-user-visit"></span>)</a>
+                <a id="visit-tab" class="nav-link" href="#view-been-there" aria-controls="view-been-there" role="tab" data-toggle="tab" aria-selected="false"><i class="aicon aicon-icon-been-there"></i> Visit (<span class="total-user-visit"></span>)</a>
             </li>
         </ul>
 

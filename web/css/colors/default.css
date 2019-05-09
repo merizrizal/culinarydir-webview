@@ -213,6 +213,10 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 	padding: 20px 20px;
 }
 
+.detail.user-profile .nav.nav-tabs {
+	border-bottom: 1px solid #dee2e6;
+}
+
 .detail.user-profile .box.user-love {
     min-height: 280px;
 }
@@ -243,6 +247,10 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 .detail.user-profile .widget-posts-body {
     padding-top: 30px;
     margin-left : 10px;
+}
+
+.detail.user-profile .user-profile-header .widget-posts-body {
+	padding-top: 65px;
 }
 
 .detail.user-profile .widget-posts-body.business-review {
@@ -281,9 +289,6 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 
 .detail.user-profile .view .view-journey.nav.nav-tabs > li > a {
     padding: 5px 15px;
-    font-weight: normal;
-    border: none;
-    margin-right: 0px;
 }
 
 .detail.user-profile .view .view-journey.nav.nav-tabs > li.active > a,
@@ -342,12 +347,14 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 .detail.user-update-profile .profile-img-container {
     width: 160px;
     height: 160px;
-    position: absolute;
+    position: relative;
     overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .detail.user-update-profile .widget-posts-body {
-    margin-left: 210px;
+    margin-left: 0;
     padding-top: 12px;
 }
 

@@ -444,7 +444,6 @@ $jscript = '
 
         return false;
     });
-
 ';
 
 $this->registerJs($jscript); ?>

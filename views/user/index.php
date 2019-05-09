@@ -75,18 +75,16 @@ $this->registerMetaTag([
                 	$userName = '
                         <h5>' .
                             $modelUser['full_name'] . '<br>
-                            <small>' . $modelUser['email'] . '</small>
-                        </h5>
-                    ';
+                        </h5>' . $modelUser['email'];
 
                     $btnProfile =
                         Html::a('<i class="aicon aicon-pencil1"></i> ' . \Yii::t('app', 'Update Profile'), ['user/update-profile'], ['class' => 'btn btn-raised btn-danger btn-round btn-standard']) . '
-                        <div class="dropdown inline-block">
-                            <button class="btn btn-xs btn-round btn-danger btn-standard btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                            <div class="dropdown-menu">' .
-                                Html::a('<i class="aicon aicon-key1"></i>&nbsp;' . \Yii::t('app', 'Change Password'), ['user/change-password'], ['class' => 'dropdown-item']) .
-                               	Html::a('<i class="aicon aicon-logout"></i>&nbsp;' . \Yii::t('app', 'Logout'), ['site/logout'], ['class' => 'dropdown-item']) . '
-                            </div>
+                        <button class="btn btn-xs btn-round btn-danger btn-standard btn-raised" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="aicon aicon-more"></i>
+                        </button>
+                        <div class="dropdown-menu">' .
+                            Html::a('<i class="aicon aicon-key1"></i>&nbsp;' . \Yii::t('app', 'Change Password'), ['user/change-password'], ['class' => 'dropdown-item']) .
+                           	Html::a('<i class="aicon aicon-logout"></i>&nbsp;' . \Yii::t('app', 'Logout'), ['site/logout'], ['class' => 'dropdown-item']) . '
                         </div>
                     '; ?>
 
@@ -97,6 +95,7 @@ $this->registerMetaTag([
                             </div>
                             <div class="widget-posts-body">
                                 <?= $userName ?>
+                                <br>
                                 <?= $btnProfile ?>
                             </div>
                         </div>
@@ -111,6 +110,7 @@ $this->registerMetaTag([
                             <div class="row mt-10">
                                 <div class="col-12 text-center">
                                     <?= $userName ?>
+                                    <br><br>
                                     <?= $btnProfile ?>
                                 </div>
                             </div>
@@ -125,39 +125,39 @@ $this->registerMetaTag([
                     <div class="card view">
                         <ul class="nav nav-tabs mb-10" role="tablist">
                             <li class="nav-item">
-                                <a id="journey-tab" class="nav-link active text-center" href="#view-journey" aria-controls="view-journey" role="tab" data-toggle="tab">
+                                <a id="journey-tab" class="nav-link active text-center" href="#view-journey" aria-controls="view-journey" role="tab" data-toggle="tab" aria-selected="true">
                                     <i class="aicon aicon-icon-been-there-fill-1 aicon-1-5x"></i><br>
                                     Journey
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a id="photo-tab" class="nav-link text-center" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
+                                <a id="photo-tab" class="nav-link text-center" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab" aria-selected="false">
                                     <i class="aicon aicon-camera1 aicon-1-5x"></i><span class="badge total-user-photo"></span><br>
                                     <?= \Yii::t('app', 'Photo') ?>
                                 </a>
                             </li>
                             <li class="nav-item d-none d-sm-block d-md-none">
-                                <a id="history-tab" class="nav-link text-center" href="#view-order-history" aria-controls="view-order-history" role="tab" data-toggle="tab">
+                                <a id="history-tab" class="nav-link text-center" href="#view-order-history" aria-controls="view-order-history" role="tab" data-toggle="tab" aria-selected="false">
                                     <i class="aicon aicon-history aicon-1-5x"></i><span class="badge total-order-history">0</span><br>
                                     <?= \Yii::t('app', 'Order History') ?>
                                 </a>
                             </li>
                             <li class="nav-item d-none d-sm-block d-md-none">
-                                <a id="promo-tab" class="nav-link text-center" href="#view-new-promo" aria-controls="view-new-promo" role="tab" data-toggle="tab">
+                                <a id="promo-tab" class="nav-link text-center" href="#view-new-promo" aria-controls="view-new-promo" role="tab" data-toggle="tab" aria-selected="false">
                                     <i class="aicon aicon-promo aicon-1-5x"></i><span class="badge total-new-promo"></span><br>
                                     <?= \Yii::t('app', 'New Promo') ?>
                                 </a>
                             </li>
                             <li class="nav-item dropdown d-block d-sm-none">
-                                <a class="nav-link text-center dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link text-center dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-selected="false">
                                     <i class="aicon aicon-more aicon-1-5x"></i><br>
                                     More
                                 </a>
                                 <div class="dropdown-menu pull-right p-0">
-                                    <a id="history-tab" href="#view-order-history" class="dropdown-item" aria-controls="view-order-history" role="tab" data-toggle="tab">
+                                    <a id="history-tab" href="#view-order-history" class="dropdown-item" aria-controls="view-order-history" role="tab" data-toggle="tab" aria-selected="false">
                                     	<h6><i class="aicon aicon-history"></i> <?= \Yii::t('app', 'Order History') ?> (<span class="total-order-history">0</span>)</h6>
                                 	</a>
-                                    <a id="promo-tab" href="#view-new-promo" class="dropdown-item" aria-controls="view-new-promo" role="tab" data-toggle="tab">
+                                    <a id="promo-tab" href="#view-new-promo" class="dropdown-item" aria-controls="view-new-promo" role="tab" data-toggle="tab" aria-selected="false">
                                     	<h6><i class="aicon aicon-promo"></i> <?= \Yii::t('app', 'New Promo') ?> (<span class="total-new-promo"></span>)</h6>
                                 	</a>
                                 </div>

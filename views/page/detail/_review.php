@@ -949,10 +949,10 @@ $jscript = '
 
                             if (i > 4) {
 
-                                $(this).addClass("d-block");
+                                $(this).addClass("d-none");
                             } else {
 
-                                $(this).removeClass("d-block");
+                                $(this).removeClass("d-none");
                             }
 
                             var hiddenPhotos = countLi - (i + 1);

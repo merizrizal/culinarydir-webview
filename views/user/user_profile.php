@@ -1,9 +1,9 @@
 <?php
 
-use frontend\components\GrowlCustom;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\web\View;
+use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelUser core\models\User */
@@ -68,32 +68,36 @@ $this->registerMetaTag([
                 <div class="col-12">
 
                 	<?php
-                	$img = !empty($modelUser['image']) ? $modelUser['image'] . '&w=200&h=200' : 'default-avatar.png';
-                	$userName = '<h3>' . $modelUser['full_name'] . ' </h3>'; ?>
+                	$img = \Yii::$app->params['endPointLoadImage'] . 'user?image=default-avatar.png';
 
-                    <div class="row mt-10 visible-lg visible-md visible-sm visible-tab">
-                        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-tab-8 col-xs-offset-2">
+                	if (!empty($modelUser['image'])) {
+
+                	    $img = \Yii::$app->params['endPointLoadImage'] . 'user?image=' . $modelUser['image'] . '&w=160&h=160';
+                	}
+
+                	$userName = '<h5>' . $modelUser['full_name'] . ' </h5>'; ?>
+
+                    <div class="row mt-10 d-none d-sm-block d-md-none">
+                        <div class="col-sm-8 offset-sm-2">
                             <div class="row ">
-                                <div class="widget">
-                                    <div class="widget-posts-image">
-                                        <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img-responsive img-circle img-profile-thumb img-component']) ?>
-                                    </div>
-                                    <div class="widget-posts-body user-profile-identity">
-                                        <?= $userName ?>
-                                    </div>
+                                <div class="widget-posts-image">
+                                    <?= Html::img($img, ['class' => 'img-fluid rounded-circle']) ?>
+                                </div>
+                                <div class="widget-posts-body user-profile-identity">
+                                    <?= $userName ?>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row visible-xs">
-                        <div class="col-xs-12">
+                    <div class="row d-block d-sm-none">
+                        <div class="col-12">
                             <div class="row">
-                                <div class="col-xs-12 text-center">
-                                	<?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img-responsive img-circle img-profile-thumb img-component center-block']) ?>
+                                <div class="col-12 text-center">
+                                	<?= Html::img($img, ['class' => 'img-fluid rounded-circle']) ?>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-12 text-center">
+                            <div class="row mt-20">
+                                <div class="col-12 text-center">
                                     <?= $userName ?>
                                 </div>
                             </div>
@@ -104,51 +108,40 @@ $this->registerMetaTag([
             </div>
 
             <div class="row">
-                <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-
-                    <div class="view">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs widget mb-10" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#view-journey" aria-controls="view-journey" role="tab" data-toggle="tab">
-                                    <ul class="link-icon list-inline">
-                                        <li>
-                                            <ul class="text-center">
-                                                <i class="aicon aicon-icon-been-there-fill-1 aicon-1-5x"></i>
-                                                <li>Journey</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                <div class="col-12">
+                    <div class="card view">
+                        <ul class="nav nav-tabs mb-10" role="tablist">
+                            <li class="nav-item">
+                                <a id="journey-tab" class="nav-link active text-center" href="#view-journey" aria-controls="view-journey" role="tab" data-toggle="tab">
+                                    <i class="aicon aicon-icon-been-there-fill-1 aicon-1-5x"></i><br>
+                                    Journey
                                 </a>
                             </li>
-                            <li role="presentation">
-                                <a href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab" id="nav-tabs-photo">
-                                    <ul class="link-icon list-inline">
-                                        <li>
-                                            <ul class="text-center">
-                                                <i class="aicon aicon-camera1 aicon-1-5x"></i>
-                                                <li><?= \Yii::t('app', 'Photo') ?></li>
-                                                <span class="badge total-user-photo"></span>
-                                            </ul>
-                                        </li>
-                                    </ul>
+                            <li class="nav-item">
+                                <a id="photo-tab" class="nav-link text-center" href="#view-photo" aria-controls="view-photo" role="tab" data-toggle="tab">
+                                    <i class="aicon aicon-camera1 aicon-1-5x"></i><span class="badge total-user-photo"></span><br>
+                                    <?= \Yii::t('app', 'Photo') ?>
                                 </a>
                             </li>
                         </ul>
 
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade in active p-0" id="view-journey">
+                            <div role="tabpanel" class="tab-pane fade show active p-0" id="view-journey" aria-labelledby="journey-tab">
+
                                 <?= $this->render('user/_journey', [
                                     'username' => $modelUser['username'],
                                     'queryParams' => $queryParams,
                                 ]) ?>
+
                             </div>
 
-                            <div role="tabpanel" class="tab-pane fade p-0" id="view-photo">
+                            <div role="tabpanel" class="tab-pane fade p-0" id="view-photo" aria-labelledby="photo-tab">
+
                                 <?= $this->render('user/_photo', [
                                     'username' => $modelUser['username'],
                                     'queryParams' => $queryParams,
                                 ]) ?>
+
                             </div>
                         </div>
                     </div>
@@ -161,27 +154,13 @@ $this->registerMetaTag([
 </div>
 
 <?php
-$this->registerCssFile($this->params['assetCommon']->baseUrl . '/plugins/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\YiiAsset']);
+$this->registerCssFile(\Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/magnific-popup.css', ['depends' => 'yii\web\JqueryAsset']);
 
-$this->registerJsFile($this->params['assetCommon']->baseUrl . '/plugins/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\YiiAsset']);
+$this->registerJsFile(\Yii::$app->homeUrl . 'lib/Magnific-Popup/dist/jquery.magnific-popup.js', ['depends' => 'yii\web\JqueryAsset']);
 
-GrowlCustom::widget();
+Snackbar::widget();
 frontend\components\RatingColor::widget();
 frontend\components\Readmore::widget();
 frontend\components\FacebookShare::widget();
 
-$this->registerJs(GrowlCustom::messageResponse(), View::POS_HEAD);
-
-$this->on(View::EVENT_END_BODY, function() use ($modelUser, $ogDescription, $ogImage) {
-
-    echo '
-        <script type="application/ld+json">
-        {
-            "@context": "http://schema.org/",
-            "@type": "Person",
-            "name": "' . $modelUser['full_name'] . '",
-            "image": "' . $ogImage . '"
-        }
-        </script>
-    ';
-}); ?>
+$this->registerJs(Snackbar::messageResponse(), View::POS_HEAD); ?>
