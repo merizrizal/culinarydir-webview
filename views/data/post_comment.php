@@ -2,9 +2,7 @@
 
 use common\components\Helper;
 use yii\helpers\Html;
-use yii\web\View;
 
-/* @var $this yii\web\View */
 /* @var $modelUserPostComment core\models\UserPostComment */
 /* @var $userPostId frontend\controllers\DataController */
 
@@ -49,14 +47,4 @@ if (!empty($modelUserPostComment)): ?>
     </div>
 
 <?php
-endif;
-
-$jscript = '
-    var commentCount = ' . (!empty($modelUserPostComment) ? count($modelUserPostComment) : '0') . ';
-';
-
-$this->registerJs($jscript);
-
-$this->registerJs('
-    $(".comment-section").bootstrapMaterialDesign();
-', View::POS_END); ?>
+endif; ?>

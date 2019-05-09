@@ -25,11 +25,7 @@ common\assets\OwlCarouselAsset::register($this);
 
 $this->title = $modelBusiness['name'];
 
-$ogUrl = \Yii::$app->urlManager->createAbsoluteUrl([
-    'page/detail',
-    'city' => Inflector::slug($modelBusiness['businessLocation']['city']['name']),
-    'uniqueName' => $modelBusiness['unique_name']
-]);
+$ogUrl = \Yii::$app->params['rootUrl'] . 'kuliner/di/' . Inflector::slug($modelBusiness['businessLocation']['city']['name']) . '/' . $modelBusiness['unique_name'];
 
 $ogTitle = $modelBusiness['name'];
 
@@ -550,11 +546,7 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                                 <?php
                                                 foreach ($modelBusiness['businessPromos'] as $dataBusinessPromo):
 
-                                                    $urlPromoDetail = [
-                                                        'page/detail-business-promo',
-                                                        'id' => $dataBusinessPromo['id'],
-                                                        'uniqueName' => $modelBusiness['unique_name'],
-                                                    ];
+                                                    $urlPromoDetail = ['page/detail-business-promo', 'id' => $dataBusinessPromo['id']];
 
                                                     $img = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $dataBusinessPromo['image'] . '&w=1252&h=706';
 

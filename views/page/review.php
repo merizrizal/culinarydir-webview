@@ -13,11 +13,7 @@ webview\assets\RateyoAsset::register($this);
 
 $this->title = \Yii::t('app', 'Review') . ' ' . $modelUserPostMain['business']['name'];
 
-$ogUrl = \Yii::$app->urlManager->createAbsoluteUrl([
-    'page/review',
-    'id' => $modelUserPostMain['id'],
-    'uniqueName' => $modelUserPostMain['business']['unique_name'],
-]);
+$ogUrl = \Yii::$app->params['rootUrl'] . 'review/' . $modelUserPostMain['id'] . '/di/' . $modelUserPostMain['business']['unique_name'];
 
 $ogTitle = !empty($modelUserPostMain['business']['name']) && !empty($dataUserVoteReview['overallValue']) ? 'Rating ' . number_format($dataUserVoteReview['overallValue'], 1) . ' untuk ' . $modelUserPostMain['business']['name'] : 'Review di Asikmakan';
 

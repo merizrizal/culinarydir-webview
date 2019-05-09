@@ -53,7 +53,7 @@ $linkPager = LinkPager::widget([
     	<div class="overlay" style="display: none;"></div>
 		<div class="loading-img" style="display: none;"></div>
 
-        <ul class="works-grid works-grid-gut" id="photo-gallery">
+        <ul class="works-grid works-grid-gut works-grid-4" id="photo-gallery">
 
             <?php
             if (!empty($modelUserPostMain)):
@@ -64,7 +64,7 @@ $linkPager = LinkPager::widget([
                         <div class="gallery-item place-gallery">
                             <div class="gallery-image">
                                 <div class="work-image">
-                                    <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMain['image'] . '&w=200&h=200', ['class' => 'img-component', 'data-id' => $dataUserPostMain['id']]) ?>
+                                    <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMain['image'] . '&w=200&h=200', ['class' => 'img-fluid', 'data-id' => $dataUserPostMain['id']]) ?>
                                 </div>
                                 <div class="work-caption">
                                     <div class="work-descr photo-caption d-none d-sm-block d-md-none"><?= !empty($dataUserPostMain['text']) ? $dataUserPostMain['text'] : '' ?></div>
@@ -73,10 +73,7 @@ $linkPager = LinkPager::widget([
                                         <?php
                                         echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMain['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']) . '&nbsp';
 
-                                        echo Html::a('<i class="aicon aicon-share1"></i>', \Yii::$app->urlManager->createAbsoluteUrl([
-                                            'page/photo',
-                                            'id' => $dataUserPostMain['id'],
-                                        ]), ['class' => 'btn btn-danger btn-raised btn-small btn-xs btn-circle share-image-trigger']) . '&nbsp'; ?>
+                                        echo Html::a('<i class="aicon aicon-share1"></i>', \Yii::$app->params['rootUrl'] . 'photo/' . $dataUserPostMain['id'] . '/di/' . $dataUserPostMain['business']['unique_name'], ['class' => 'btn btn-danger btn-raised btn-small btn-xs btn-circle share-image-trigger']) . '&nbsp'; ?>
 
                                     </div>
                                 </div>

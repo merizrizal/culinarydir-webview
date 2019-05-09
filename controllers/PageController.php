@@ -248,7 +248,7 @@ class PageController extends base\BaseController
         ]);
     }
 
-    public function actionDetailBusinessPromo($id, $uniqueName)
+    public function actionDetailBusinessPromo($id)
     {
         $modelBusinessPromo = BusinessPromo::find()
             ->joinWith([
@@ -257,7 +257,6 @@ class PageController extends base\BaseController
                 'business.businessLocation.city',
             ])
             ->andWhere(['business_promo.id' => $id])
-            ->andWhere(['business.unique_name' => $uniqueName])
             ->asArray()->one();
 
         if (empty($modelBusinessPromo)) {

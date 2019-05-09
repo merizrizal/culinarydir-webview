@@ -493,10 +493,6 @@ a.form-control:hover {
     background: #ffd31b;
 }
 
-.works-grid-5 .gallery-photo-review {
-    width: 80px;
-}
-
 .btn-product-category,
 .btn-price,
 .btn-region {
@@ -607,10 +603,6 @@ a.form-control:hover {
 
 .detail.place-detail .view .nav-tabs .badge.total-photo {
 	right: 0.9rem;
-}
-
-.detail.place-detail .post-photo-container .work-item {
-	width: 50%;
 }
 
 .detail.user-profile .view .nav-tabs .badge {
@@ -959,3 +951,34 @@ a.form-control:hover {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.work-caption {
+    padding: 0;
+}
+
+.works-grid-4 .work-item {
+    width: 50%;
+}
+
+.works-grid-5 .work-item {
+    width: 20%;
+}
+
+@media (min-width: 576px) {
+	.works-grid-4 .work-item {
+    	width: 25%;
+	}
+	
+	.works-grid-5 .work-item {
+	    width: 80px;
+	}
+}
+@media (min-width: 768px) {	
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
+

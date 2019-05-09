@@ -150,8 +150,8 @@ $linkPager = LinkPager::widget([
                                                     	<?php
                                                     	if ($i == 4) {
 
-                                                    	    echo Html::a('+' . (count($dataUserPostMain['userPostMains']) - $i), ['page/review', 'id' => $dataUserPostMain['id']], ['class' => 'btn btn-d btn-small btn-xs btn-circle']);
-                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image hidden']);
+                                                    	    echo Html::a('+' . (count($dataUserPostMain['userPostMains']) - $i), ['page/review', 'id' => $dataUserPostMain['id']], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle']);
+                                                    	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none']);
                                                     	} else {
 
                                                     	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']);
@@ -172,6 +172,8 @@ $linkPager = LinkPager::widget([
                 </div>
 
                 <?php
+                $urlMyReviewDetail = \Yii::$app->params['rootUrl'] . 'review/' . $dataUserPostMain['id'] . '/di/' . $dataUserPostMain['business']['unique_name'];
+
                 $loveCount = !empty($dataUserPostMain['love_value']) ? $dataUserPostMain['love_value'] : 0;
                 $commentCount = !empty($dataUserPostMain['userPostComments']) ? count($dataUserPostMain['userPostComments']) : 0;
                 $photoCount = !empty($dataUserPostMain['userPostMains']) ? count($dataUserPostMain['userPostMains']) : 0;
@@ -215,10 +217,7 @@ $linkPager = LinkPager::widget([
                             </li>
                             <li class="list-inline-item">
 
-                                <?= Html::a('<i class="aicon aicon-share1"></i> ', \Yii::$app->urlManager->createAbsoluteUrl([
-                                    'page/review',
-                                    'id' => $dataUserPostMain['id'],
-                                ]), ['class' => 'btn btn-raised btn-small btn-round share-review-trigger d-block d-sm-none']); ?>
+                                <?= Html::a('<i class="aicon aicon-share1"></i> ', $urlMyReviewDetail, ['class' => 'btn btn-raised btn-small btn-round share-review-trigger d-block d-sm-none']); ?>
 
                             </li>
                         </ul>
@@ -227,10 +226,7 @@ $linkPager = LinkPager::widget([
                         <ul class="list-inline list-review mt-0 mb-0">
                             <li>
 
-                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', \Yii::$app->urlManager->createAbsoluteUrl([
-                                    'page/review',
-                                    'id' => $dataUserPostMain['id'],
-                                ]), ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
+                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', $urlMyReviewDetail, ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
 
                             </li>
                         </ul>

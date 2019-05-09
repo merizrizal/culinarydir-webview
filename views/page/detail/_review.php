@@ -12,12 +12,7 @@ use yii\widgets\ActiveForm;
 /* @var $dataUserVoteReview array */
 /* @var $queryParams array */
 
-webview\assets\RateyoAsset::register($this);
-
-$urlMyReviewDetail = [
-    'page/review',
-    'id' => $modelUserPostMain['id'],
-]; ?>
+webview\assets\RateyoAsset::register($this); ?>
 
 <div class="row">
     <div class="col-12">
@@ -38,7 +33,7 @@ $urlMyReviewDetail = [
             </div>
 
             <div class="box-content">
-                <div class="form-group p-0" id="edit-review-container">
+                <div class="form-group p-0" id="my-review-container">
 
                 	<?php
                 	if (!empty(\Yii::$app->user->getIdentity())):
@@ -121,7 +116,7 @@ $urlMyReviewDetail = [
 
                                                                     	if ($i == 4 && $hiddenPhotos != 0) {
 
-                                                                    	    echo Html::a('+' . $hiddenPhotos, \Yii::$app->urlManager->createUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle']);
+                                                                    	    echo Html::a('+' . $hiddenPhotos, \Yii::$app->urlManager->createUrl(['page/review', 'id' => $modelUserPostMain['id']]), ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle']);
                                                                     	    echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image d-none']);
                                                                     	} else {
 
@@ -143,6 +138,8 @@ $urlMyReviewDetail = [
                                 </div>
 
                                 <?php
+                                $urlMyReviewDetail = \Yii::$app->params['rootUrl'] . 'review/' . $modelUserPostMain['id'] . '/di/' . $modelBusiness['unique_name'];
+
                             	$loveCount = !empty($modelUserPostMain['love_value']) ? $modelUserPostMain['love_value'] : 0;
                         	    $commentCount = !empty($modelUserPostMain['userPostComments']) ? count($modelUserPostMain['userPostComments']) : 0;
                         	    $photoCount = !empty($modelUserPostMain['userPostMains']) ? count($modelUserPostMain['userPostMains']) : 0;
@@ -203,7 +200,7 @@ $urlMyReviewDetail = [
                                                     <i class="aicon aicon-more"></i>
                                                 </a>
                                                 <div class="dropdown-menu pull-right review-btn">
-                                                	<?= Html::a('<i class="aicon aicon-share1"></i>&nbsp;Share', \Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'share-my-review-trigger dropdown-item']); ?>
+                                                	<?= Html::a('<i class="aicon aicon-share1"></i>&nbsp;Share', $urlMyReviewDetail, ['class' => 'share-my-review-trigger dropdown-item']); ?>
                                                    	<?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i>&nbsp;Edit', '', ['class' => 'edit-my-review-trigger dropdown-item']) ?>
                                                    	<?= Html::a('<i class="aicon aicon-icon-trash"></i>&nbsp;' . \Yii::t('app', 'Delete'), ['user-action/delete-user-post', 'id' => $modelUserPostMain['id']], ['class' => 'delete-my-review-trigger dropdown-item']) ?>
                                                 </div>
@@ -213,7 +210,7 @@ $urlMyReviewDetail = [
                                     <div class="col-sm-6 text-right d-none d-sm-block d-md-none">
                                         <ul class="list-inline list-review mt-0 mb-0">
                                     		<li class="list-inline-item">
-                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', \Yii::$app->urlManager->createAbsoluteUrl($urlMyReviewDetail), ['class' => 'btn btn-raised btn-small btn-round share-my-review-trigger']) ?>
+                                                <?= Html::a('<i class="aicon aicon-share1"></i> Share', $urlMyReviewDetail, ['class' => 'btn btn-raised btn-small btn-round share-my-review-trigger']) ?>
                                             </li>
                                             <li class="list-inline-item">
                                                 <?= Html::a('<i class="aicon aicon-icon-edit-profile-new"></i> Edit', '', ['class' => 'btn btn-raised btn-small btn-round edit-my-review-trigger']) ?>
@@ -359,11 +356,11 @@ $urlMyReviewDetail = [
 
                                                 	<?php
                                                     echo Html::hiddenInput('rating_component_id', $dataRatingComponent['id'], ['class' => 'rating-component-id', 'data-prior' => '']);
-                                                    echo Html::hiddenInput('temp_rating_' . $dataRatingComponent['id'], null, ['class' => 'temp-rating-' . $dataRatingComponent['id']]);
+                                                    echo Html::hiddenInput('temp_rating_' . $dataRatingComponent['id'], (!empty($valueRatingComponent) ? $valueRatingComponent : null), ['class' => 'temp-rating-' . $dataRatingComponent['id']]);
 
                                                     echo $form->field($modelPost, '[review]rating[' . $dataRatingComponent['id'] . ']')->hiddenInput(['value' => !empty($valueRatingComponent) ? $valueRatingComponent : null]); ?>
 
-													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating" data-rating=<?= !empty($valueRatingComponent) ? $valueRatingComponent : 0 ?>></div>
+													<div id="rating-<?= $dataRatingComponent['id'] ?>" class="component-rating"></div>
                                                 </div>
 
                                                 <div class="col-6 business-rating-components p-15">
@@ -664,11 +661,11 @@ $jscript = '
             if (cancelWrite) {
 
                 $("#write-review-trigger").fadeIn();
-                $("#edit-review-container").fadeOut();
+                $("#my-review-container").fadeOut();
             } else {
 
                 $("#write-review-trigger").fadeOut();
-                $("#edit-review-container").fadeIn();
+                $("#my-review-container").fadeIn();
             }
 
             $("html, body").animate({ scrollTop: $("#title-write-review").offset().top }, "slow");
@@ -688,15 +685,17 @@ $jscript = '
 
         $(".rating-component-id").each(function() {
 
-            if ($(".temp-rating-" + $(this).val()).val() == "") {
+            var tempRating = $(".temp-rating-" + $(this).val()).val();
 
-                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", 0);
-                $("#post-review-rating-" + $(this).val()).val($("#rating-" + $(this).val()).val());
+            if (tempRating == "") {
+
+                $(this).siblings(".component-rating").rateYo("rating", 0);
             } else {
 
-                $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", $(this).siblings(".component-rating").rateYo("rating"));
-                $("#post-review-rating-" + $(this).val()).val($(this).siblings(".component-rating").rateYo("rating"));
+                $(this).siblings(".component-rating").rateYo("rating", tempRating);
             }
+
+            $("#post-review-rating-" + $(this).val()).val($(this).siblings(".component-rating").rateYo("rating"));
         });
 
         $("#post-review-text").val(prevReview);
@@ -736,7 +735,7 @@ $jscript = '
     $(".share-my-review-trigger").on("click", function(event) {
 
         var url = $(this).attr("href");
-        var title = "Rating " + $("#edit-review-container").find(".my-rating > h3").text().trim() + " untuk " + $(".business-name").text().trim();
+        var title = "Rating " + $("#my-review-container").find(".my-rating > h3").text().trim() + " untuk " + $(".business-name").text().trim();
         var description = $(".my-review-description").text();
         var image = "' . \Yii::$app->params['endPointLoadImage'] . 'user-post?image=";
 
@@ -760,7 +759,7 @@ $jscript = '
 
     $(".edit-my-review-trigger").on("click", function(event) {
 
-        $("#edit-review-container").fadeOut(100, function() {
+        $("#my-review-container").fadeOut(100, function() {
 
             prevReview = $("#post-review-text").val();
 
@@ -779,12 +778,7 @@ $jscript = '
 
         $(".rating-component-id").each(function() {
 
-            $(this).siblings(".component-rating").rateYo("rating", $(this).siblings(".component-rating").data("rating"));
-
-            var dataRating = $(this).siblings(".component-rating").rateYo("rating");
-
-            $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", dataRating);
-            $("#post-review-rating-" + $(this).val()).val(dataRating);
+            $(this).siblings(".component-rating").rateYo("rating", $("#post-review-rating-" + $(this).val()).val());
         });
 
         return false;
@@ -818,7 +812,7 @@ $jscript = '
                         var totalUserPost = parseInt($(".total-review").html());
                         $(".total-review").html(totalUserPost - 1);
 
-                        $("#edit-review-container").fadeOut(100, function() {
+                        $("#my-review-container").fadeOut(100, function() {
 
                             $("#write-review-trigger").fadeIn();
                         });
@@ -829,7 +823,7 @@ $jscript = '
                         $(".rating-component-id").each(function() {
 
                             $(".temp-rating-" + $(this).val()).val(0);
-                            $(this).parent().find("#rating-" + $(this).val()).rateYo("rating", 0);
+                            $(this).siblings(".component-rating").rateYo("rating", 0);
                             $("#post-review-rating-" + $(this).val() + "").val($("#rating-" + $(this).val()).val());
                         });
 
@@ -993,18 +987,18 @@ $jscript = '
 
                         ratingColor($(".my-rating"), "a");
 
-                        $("#edit-review-container").find(".my-total-photos-review").html(parseInt($("#edit-review-container").find(".my-total-photos-review").html()) + parseInt(response.userPostMainPhoto.length));
-                        $("#edit-review-container").find(".my-total-comments-review").html(response.commentCount);
+                        $("#my-review-container").find(".my-total-photos-review").html(parseInt($("#my-review-container").find(".my-total-photos-review").html()) + parseInt(response.userPostMainPhoto.length));
+                        $("#my-review-container").find(".my-total-comments-review").html(response.commentCount);
 
                         $(".my-comment-section").html(response.userPostComments);
 
-                        $("#edit-review-container").find(".my-user-post-main-id").val(response.userPostMain.id);
+                        $("#my-review-container").find(".my-user-post-main-id").val(response.userPostMain.id);
 
                         $("#title-write-review").find("h4").html("' . \Yii::t('app', 'Your Review') . '");
 
                         $("#write-review-container, #close-review-container").fadeOut(100, function() {
 
-                            $("#edit-review-container").show();
+                            $("#my-review-container").show();
                             $("html, body").animate({ scrollTop: $("#title-write-review").offset().top }, "slow");
                         });
 
@@ -1109,6 +1103,8 @@ $jscript = '
                             success: function(response) {
 
                                 $(".my-comment-section").html(response);
+
+                                var commentCount = $(".my-comment-section").find(".comment-count").val();
 
                                 $(".my-total-comments-review").html(commentCount);
                             },
@@ -1296,7 +1292,7 @@ if (!empty($modelUserPostMain)) {
 } else {
 
     $jscript .= '
-        $("#edit-review-container").hide();
+        $("#my-review-container").hide();
     ';
 }
 
