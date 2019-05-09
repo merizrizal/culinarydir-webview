@@ -24,99 +24,93 @@ $linkPager = LinkPager::widget([
     'maxButtonCount' => 5,
     'prevPageLabel' => false,
     'nextPageLabel' => false,
-    'firstPageLabel' => '<i class="fa fa-angle-double-left"></i>',
-    'lastPageLabel' => '<i class="fa fa-angle-double-right"></i>',
+    'firstPageLabel' => '<i class="aicon aicon-icon-left-angle-semantic"></i>',
+    'lastPageLabel' => '<i class="aicon aicon-icon-right-angle-semantic"></i>',
     'options' => ['id' => 'pagination-user-visit', 'class' => 'pagination'],
 ]); ?>
 
 <div class="row mt-10 mb-20">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
         <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
     </div>
 </div>
 
-<div class="row" style="position: relative;">
-    <div class="user-visit-container">
+<div class="row user-visit-container" style="position: relative;">
 
-    	<div class="overlay" style="display: none;"></div>
-		<div class="loading-img" style="display: none;"></div>
+	<div class="overlay" style="display: none;"></div>
+	<div class="loading-img" style="display: none;"></div>
 
-        <?php
-        if (!empty($modelUserVisit)):
+    <?php
+    if (!empty($modelUserVisit)):
 
-            foreach ($modelUserVisit as $dataUserVisit):
+        foreach ($modelUserVisit as $dataUserVisit):
 
-                $urlBusinessDetail = [
-                    'page/detail',
-                    'city' => Inflector::slug($dataUserVisit['business']['businessLocation']['city']['name']),
-                    'uniqueName' => $dataUserVisit['business']['unique_name']
-                ]; ?>
+            $urlBusinessDetail = ['page/detail', 'id' => $dataUserVisit['business']['id']]; ?>
 
-                <div class="col-lg-4 col-sm-6 col-tab-6 col-xs-12 mb-10">
-                    <div class="box user">
-                        <div class="row">
-                            <div class="col-xs-12">
+            <div class="col-sm-6 col-12 mb-10">
+                <div class="card box user">
+                    <div class="row">
+                        <div class="col-12">
 
-                                <?php
-                                $img = (!empty($dataUserVisit['business']['businessImages']) ? $dataUserVisit['business']['businessImages'][0]['image'] : '') . '&w=565&h=350';
-                                echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $img), $urlBusinessDetail); ?>
+                            <?php
+                            $img = (!empty($dataUserVisit['business']['businessImages']) ? $dataUserVisit['business']['businessImages'][0]['image'] : '') . '&w=565&h=350';
+                            echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $img), $urlBusinessDetail); ?>
 
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="short-desc">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <h5 class="m-0">
-                                                <?= Html::a($dataUserVisit['business']['name'], $urlBusinessDetail); ?>
-                                            </h5>
-                                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="short-desc">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="m-0">
+                                            <?= Html::a($dataUserVisit['business']['name'], $urlBusinessDetail); ?>
+                                        </h5>
                                     </div>
-                                    <div class="row">
-                                    	<div class="col-xs-12">
-                                            <small class="m-0">
-                                                <?= $dataUserVisit['business']['businessLocation']['village']['name'] . ', ' . $dataUserVisit['business']['businessLocation']['city']['name'] ?>
-                                            </small>
-                                        </div>
+                                </div>
+                                <div class="row">
+                                	<div class="col-12">
+                                        <small class="m-0">
+                                            <?= $dataUserVisit['business']['businessLocation']['village']['name'] . ', ' . $dataUserVisit['business']['businessLocation']['city']['name'] ?>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            <?php
-            endforeach;
-        endif; ?>
+        <?php
+        endforeach;
+    endif; ?>
 
-    </div>
 </div>
 
 <div class="row mt-20 mb-10">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
         <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -137,6 +131,12 @@ $jscript = '
 
         $(".user-visit-container").children(".overlay").hide();
         $(".user-visit-container").children(".loading-img").hide();
+    });
+
+    $("#pjax-user-visit-container").off("pjax:end");
+    $("#pjax-user-visit-container").on("pjax:end", function() {
+
+        $(".user-visit-container").bootstrapMaterialDesign();
     });
 
     $("#pjax-user-visit-container").off("pjax:error");

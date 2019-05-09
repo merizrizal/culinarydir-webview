@@ -21,6 +21,7 @@ $jscript = '
             success: function(response) {
 
                 $(".user-post-section").html(response);
+                $(".user-post-section").find(".user-post-container").bootstrapMaterialDesign();
             },
             error: function(xhr, ajaxOptions, thrownError) {
 
@@ -100,8 +101,8 @@ $jscript = '
                 url: "' . \Yii::$app->urlManager->createUrl(['action/submit-comment']) . '",
                 beforeSend: function(xhr) {
 
-                    thisObj.parent().siblings(".overlay").show();
-                    thisObj.parent().siblings(".loading-img").show();
+                    thisObj.parents(".user-comment-review").find(".overlay").show();
+                    thisObj.parents(".user-comment-review").find(".loading-img").show();
                 },
                 success: function(response) {
 
@@ -118,7 +119,9 @@ $jscript = '
                             url: "' . \Yii::$app->urlManager->createUrl(['data/post-comment']) . '",
                             success: function(response) {
 
-                                thisObj.parent().siblings(".comment-section").html(response);
+                                thisObj.parents(".user-comment-review").find(".comment-section").html(response);
+
+                                var commentCount = thisObj.parents(".user-comment-review").find(".comment-section").find(".comment-count").val();
 
                                 thisObj.parents(".user-post-item").find("span.total-comments-review").html(commentCount);
                             },
@@ -132,15 +135,15 @@ $jscript = '
                         messageResponse(response.icon, response.title, response.message, response.type);
                     }
 
-                    thisObj.parent().siblings(".overlay").hide();
-                    thisObj.parent().siblings(".loading-img").hide();
+                    thisObj.parents(".user-comment-review").find(".overlay").hide();
+                    thisObj.parents(".user-comment-review").find(".loading-img").hide();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
 
                     messageResponse("aicon aicon-icon-info", xhr.status, xhr.responseText, "danger");
 
-                    thisObj.parent().siblings(".overlay").hide();
-                    thisObj.parent().siblings(".loading-img").hide();
+                    thisObj.parents(".user-comment-review").find(".overlay").hide();
+                    thisObj.parents(".user-comment-review").find(".loading-img").hide();
                 }
             });
         }

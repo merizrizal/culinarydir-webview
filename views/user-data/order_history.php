@@ -1,12 +1,11 @@
 <?php
 
 use frontend\components\AddressType;
-use frontend\components\GrowlCustom;
 use yii\helpers\Html;
-use yii\helpers\Inflector;
 use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
+use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelTransactionSession core\models\TransactionSession */
@@ -27,23 +26,23 @@ $linkPager = LinkPager::widget([
     'maxButtonCount' => 5,
     'prevPageLabel' => false,
     'nextPageLabel' => false,
-    'firstPageLabel' => '<i class="fa fa-angle-double-left"></i>',
-    'lastPageLabel' => '<i class="fa fa-angle-double-right"></i>',
+    'firstPageLabel' => '<i class="aicon aicon-icon-left-angle-semantic"></i>',
+    'lastPageLabel' => '<i class="aicon aicon-icon-right-angle-semantic"></i>',
     'options' => ['id' => 'pagination-order-history', 'class' => 'pagination'],
 ]); ?>
 
 <div class="row mt-10 mb-20">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
-        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+    	<?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -51,93 +50,87 @@ $linkPager = LinkPager::widget([
 </div>
 
 
-<div class="row" style="position: relative;">
-    <div class="order-history-container">
+<div class="row order-history-container" style="position: relative;">
 
-    	<div class="overlay" style="display: none;"></div>
-		<div class="loading-img" style="display: none;"></div>
+	<div class="overlay" style="display: none;"></div>
+	<div class="loading-img" style="display: none;"></div>
 
-        <?php
-        if (!empty($modelTransactionSession)):
+    <?php
+    if (!empty($modelTransactionSession)):
 
-            foreach ($modelTransactionSession as $dataTransactionSession):
+        foreach ($modelTransactionSession as $dataTransactionSession):
 
-                $img = (!empty($dataTransactionSession['business']['businessImages']) ? $dataTransactionSession['business']['businessImages'][0]['image'] : '') . '&w=88&h=88';
+            $img = (!empty($dataTransactionSession['business']['businessImages']) ? $dataTransactionSession['business']['businessImages'][0]['image'] : '') . '&w=88&h=88';
 
-                $btnDetail = Html::a('<i class="fas fa-search"></i> Detail', ['user/detail-order-history', 'id' => $dataTransactionSession['id']], [
-                    'class' => 'btn btn-default btn-small btn-round-4'
-                ]);
+            $btnDetail = Html::a('<i class="aicon aicon-icon-search-semantic"></i> Detail', ['user/detail-order-history', 'id' => $dataTransactionSession['id']], [
+                'class' => 'btn btn-raised btn-default btn-small btn-round'
+            ]);
 
-                $btnReorder = Html::a($dataTransactionSession['is_closed'] ? '<i class="aicon aicon-icon-online-ordering"></i> ' . \Yii::t('app', 'Reorder') : '<i class="aicon aicon-inspection_checklist"></i> ' . \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
-                    'class' => 'btn btn-default btn-small btn-round-4 btn-reorder',
-                    'data-id' => $dataTransactionSession['id']
-                ]);
+            $btnReorder = Html::a($dataTransactionSession['is_closed'] ? '<i class="aicon aicon-icon-online-ordering"></i> ' . \Yii::t('app', 'Reorder') : '<i class="aicon aicon-inspection_checklist"></i> ' . \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
+                'class' => 'btn btn-raised btn-default btn-small btn-round btn-reorder',
+                'data-id' => $dataTransactionSession['id']
+            ]);
 
-                $urlBusinessDetail = [
-                    'page/detail',
-                    'city' => Inflector::slug($dataTransactionSession['business']['businessLocation']['city']['name']),
-                    'uniqueName' => $dataTransactionSession['business']['unique_name']
-                ];
+            $urlBusinessDetail = ['page/detail', 'id' => $dataTransactionSession['business']['id']];
 
-                $grandTotal = $dataTransactionSession['total_price'] - $dataTransactionSession['discount_value']; ?>
+            $grandTotal = $dataTransactionSession['total_price'] - $dataTransactionSession['discount_value']; ?>
 
-            	<div class="col-xs-12">
-            		<div class="row mb-10">
-                        <div class="col-sm-6 col-tab-7 col-xs-12">
-                            <div class="widget-posts-image image-order-history">
-                                <?= Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $img, ['class' => 'img-rounded']), $urlBusinessDetail) ?>
-                            </div>
-                        	<small>
-                        		<?= \Yii::$app->formatter->asDate($dataTransactionSession['created_at'], 'long') . ', ' . \Yii::$app->formatter->asTime($dataTransactionSession['created_at'], 'short') ?>
-                    		</small>
-                        	<br>
-                            	<?= Html::a($dataTransactionSession['business']['name'], $urlBusinessDetail) ?>
-                            <br>
-                            <small>
-                                <?= AddressType::widget(['businessLocation' => $dataTransactionSession['business']['businessLocation']]); ?>
-                            </small>
+        	<div class="col-12">
+        		<div class="row mb-10">
+                    <div class="col-sm-7 col-12">
+                        <div class="widget-posts-image image-order-history">
+                            <?= Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'registry-business?image=' . $img, ['class' => 'rounded']), $urlBusinessDetail) ?>
                         </div>
+                    	<small>
+                    		<?= \Yii::$app->formatter->asDate($dataTransactionSession['created_at'], 'long') . ', ' . \Yii::$app->formatter->asTime($dataTransactionSession['created_at'], 'short') ?>
+                		</small>
+                    	<br>
+                        	<?= Html::a($dataTransactionSession['business']['name'], $urlBusinessDetail) ?>
+                        <br>
+                        <small>
+                            <?= AddressType::widget(['businessLocation' => $dataTransactionSession['business']['businessLocation']]); ?>
+                        </small>
                     </div>
-                    <div class="row mb-10">
-                    	<div class="col-sm-7 col-tab-6 col-xs-12">
-                    		Grand Total : <?= \Yii::$app->formatter->asCurrency($grandTotal < 0 ? 0 : $grandTotal) ?> | <i class="far fa-check-circle <?= $dataTransactionSession['is_closed'] ? 'text-success' : 'text-danger' ?>"></i>
-                    	</div>
-                    	<div class="col-sm-5 col-tab-6 text-right visible-lg visible-md visible-sm visible-tab">
-                    		<ul class="list-inline list-review mt-0 mb-0">
-                                <li><?= $btnDetail ?></li>
-                                <li><?= $btnReorder ?></li>
-                            </ul>
-                    	</div>
-                    	<div class="col-xs-12 visible-xs">
-                    		<ul class="list-inline list-review mt-10 mb-0">
-                                <li><?= $btnDetail ?></li>
-                                <li><?= $btnReorder ?></li>
-                            </ul>
-                    	</div>
-                    </div>
+                </div>
+                <div class="row mb-10">
+                	<div class="col-sm-6 col-12">
+                		Grand Total : <?= \Yii::$app->formatter->asCurrency($grandTotal < 0 ? 0 : $grandTotal) ?> | <i class="aicon aicon-checkbox-checked <?= $dataTransactionSession['is_closed'] ? 'text-success' : 'text-danger' ?>"></i>
+                	</div>
+                	<div class="col-sm-6 text-right d-none d-sm-block d-md-none">
+                		<ul class="list-inline list-review mt-0 mb-0">
+                            <li class="list-inline-item"><?= $btnDetail ?></li>
+                            <li class="list-inline-item"><?= $btnReorder ?></li>
+                        </ul>
+                	</div>
+                	<div class="col-12 d-block d-sm-none">
+                		<ul class="list-inline list-review mt-10 mb-0">
+                            <li class="list-inline-item"><?= $btnDetail ?></li>
+                            <li class="list-inline-item"><?= $btnReorder ?></li>
+                        </ul>
+                	</div>
+                </div>
 
-                    <hr class="divider-w mt-10 mb-10">
-            	</div>
+                <hr class="divider-w mt-10 mb-10">
+        	</div>
 
-        	<?php
-            endforeach;
-        endif; ?>
+    	<?php
+        endforeach;
+    endif; ?>
 
-    </div>
 </div>
 
 <div class="row mt-20 mb-10">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
-        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+    	<?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -145,9 +138,9 @@ $linkPager = LinkPager::widget([
 </div>
 
 <?php
-GrowlCustom::widget();
+Snackbar::widget();
 
-$this->registerJs(GrowlCustom::messageResponse(), View::POS_HEAD);
+$this->registerJs(Snackbar::messageResponse(), View::POS_HEAD);
 
 $jscript = '
     $(".btn-reorder").on("click", function() {
@@ -189,6 +182,12 @@ $jscript = '
 
         $(".order-history-container").children(".overlay").hide();
         $(".order-history-container").children(".loading-img").hide();
+    });
+
+    $("#pjax-order-history-container").off("pjax:end");
+    $("#pjax-order-history-container").on("pjax:end", function() {
+
+        $(".order-history-container").bootstrapMaterialDesign();
     });
 
     $("#pjax-order-history-container").off("pjax:error");

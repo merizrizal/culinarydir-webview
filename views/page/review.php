@@ -54,7 +54,7 @@ $this->registerMetaTag([
 
 <div class="main bg-main">
 	<section>
-        <div class="detail review">
+        <div class="detail review review-container">
         	<div class="row">
                 <div class="col-12">
 
@@ -138,7 +138,7 @@ $this->registerMetaTag([
                                                                             </div>
                                                                             <div class="work-caption">
                                                                                 <div class="work-descr">
-                                                                                	<a class="btn btn-d btn-small btn-xs btn-circle show-image" href="<?= \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image']; ?>"><i class="aicon aicon-zoomin"></i></a>
+                                                                                	<a class="btn btn-raised btn-danger btn-small btn-xs btn-circle show-image" href="<?= \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMainChild['image']; ?>"><i class="aicon aicon-zoomin"></i></a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -444,6 +444,7 @@ $jscript = '
 
         return false;
     });
+
 ';
 
 $this->registerJs($jscript); ?>

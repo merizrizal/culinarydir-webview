@@ -80,9 +80,9 @@ $this->registerMetaTag([
                     ';
 
                     $btnProfile =
-                        '<div class="dropdown">' .
-                            Html::a('<i class="aicon aicon-pencil1"></i> ' . \Yii::t('app', 'Update Profile'), ['user/update-profile'], ['class' => 'btn btn-raised btn-danger btn-round btn-standard']) . '
-                            <a class="btn btn-xs btn-round btn-danger btn-standard btn-raised dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                        Html::a('<i class="aicon aicon-pencil1"></i> ' . \Yii::t('app', 'Update Profile'), ['user/update-profile'], ['class' => 'btn btn-raised btn-danger btn-round btn-standard']) . '
+                        <div class="dropdown inline-block">
+                            <button class="btn btn-xs btn-round btn-danger btn-standard btn-raised dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu">' .
                                 Html::a('<i class="aicon aicon-key1"></i>&nbsp;' . \Yii::t('app', 'Change Password'), ['user/change-password'], ['class' => 'dropdown-item']) .
                                	Html::a('<i class="aicon aicon-logout"></i>&nbsp;' . \Yii::t('app', 'Logout'), ['site/logout'], ['class' => 'dropdown-item']) . '
@@ -91,7 +91,7 @@ $this->registerMetaTag([
                     '; ?>
 
                     <div class="row mt-10 d-none d-sm-block d-md-none">
-                        <div class="col-sm-8 offset-sm-2">
+                        <div class="col-sm-9 offset-sm-2">
                             <div class="widget-posts-image">
                                 <?= Html::img($img, ['class' => 'img-fluid rounded-circle']) ?>
                             </div>

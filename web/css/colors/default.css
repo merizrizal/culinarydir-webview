@@ -167,7 +167,8 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
     text-shadow: none;
 }
 
-.detail.place-detail .review-post .rating {
+.detail.place-detail .review-post .rating,
+.detail.user-profile .user-post-item .rating {
     margin-top: 7px;
 }
 
@@ -240,8 +241,13 @@ label.radio-inline input[type="radio"]:checked ~ .bmd-radio::after {
 }
 
 .detail.user-profile .widget-posts-body {
-    padding-top: 10px;
+    padding-top: 30px;
     margin-left : 10px;
+}
+
+.detail.user-profile .widget-posts-body.business-review {
+    padding-top: 0;
+    margin-left : 70px;
 }
 
 .detail.user-profile .widget .widget-posts-body.user-profile-identity {
@@ -525,7 +531,8 @@ a.form-control:hover {
 
 .detail.review .review-container .rating .badge,
 .detail.place-detail .review-post .rating .badge,
-.detail.place-detail .rating.my-rating .badge {
+.detail.place-detail .rating.my-rating .badge,
+.detail.user-profile .user-post-item .rating .badge {
 	display: inline;
     padding: .4em;
     line-height: 1.2;
@@ -559,7 +566,9 @@ a.form-control:hover {
 
 .detail .box .box-content .review-description,
 .detail .box .box-content .comment-description,
-.detail .box .box-content .my-review-description {
+.detail .box .box-content .my-review-description,
+.detail.user-profile .review-description,
+.detail.user-profile .comment-description {
     line-height: 1.4;
     margin: 0px 0px 5px;
 }
@@ -568,7 +577,8 @@ a.form-control:hover {
     padding-left: 17px;
 }
 
-.detail .box .gallery-item {
+.detail .box .gallery-item,
+.detail.user-profile .gallery-item {
     border-radius: 5px;
     overflow: hidden;
     margin: 0 0 0px;

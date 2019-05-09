@@ -107,8 +107,7 @@ $linkPager = LinkPager::widget([
                     <div class="col-12 d-block d-sm-none">
                     	<ul class="list-inline mt-0 mb-0">
                             <li class="list-inline-item">
-                                <div class="star-rating" data-rating="<?= number_format($overallValue, 1) ?>">
-                                </div>
+                                <div class="star-rating" data-rating="<?= number_format($overallValue, 1) ?>"></div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="rating rating-<?= $dataUserPostMain['id']; ?>">
@@ -216,18 +215,14 @@ $linkPager = LinkPager::widget([
                                 <?= Html::a('<i class="aicon aicon-bubbles"></i> Comment', '', ['class' => 'btn btn-raised btn-small btn-round user-comments-review-trigger d-block d-sm-none']); ?>
                             </li>
                             <li class="list-inline-item">
-
                                 <?= Html::a('<i class="aicon aicon-share1"></i> ', $urlMyReviewDetail, ['class' => 'btn btn-raised btn-small btn-round share-review-trigger d-block d-sm-none']); ?>
-
                             </li>
                         </ul>
                     </div>
                     <div class="col-sm-5 text-right d-none d-sm-block d-md-none">
                         <ul class="list-inline list-review mt-0 mb-0">
                             <li>
-
                                 <?= Html::a('<i class="aicon aicon-share1"></i> Share', $urlMyReviewDetail, ['class' => 'btn btn-raised btn-small btn-round share-review-trigger']); ?>
-
                             </li>
                         </ul>
                     </div>
@@ -264,7 +259,10 @@ $linkPager = LinkPager::widget([
 
                                                     <?php
                                                     $img = !empty($dataUserPostComment['user']['image']) ? $dataUserPostComment['user']['image'] . '&w=64&h=64' : 'default-avatar.png';
-                                                    echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, ['class' => 'img-fluid rounded-circle']), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
+
+                                                    echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'user?image=' . $img, [
+                                                        'class' => 'img-fluid rounded-circle'
+                                                    ]), ['user/user-profile', 'user' => $dataUserPostComment['user']['username']]); ?>
 
                                                 </div>
 

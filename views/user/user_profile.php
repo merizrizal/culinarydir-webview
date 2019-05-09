@@ -61,13 +61,11 @@ $this->registerMetaTag([
     'content' => $ogImage
 ]); ?>
 
-<div class="main">
-
-    <section class="module-extra-small bg-main">
-        <div class="container detail user-profile">
-
+<div class="main bg-main">
+    <section>
+        <div class="detail user-profile">
             <div class="row user-profile-header mb-50">
-                <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+                <div class="col-12">
 
                 	<?php
                 	$img = !empty($modelUser['image']) ? $modelUser['image'] . '&w=200&h=200' : 'default-avatar.png';

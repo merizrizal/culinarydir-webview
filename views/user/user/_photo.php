@@ -5,8 +5,8 @@
 /* @var $queryParams array */ ?>
 
 <div class="row">
-    <div class="col-sm-12 col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box bg-white">
             <div class="box-content">
                 <div class="user-post-photo"></div>
             </div>
@@ -21,13 +21,11 @@ $jscript = '
         $.ajax({
             cache: false,
             type: "GET",
-            url: "' . \Yii::$app->urlManager->createUrl([
-                'user-data/user-post-photo',
-                'username' => $username
-            ]). (!empty($queryParams['redirect']) && $queryParams['redirect'] == 'photo' ? '?page=' . $queryParams['page'] . '&per-page=' . $queryParams['per-page'] : '') . '",
+            url: "' . \Yii::$app->urlManager->createUrl(['user-data/user-post-photo', 'username' => $username]) . '",
             success: function(response) {
 
                 $(".user-post-photo").html(response);
+                $(".user-post-photo").find(".user-post-photo-container").bootstrapMaterialDesign();
             },
             error: function(xhr, ajaxOptions, thrownError) {
 

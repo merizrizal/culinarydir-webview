@@ -5,8 +5,8 @@
 /* @var $queryParams array */ ?>
 
 <div class="row">
-    <div class="col-sm-12 col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
             <div class="box-content">
             	<div class="order-history"></div>
             </div>
@@ -19,10 +19,11 @@ $jscript = '
     $.ajax({
         cache: false,
         type: "GET",
-        url: "' . \Yii::$app->urlManager->createUrl(['user-data/order-history']) . (!empty($queryParams['redirect']) && $queryParams['redirect'] == 'order-history' ? '?username=' . $queryParams['user'] . '&page=' . $queryParams['page'] . '&per-page=' . $queryParams['per-page'] : '?username=' . $username) . '",
+        url: "' . \Yii::$app->urlManager->createUrl(['user-data/order-history']) . '",
         success: function(response) {
 
             $(".order-history").html(response);
+            $(".order-history").find(".order-history-container").bootstrapMaterialDesign();
         },
         error: function(xhr, ajaxOptions, thrownError) {
 

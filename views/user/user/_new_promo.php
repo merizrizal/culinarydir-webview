@@ -3,8 +3,8 @@
 /* @var $this yii\web\View */ ?>
 
 <div class="row">
-    <div class="col-sm-12 col-xs-12">
-        <div class="box bg-white">
+    <div class="col-12">
+        <div class="card box">
             <div class="box-content">
                 <div class="new-promo"></div>
             </div>
@@ -21,6 +21,7 @@ $jscript = '
         success: function(response) {
 
             $(".new-promo").html(response);
+            $(".new-promo").find(".new-promo-container").bootstrapMaterialDesign();
         },
         error: function(xhr, ajaxOptions, thrownError) {
 

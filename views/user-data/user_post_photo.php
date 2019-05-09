@@ -23,23 +23,23 @@ $linkPager = LinkPager::widget([
     'maxButtonCount' => 5,
     'prevPageLabel' => false,
     'nextPageLabel' => false,
-    'firstPageLabel' => '<i class="fa fa-angle-double-left"></i>',
-    'lastPageLabel' => '<i class="fa fa-angle-double-right"></i>',
+    'firstPageLabel' => '<i class="aicon aicon-icon-left-angle-semantic"></i>',
+    'lastPageLabel' => '<i class="aicon aicon-icon-right-angle-semantic"></i>',
     'options' => ['id' => 'pagination-user-photo', 'class' => 'pagination'],
 ]); ?>
 
 <div class="row mt-10 mb-20">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
-        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+    	<?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -47,7 +47,7 @@ $linkPager = LinkPager::widget([
 </div>
 
 <div class="row" style="position: relative;">
-    <div class="col-xs-12 user-post-photo-container">
+    <div class="col-12 user-post-photo-container">
 
 		<div class="overlay" style="display: none;"></div>
 		<div class="loading-img" style="display: none;"></div>
@@ -57,7 +57,9 @@ $linkPager = LinkPager::widget([
             <?php
             if (!empty($modelUserPostMainPhoto)):
 
-                foreach ($modelUserPostMainPhoto as $dataUserPostMainPhoto): ?>
+                foreach ($modelUserPostMainPhoto as $dataUserPostMainPhoto):
+
+                    $urlPhoto = \Yii::$app->params['rootUrl'] . 'photo/' . $dataUserPostMainPhoto['id'] . '/di/' . $dataUserPostMainPhoto['business']['unique_name']; ?>
 
                     <li class="work-item">
 
@@ -69,21 +71,16 @@ $linkPager = LinkPager::widget([
                                     <?= Html::img(\Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainPhoto['image'] . '&w=200&h=200', ['class' => 'img-component', 'data-id' => $dataUserPostMainPhoto['id']]) ?>
                                 </div>
                                 <div class="work-caption">
-                                    <div class="work-descr photo-caption hidden-xs"><?= !empty($dataUserPostMainPhoto['text']) ? $dataUserPostMainPhoto['text'] : '' ?></div>
+                                    <div class="work-descr photo-caption d-none d-sm-block d-md-none"><?= !empty($dataUserPostMainPhoto['text']) ? $dataUserPostMainPhoto['text'] : '' ?></div>
                                     <div class="work-descr">
 
                                     	<?php
-                                    	echo Html::a('<i class="fa fa-search"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainPhoto['image'], ['class' => 'btn btn-d btn-small btn-xs btn-circle show-image']) . '&nbsp';
-
-                                    	echo Html::a('<i class="fa fa-share-alt"></i>', \Yii::$app->urlManager->createAbsoluteUrl([
-                                    	    'page/photo',
-                                    	    'id' => $dataUserPostMainPhoto['id'],
-                                    	    'uniqueName' => $dataUserPostMainPhoto['business']['unique_name'],
-                                    	]), ['class' => 'btn btn-d btn-small btn-xs btn-circle share-image-trigger']) . '&nbsp';
+                                    	echo Html::a('<i class="aicon aicon-zoomin"></i>', \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $dataUserPostMainPhoto['image'], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle show-image']) . '&nbsp';
+                                    	echo Html::a('<i class="aicon aicon-share1"></i>', $urlPhoto, ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle share-image-trigger']) . '&nbsp';
 
                                         if (!empty(\Yii::$app->user->getIdentity()->id) && \Yii::$app->user->getIdentity()->id == $dataUserPostMainPhoto['user_id']) {
 
-                                            echo Html::a('<i class="fa fa-trash"></i>', ['user-action/delete-photo', 'id' => $dataUserPostMainPhoto['id']], ['class' => 'btn btn-d btn-small btn-xs btn-circle delete-image']);
+                                            echo Html::a('<i class="aicon aicon-icon-trash"></i>', ['user-action/delete-photo', 'id' => $dataUserPostMainPhoto['id']], ['class' => 'btn btn-raised btn-danger btn-small btn-xs btn-circle delete-image']);
                                         } ?>
 
                                     </div>
@@ -101,17 +98,17 @@ $linkPager = LinkPager::widget([
 </div>
 
 <div class="row mt-20 mb-10">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
-        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+    	<?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -149,6 +146,12 @@ $jscript = '
 
         $(".user-post-photo-container").children(".overlay").hide();
         $(".user-post-photo-container").children(".loading-img").hide();
+    });
+
+    $("#pjax-user-photo-container").off("pjax:end");
+    $("#pjax-user-photo-container").on("pjax:end", function() {
+
+        $(".user-post-photo-container").bootstrapMaterialDesign();
     });
 
     $("#pjax-user-photo-container").off("pjax:error");

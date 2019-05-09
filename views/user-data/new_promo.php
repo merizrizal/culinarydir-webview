@@ -24,100 +24,97 @@ $linkPager = LinkPager::widget([
     'maxButtonCount' => 5,
     'prevPageLabel' => false,
     'nextPageLabel' => false,
-    'firstPageLabel' => '<i class="fa fa-angle-double-left"></i>',
-    'lastPageLabel' => '<i class="fa fa-angle-double-right"></i>',
+    'firstPageLabel' => '<i class="aicon aicon-icon-left-angle-semantic"></i>',
+    'lastPageLabel' => '<i class="aicon aicon-icon-right-angle-semantic"></i>',
     'options' => ['id' => 'pagination-new-promo', 'class' => 'pagination'],
 ]); ?>
 
 <div class="row mt-10 mb-20">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
-        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+    	<?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
     </div>
 </div>
 
-<div class="row" style="position: relative;">
-    <div class="new-promo-container">
+<div class="row new-promo-container" style="position: relative;">
 
-    	<div class="overlay" style="display: none;"></div>
-		<div class="loading-img" style="display: none;"></div>
+	<div class="overlay" style="display: none;"></div>
+	<div class="loading-img" style="display: none;"></div>
 
-        <?php
-        if (!empty($modelBusinessPromo)):
+    <?php
+    if (!empty($modelBusinessPromo)):
 
-            foreach ($modelBusinessPromo as $dataBusinessPromo):
+        foreach ($modelBusinessPromo as $dataBusinessPromo):
 
-                $urlBusinessDetail = [
-                    'page/detail',
-                    '#' => 'special',
-                    'city' => Inflector::slug($dataBusinessPromo['business']['businessLocation']['city']['name']),
-                    'uniqueName' => $dataBusinessPromo['business']['unique_name']
-                ]; ?>
+            $urlBusinessDetail = [
+                'page/detail',
+                '#' => 'special',
+                'id' => $dataBusinessPromo['business']['id']
+            ]; ?>
 
-                <div class="col-lg-4 col-sm-6 col-tab-6 col-xs-12 mb-10">
-                    <div class="box user">
-                        <div class="row">
-                            <div class="col-xs-12">
+            <div class="col-sm-6 col-12 mb-10">
+                <div class="card box user">
+                    <div class="row">
+                        <div class="col-12">
 
-                                <?php
-                                $img = (!empty($dataBusinessPromo['image']) ? $dataBusinessPromo['image'] : '') . '&w=565&h=350';
-                                echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $img), $urlBusinessDetail); ?>
+                            <?php
+                            $img = (!empty($dataBusinessPromo['image']) ? $dataBusinessPromo['image'] : '') . '&w=565&h=350';
+                            echo Html::a(Html::img(\Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $img), $urlBusinessDetail); ?>
 
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="short-desc">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <h5 class="m-0">
-                                                <?= Html::a($dataBusinessPromo['business']['name'], $urlBusinessDetail); ?>
-                                            </h5>
-										</div>
-                                    </div>
-                                    <div class="row">
-                                    	<div class="col-xs-12">
-                                            <small class="m-0">
-                                                <?= $dataBusinessPromo['title']; ?>
-                                            </small>
-                                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="short-desc">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5 class="m-0">
+                                            <?= Html::a($dataBusinessPromo['business']['name'], $urlBusinessDetail); ?>
+                                        </h5>
+									</div>
+                                </div>
+                                <div class="row">
+                                	<div class="col-12">
+                                        <small class="m-0">
+                                            <?= $dataBusinessPromo['title']; ?>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-            <?php
-            endforeach;
-        endif; ?>
+        <?php
+        endforeach;
+    endif; ?>
 
-    </div>
 </div>
 
 <div class="row mt-20 mb-10">
-    <div class="col-sm-6 col-tab-6 col-xs-12 mb-10">
+    <div class="col-sm-6 col-12 mb-10">
 
-        <?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
+    	<?= \Yii::t('app', 'Showing {startItem} - {endItem} of {totalCount} results', ['startItem' => $startItem, 'endItem' => $endItem, 'totalCount' => $totalCount]) ?>
 
     </div>
-    <div class="col-sm-6 col-tab-6 visible-lg visible-md visible-sm visible-tab text-right">
+    <div class="col-sm-6 d-none d-sm-block d-md-none text-right">
 
         <?= $linkPager; ?>
 
     </div>
-    <div class="col-xs-12 visible-xs">
+    <div class="col-12 d-block d-sm-none">
 
         <?= $linkPager; ?>
 
@@ -140,6 +137,12 @@ $jscript = '
 
         $(".new-promo-container").children(".overlay").hide();
         $(".new-promo-container").children(".loading-img").hide();
+    });
+
+    $("#pjax-new-promo-container").off("pjax:end");
+    $("#pjax-new-promo-container").on("pjax:end", function() {
+
+        $(".new-promo-container").bootstrapMaterialDesign();
     });
 
     $("#pjax-new-promo-container").off("pjax:error");

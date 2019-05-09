@@ -5,7 +5,7 @@
 /* @var $queryParams array */ ?>
 
 <div class="row love-place">
-    <div class="col-sm-12 col-xs-12">
+    <div class="col-12">
         <div class="user-love-section"></div>
     </div>
 </div>
@@ -15,13 +15,11 @@ $jscript = '
     $.ajax({
         cache: false,
         type: "GET",
-        url: "' . \Yii::$app->urlManager->createUrl([
-            'user-data/user-love',
-            'username' => $username
-        ]) . (!empty($queryParams['redirect']) && $queryParams['redirect'] == 'love' ? '?page=' . $queryParams['page'] . '&per-page=' . $queryParams['per-page'] : '') . '",
+        url: "' . \Yii::$app->urlManager->createUrl(['user-data/user-love', 'username' => $username]) . '",
         success: function(response) {
 
             $(".user-love-section").html(response);
+            $(".user-love-section").find(".user-love-container").bootstrapMaterialDesign();
         },
         error: function(xhr, ajaxOptions, thrownError) {
 
@@ -48,11 +46,11 @@ $jscript = '
 
                     if (response.is_active) {
 
-                        thisObj.html("<h2 class=\"mt-0 mb-0 text-red fas fa-heart\"></h2>");
+                        thisObj.html("<h2 class=\"mt-0 mb-0 text-danger aicon aicon-heart_selected aicon-2x\"></h2>");
                         $(".total-user-love").html(count + 1);
                     } else {
 
-                        thisObj.html("<h2 class=\"mt-0 mb-0 text-red far fa-heart\"></h2>");
+                        thisObj.html("<h2 class=\"mt-0 mb-0 text-danger aicon aicon-heart aicon-2x\"></h2>");
                         $(".total-user-love").html(count - 1);
                     }
                 } else {
