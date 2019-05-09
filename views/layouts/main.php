@@ -34,7 +34,7 @@ AppAsset::register($this); ?>
         }
 
         $this->registerJs('
-            $(document).on("ready", function() {
+            $(document).ready(function() {
 
                 $("body").bootstrapMaterialDesign();
             });', View::POS_END); ?>
