@@ -9,17 +9,15 @@ common\assets\OwlCarouselAsset::register($this);
 
 $this->title = $modelBusinessPromo['title'];
 
-$ogUrl = [
-    'page/detail-business-promo',
-    'id' => $modelBusinessPromo['id'],
-    'uniqueName' => $modelBusinessPromo['business']['unique_name']
-];
+$ogUrl = \Yii::$app->params['rootUrl'] . 'promo-spesial-diskon/' . $modelBusinessPromo['id'] . '/di/' . $modelBusinessPromo['business']['unique_name'];
+
+$ogTitle = $modelBusinessPromo['title'] . ' di ' . $modelBusinessPromo['business']['name'];
 
 $ogImage = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=&w=490&h=276';
 
 if (!empty($modelBusinessPromo['image'])) {
 
-    $ogImage = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image'];
+    $ogImage = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image'] . '&w=1252&h=706';
 }
 
 $ogDescription = !empty($modelBusinessPromo['short_description']) ? $modelBusinessPromo['short_description'] : $this->title;
@@ -36,7 +34,7 @@ $this->registerMetaTag([
 
 $this->registerMetaTag([
     'property' => 'og:url',
-    'content' => \Yii::$app->urlManager->createAbsoluteUrl($ogUrl)
+    'content' => $ogUrl
 ]);
 
 $this->registerMetaTag([
@@ -77,7 +75,7 @@ $this->registerMetaTag([
                                         <div class="row">
                                             <div class="col-12 text-center">
                                             	<div class="business-promo-image-container owl-carousel owl-theme">
-                                                    <?= Html::img(null, ['class' => 'owl-lazy', 'data-src' => \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image']]); ?>
+                                                    <?= Html::img(null, ['class' => 'owl-lazy', 'data-src' => $ogImage]); ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +91,8 @@ $this->registerMetaTag([
                                 <div class="box-title">
                                     <div class="row">
                                         <div class="col-12">
-                                            <h6 class="m-0"><?= $modelBusinessPromo['title']; ?></h6>
+                                            <h6 class="m-0 float-left"><?= $modelBusinessPromo['title']; ?></h6>
+                                            <?= Html::a('<i class="aicon aicon-share1"></i> Share', $ogUrl, ['class' => 'btn btn-raised btn-small btn-round float-right share-promo-trigger']) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -109,8 +108,8 @@ $this->registerMetaTag([
                                 <div class="box-content">
                                     <div class="row">
                                         <div class="col-12">
-                                            <h4 class="m-0 d-none d-sm-block d-md-none"><small><?= $promoRange ?></small></h4>
-                                            <small class="d-block d-sm-none"><?= $promoRange ?></small>
+                                            <h6 class="m-0 d-none d-sm-block d-md-none"><small><?= $promoRange ?></small></h6>
+                                            <small class="d-block d-sm-none"><strong><?= $promoRange ?></strong></small>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -129,12 +128,27 @@ $this->registerMetaTag([
 </div>
 
 <?php
+frontend\components\FacebookShare::widget();
+
 $jscript = '
     $(".business-promo-image-container").owlCarousel({
         lazyLoad: true,
         items: 1,
         mouseDrag: false,
         touchDrag: false
+    });
+
+    $(".share-promo-trigger").on("click", function() {
+
+        facebookShare({
+            ogUrl: "' . $ogUrl . '",
+            ogTitle: "' . $ogTitle . '",
+            ogDescription: "' . addslashes($ogDescription) . '",
+            ogImage: "' . $ogImage . '",
+            type: "Review"
+        });
+
+        return false;
     });
 ';
 
