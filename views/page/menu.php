@@ -319,10 +319,11 @@ $jscript = '
             "info"
         );
 
-        cart.on("click", function() {
+        cart.on("click", function(event) {
 
             window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
-            $(this).snackbar("show");
+
+            event.stopPropagation();
         });
     }
 
@@ -347,7 +348,7 @@ $jscript = '
 
                     if (cart != null) {
 
-                        $(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
+                        cart.find(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
                     } else {
 
                         cart = stickySnackbar(
@@ -360,7 +361,8 @@ $jscript = '
                         cart.on("click", function() {
 
                             window.location = "' . \Yii::$app->urlManager->createUrl(['order/checkout']) . '";
-                            $(this).snackbar("show");
+
+                            event.stopPropagation();
                         });
                     }
 
@@ -406,7 +408,7 @@ $jscript = '
                 if (response.success) {
 
                     totalPrice = $("<span>").html(response.total_price).currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
-                    $(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
+                    cart.find(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
 
                     thisObj.parents(".business-menu-group").find(".transaction-item-amount").val(amount);
                 } else {
@@ -489,13 +491,13 @@ $jscript = '
 
                     if (!response.total_amount) {
 
-                        $("#snackbar-container .snackbar").remove();
+                        cart.remove();
 
                         cart = null;
                     } else {
 
                         totalPrice = $("<span>").html(response.total_price).currency({' . \Yii::$app->params['currencyOptions'] . '}).html();
-                        $(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
+                        cart.find(".snackbar-title").html("<b>" + response.total_amount + " menu" + " | Total : " + totalPrice + "</b>");
                     }
 
                     var parentClass = thisObj.parents(".business-menu-group");
