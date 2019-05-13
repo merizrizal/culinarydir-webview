@@ -71,7 +71,7 @@ webview\assets\RateyoAsset::register($this); ?>
                             </div>
 
                             <div class="col-6">
-                                <?= 0 . ' &nbsp; ' . \Yii::t('app', $dataBusinessDetailVote['ratingComponent']['name']) ?>
+                                <?= 0 . ' &nbsp; ' . \Yii::t('app', $dataRatingComponent['name']) ?>
                             </div>
                         </div>
                     </li>
