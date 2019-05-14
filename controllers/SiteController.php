@@ -36,4 +36,9 @@ class SiteController extends base\BaseController
             ],
         ];
     }
+
+    public function actionLogout()
+    {
+        \Yii::$app->user->logout();
+    }
 }
