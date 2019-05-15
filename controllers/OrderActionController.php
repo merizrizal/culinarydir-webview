@@ -165,9 +165,11 @@ class OrderActionController extends base\BaseController
 
     public function actionRemoveItem()
     {
+        $post = \Yii::$app->request->post();
+
         $modelTransactionItem = TransactionItem::find()
             ->joinWith(['transactionSession'])
-            ->andWhere(['transaction_item.id' => !empty(\Yii::$app->request->post('id')) ? \Yii::$app->request->post('id') : null])
+            ->andWhere(['transaction_item.id' => !empty($post['id']) ? $post['id'] : null])
             ->one();
 
         if (empty($modelTransactionItem)) {
