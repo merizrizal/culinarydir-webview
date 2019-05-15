@@ -1,8 +1,8 @@
 <?php
 
-use yii\web\View;
-use yii\helpers\Html;
 use webview\components\Snackbar;
+use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $modelPromo core\models\BusinessPromo */
@@ -24,42 +24,7 @@ if (!empty($modelPromo['image'])) {
     $ogImage = \Yii::$app->params['endPointLoadImage'] . 'promo?image=' . $modelPromo['image'];
 }
 
-$ogDescription = $this->title;
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => \Yii::$app->urlManager->createAbsoluteUrl($ogUrl)
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => !empty($modelPromo['title']) ? $modelPromo['title'] : 'Promo di Asikmakan'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+$ogDescription = $this->title; ?>
 
 <div class="main bg-main">
     <section>

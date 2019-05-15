@@ -243,7 +243,6 @@ class PageController extends base\BaseController
             'modelRatingComponent' => $modelRatingComponent,
             'modelUserReport' => $modelUserReport,
             'modelTransactionSession' => $modelTransactionSession,
-            'queryParams' => \Yii::$app->request->getQueryParams(),
             'isOrderOnline' => $isOrderOnline
         ]);
     }

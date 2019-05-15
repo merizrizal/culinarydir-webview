@@ -12,11 +12,7 @@ common\assets\OwlCarouselAsset::register($this);
 
 $this->title = \Yii::t('app', 'Photo') . ' ' . $modelUserPostMain['business']['name'];
 
-$ogUrl = \Yii::$app->urlManager->createAbsoluteUrl([
-    'page/photo',
-    'id' => $modelUserPostMain['id'],
-    'uniqueName' => $modelUserPostMain['business']['unique_name'],
-]);
+$ogUrl = \Yii::$app->params['rootUrl'] . 'photo/' . $modelUserPostMain['id'] . '/di/' . $modelUserPostMain['business']['unique_name'];
 
 $ogTitle = !empty($modelUserPostMain['business']['name']) ? 'Foto untuk ' . $modelUserPostMain['business']['name'] : 'Foto di Asikmakan';
 $ogDescription = !empty($modelUserPostMain['text']) ? $modelUserPostMain['text'] : $this->title;
@@ -25,42 +21,7 @@ $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=&w=490&h=2
 if (!empty($modelUserPostMain['image'])) {
 
     $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image'];
-}
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => $ogUrl
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $ogTitle
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+} ?>
 
 <div class="main bg-main">
     <section>

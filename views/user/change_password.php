@@ -1,24 +1,14 @@
 <?php
 
+use webview\components\Snackbar;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelChangePassword frontend\models\ChangePassword */
 
-$this->title = \Yii::t('app', 'Change Password');
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => 'Temukan Bisnis Kuliner Favorit Anda di Asikmakan.com'
-]); ?>
+$this->title = \Yii::t('app', 'Change Password'); ?>
 
 <div class="main bg-main">
     <section>

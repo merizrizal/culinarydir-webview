@@ -1,65 +1,13 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\StringHelper;
-use yii\web\View;
 use webview\components\Snackbar;
+use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $modelUser core\models\User */
-/* @var $queryParams array */
 
-$this->title = $modelUser['full_name'];
-
-$ogDescription = $modelUser['full_name'] . ' telah bergabung Asikmakan.com sejak ' . \Yii::$app->formatter->asDate($modelUser['created_at'], 'long');
-
-if (!empty($modelUser['userPerson']['person']['about_me'])) {
-
-    $ogDescription = $modelUser['userPerson']['person']['about_me'];
-}
-
-$ogDescription = StringHelper::truncate(preg_replace('/[\r\n]+/','' , $ogDescription), 300);
-$ogImage = \Yii::$app->params['endPointLoadImage'] . 'user?image=default-avatar.png';
-
-if (!empty($modelUser['image'])) {
-
-    $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user?image=' . $modelUser['image'];
-}
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => \Yii::$app->urlManager->createAbsoluteUrl(['user/user-profile', 'user' => $modelUser['username']])
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $modelUser['full_name']
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' =>  $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+$this->title = $modelUser['full_name']; ?>
 
 <div class="main bg-main">
     <section>
@@ -129,8 +77,7 @@ $this->registerMetaTag([
                             <div role="tabpanel" class="tab-pane fade show active p-0" id="view-journey" aria-labelledby="journey-tab">
 
                                 <?= $this->render('user/_journey', [
-                                    'username' => $modelUser['username'],
-                                    'queryParams' => $queryParams,
+                                    'id' => $modelUser['id']
                                 ]) ?>
 
                             </div>
@@ -138,8 +85,7 @@ $this->registerMetaTag([
                             <div role="tabpanel" class="tab-pane fade p-0" id="view-photo" aria-labelledby="photo-tab">
 
                                 <?= $this->render('user/_photo', [
-                                    'username' => $modelUser['username'],
-                                    'queryParams' => $queryParams,
+                                    'id' => $modelUser['id']
                                 ]) ?>
 
                             </div>

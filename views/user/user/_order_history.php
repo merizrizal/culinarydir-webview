@@ -1,8 +1,6 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $username string */
-/* @var $queryParams array */ ?>
+/* @var $this yii\web\View */ ?>
 
 <div class="row">
     <div class="col-12">

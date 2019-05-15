@@ -1,8 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $username string */
-/* @var $queryParams array */ ?>
+/* @var $id string */ ?>
 
 <div class="row">
     <div class="col-12">
@@ -17,7 +16,7 @@ $jscript = '
         $.ajax({
             cache: false,
             type: "GET",
-            url: "' . \Yii::$app->urlManager->createUrl(['user-data/user-post', 'username' => $username]) . '",
+            url: "' . \Yii::$app->urlManager->createUrl(['user-data/user-post', 'id' => $id]) . '",
             success: function(response) {
 
                 $(".user-post-section").html(response);

@@ -10,7 +10,6 @@ use yii\widgets\ActiveForm;
 /* @var $modelUserPostMain core\models\UserPostMain */
 /* @var $modelPost frontend\models\Post */
 /* @var $dataUserVoteReview array */
-/* @var $queryParams array */
 
 webview\assets\RateyoAsset::register($this); ?>
 

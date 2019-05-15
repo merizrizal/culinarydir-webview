@@ -32,7 +32,7 @@ class UserDataController extends base\BaseController
             ]);
     }
 
-    public function actionUserVisit($username)
+    public function actionUserVisit($id)
     {
         $this->layout = 'ajax';
 
@@ -49,7 +49,7 @@ class UserDataController extends base\BaseController
                 'user',
             ])
             ->andWhere(['user_visit.is_active' => true])
-            ->andWhere(['user.username' => $username])
+            ->andWhere(['user.id' => $id])
             ->distinct()
             ->asArray();
 
@@ -76,7 +76,7 @@ class UserDataController extends base\BaseController
         ]);
     }
 
-    public function actionUserLove($username)
+    public function actionUserLove($id)
     {
         $this->layout = 'ajax';
 
@@ -93,7 +93,7 @@ class UserDataController extends base\BaseController
                 'user',
             ])
             ->andWhere(['user_love.is_active' => true])
-            ->andWhere(['user.username' => $username])
+            ->andWhere(['user.id' => $id])
             ->distinct()
             ->asArray();
 
@@ -122,7 +122,7 @@ class UserDataController extends base\BaseController
         ]);
     }
 
-    public function actionUserPost($username)
+    public function actionUserPost($id)
     {
         $this->layout = 'ajax';
 
@@ -156,7 +156,7 @@ class UserDataController extends base\BaseController
             ->andWhere(['user_post_main.parent_id' => null])
             ->andWhere(['user_post_main.type' => 'Review'])
             ->andWhere(['user_post_main.is_publish' => true])
-            ->andWhere(['user.username' => $username])
+            ->andWhere(['user.id' => $id])
             ->orderBy(['user_post_main.created_at' => SORT_DESC])
             ->distinct()
             ->asArray();
@@ -186,7 +186,7 @@ class UserDataController extends base\BaseController
         ]);
     }
 
-    public function actionUserPostPhoto($username)
+    public function actionUserPostPhoto($id)
     {
         $this->layout = 'ajax';
 
@@ -197,7 +197,7 @@ class UserDataController extends base\BaseController
             ])
             ->andWhere(['type' => 'Photo'])
             ->andWhere(['is_publish' => true])
-            ->andWhere(['user.username' => $username])
+            ->andWhere(['user.id' => $id])
             ->orderBy(['created_at' => SORT_DESC])
             ->distinct()
             ->asArray();

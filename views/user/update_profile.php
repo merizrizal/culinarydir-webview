@@ -1,29 +1,19 @@
 <?php
 
 use core\models\City;
+use webview\components\Snackbar;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
-use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelUserPerson core\models\UserPerson */
 /* @var $modelUser core\models\User */
 /* @var $modelPerson core\models\Person */
 
-$this->title = 'Update Profile ' . $modelUser->full_name;
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => 'Temukan Bisnis Kuliner Favorit Anda di Asikmakan.com'
-]); ?>
+$this->title = 'Update Profile ' . $modelUser->full_name; ?>
 
 <div class="main bg-main">
     <section>

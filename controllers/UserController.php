@@ -44,21 +44,20 @@ class UserController extends BaseController
             ->asArray()->one();
 
         return $this->render('index', [
-            'modelUser' => $modelUser,
-            'queryParams' => \Yii::$app->request->getQueryParams(),
+            'modelUser' => $modelUser
         ]);
     }
 
-    public function actionUserProfile($user)
+    public function actionUserProfile($id)
     {
-        if (!empty(\Yii::$app->user->getIdentity()->id) && \Yii::$app->user->getIdentity()->username == $user) {
+        if (!empty(\Yii::$app->user->getIdentity()->id) && \Yii::$app->user->getIdentity()->id == $id) {
 
             return $this->redirect(ArrayHelper::merge(['user/index'], \Yii::$app->request->getQueryParams()));
         } else {
 
             $modelUser = User::find()
                 ->joinWith(['userPerson.person'])
-                ->andWhere(['username' => $user])
+                ->andWhere(['user.id' => $id])
                 ->asArray()->one();
 
             if (empty($modelUser)) {
@@ -67,8 +66,7 @@ class UserController extends BaseController
             }
 
             return $this->render('user_profile', [
-                'modelUser' => $modelUser,
-                'queryParams' => \Yii::$app->request->getQueryParams(),
+                'modelUser' => $modelUser
             ]);
         }
     }

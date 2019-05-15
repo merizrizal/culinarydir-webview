@@ -1,8 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $username string */
-/* @var $queryParams array */ ?>
+/* @var $id string */ ?>
 
 <div class="row been-there">
     <div class="col-12">
@@ -15,7 +14,7 @@ $jscript = '
     $.ajax({
         cache: false,
         type: "GET",
-        url: "' . \Yii::$app->urlManager->createUrl(['user-data/user-visit', 'username' => $username]) . '",
+        url: "' . \Yii::$app->urlManager->createUrl(['user-data/user-visit', 'id' => $id]) . '",
         success: function(response) {
 
             $(".user-visit-section").html(response);

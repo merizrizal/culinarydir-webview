@@ -18,7 +18,6 @@ use yii\widgets\ActiveForm;
 /* @var $modelPostPhoto frontend\models\Post */
 /* @var $modelTransactionSession core\models\TransactionSession */
 /* @var $dataUserVoteReview array */
-/* @var $queryParams array */
 /* @var $isOrderOnline boolean */
 
 common\assets\OwlCarouselAsset::register($this);
@@ -86,32 +85,7 @@ foreach ($modelBusiness['businessImages'] as $dataImageThumbail) {
     }
 }
 
-$ogUrlMenuDetail = ['page/menu', 'id' => $modelBusiness['id']];
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => $ogUrl
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $ogTitle
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]);
+$urlMenuDetail = ['page/menu', 'id' => $modelBusiness['id']];
 
 $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=756&h=425'; ?>
 
@@ -421,13 +395,13 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                             </div>
 
                                             <?php
-                                            $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . \Yii::t('app', 'Online Order'), $ogUrlMenuDetail, [
+                                            $orderbtn = Html::a('<i class="aicon aicon-icon-online-ordering aicon-1-2x"></i> ' . \Yii::t('app', 'Online Order'), $urlMenuDetail, [
                                                 'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round'
                                             ]);
 
                                             if (!$isOrderOnline) {
 
-                                                $orderbtn = Html::a('<i class="aicon aicon-icon-cuisine"></i> ' . \Yii::t('app', 'Menu List'), $ogUrlMenuDetail, [
+                                                $orderbtn = Html::a('<i class="aicon aicon-icon-cuisine"></i> ' . \Yii::t('app', 'Menu List'), $urlMenuDetail, [
                                                     'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round'
                                                 ]);
                                             }
@@ -643,8 +617,7 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                                     'modelUserPostMain' => $modelUserPostMain,
                                                     'dataUserVoteReview' => $dataUserVoteReview,
                                                     'modelPost' => $modelPost,
-                                                    'modelRatingComponent' => $modelRatingComponent,
-                                                    'queryParams' => $queryParams,
+                                                    'modelRatingComponent' => $modelRatingComponent
                                                 ]) ?>
 
                                             </div>
@@ -662,8 +635,7 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
 
                                                 <?= $this->render('detail/_photo.php', [
                                                     'modelBusiness' => $modelBusiness,
-                                                    'modelPostPhoto' => $modelPostPhoto,
-                                                    'queryParams' => $queryParams,
+                                                    'modelPostPhoto' => $modelPostPhoto
                                                 ]) ?>
 
                                             </div>
