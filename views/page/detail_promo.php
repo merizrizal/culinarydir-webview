@@ -15,7 +15,7 @@ $this->title = $modelPromo['title'];
 
 $ogTitle = $modelPromo['title'] . ' ' . $modelPromo['type'] . ' sebesar ' . \Yii::$app->formatter->asCurrency($modelPromo['amount']);
 
-$ogUrl = Yii::$app->params['rootUrl'] . 'page/detail-promo?id=' . $modelPromo['id'];
+$ogUrl = Yii::$app->params['rootUrl'] . 'promo-asikmakan/' . $modelPromo['id'];
 
 $ogImage = \Yii::$app->params['endPointLoadImage'] . 'promo?image=&w=490&h=276';
 
