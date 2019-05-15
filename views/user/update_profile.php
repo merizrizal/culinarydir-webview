@@ -13,17 +13,7 @@ use webview\components\Snackbar;
 /* @var $modelUser core\models\User */
 /* @var $modelPerson core\models\Person */
 
-$this->title = 'Update Profile ' . $modelUser->full_name;
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => 'Temukan Bisnis Kuliner Favorit Anda di Asikmakan.com'
-]); ?>
+$this->title = 'Update Profile ' . $modelUser->full_name; ?>
 
 <div class="main bg-main">
     <section>

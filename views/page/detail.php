@@ -88,31 +88,6 @@ foreach ($modelBusiness['businessImages'] as $dataImageThumbail) {
 
 $ogUrlMenuDetail = ['page/menu', 'id' => $modelBusiness['id']];
 
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => $ogUrl
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $ogTitle
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]);
-
 $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=756&h=425'; ?>
 
 <div class="main bg-main">

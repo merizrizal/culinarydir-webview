@@ -21,42 +21,7 @@ if (!empty($modelUser['userPerson']['person']['about_me'])) {
 if (!empty($modelUser['image'])) {
 
     $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user?image=' . $modelUser['image'];
-}
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => 'Temukan Bisnis Kuliner Favorit Anda di Asikmakan.com'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => \Yii::$app->urlManager->createAbsoluteUrl(['user/user-profile', 'user' => $modelUser['username']])
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $modelUser['full_name']
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+} ?>
 
 <div class="main bg-main">
     <section>

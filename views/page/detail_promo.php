@@ -15,7 +15,7 @@ $this->title = $modelPromo['title'];
 
 $ogTitle = $modelPromo['title'] . ' ' . $modelPromo['type'] . ' sebesar ' . \Yii::$app->formatter->asCurrency($modelPromo['amount']);
 
-$ogUrl = Yii::$app->params['rootUrl'] . 'page/detail-promo?id=' . $modelPromo['id'];
+$ogUrl = Yii::$app->params['rootUrl'] . 'promo-asikmakan/' . $modelPromo['id'];
 
 $ogImage = \Yii::$app->params['endPointLoadImage'] . 'promo?image=&w=490&h=276';
 
@@ -24,42 +24,7 @@ if (!empty($modelPromo['image'])) {
     $ogImage = \Yii::$app->params['endPointLoadImage'] . 'promo?image=' . $modelPromo['image'];
 }
 
-$ogDescription = $this->title;
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => \Yii::$app->urlManager->createAbsoluteUrl($ogUrl)
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => !empty($modelPromo['title']) ? $modelPromo['title'] : 'Promo di Asikmakan'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+$ogDescription = $this->title; ?>
 
 <div class="main bg-main">
     <section>

@@ -20,42 +20,7 @@ if (!empty($modelBusinessPromo['image'])) {
     $ogImage = \Yii::$app->params['endPointLoadImage'] . 'business-promo?image=' . $modelBusinessPromo['image'] . '&w=1252&h=706';
 }
 
-$ogDescription = !empty($modelBusinessPromo['short_description']) ? $modelBusinessPromo['short_description'] : $this->title;
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => $ogUrl
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => !empty($modelBusinessPromo['title']) ? $modelBusinessPromo['title'] : 'Promo di Asikmakan'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+$ogDescription = !empty($modelBusinessPromo['short_description']) ? $modelBusinessPromo['short_description'] : $this->title; ?>
 
 <div class="main bg-main">
     <section>

@@ -25,42 +25,7 @@ $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=&w=490&h=2
 if (!empty($modelUserPostMain['image'])) {
 
     $ogImage = \Yii::$app->params['endPointLoadImage'] . 'user-post?image=' . $modelUserPostMain['image'];
-}
-
-$this->registerMetaTag([
-    'name' => 'keywords',
-    'content' => 'asik, makan, kuliner, bandung, jakarta'
-]);
-
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:url',
-    'content' => $ogUrl
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'website'
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $ogTitle
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:description',
-    'content' => $ogDescription
-]);
-
-$this->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $ogImage
-]); ?>
+} ?>
 
 <div class="main bg-main">
     <section>
