@@ -61,7 +61,7 @@ $this->title = $modelUser['full_name']; ?>
                             <div class="row mt-10">
                                 <div class="col-12 text-center">
                                     <?= $userName ?>
-                                    <br><br>
+                                    <br>
                                     <?= $btnProfile ?>
                                 </div>
                             </div>
@@ -115,14 +115,14 @@ $this->title = $modelUser['full_name']; ?>
                             </li>
                         </ul>
 
-                        <div class="tab-content">
+						<div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active p-0" id="view-journey" aria-labelledby="journey-tab">
 
                                 <?= $this->render('user/_journey', [
                                     'id' => $modelUser['id']
-                                ]) ?>
+                            ]) ?>
 
-                            </div>
+		                 	</div>
 
                             <div role="tabpanel" class="tab-pane fade p-0" id="view-photo" aria-labelledby="photo-tab">
 
