@@ -286,7 +286,7 @@ class UserDataController extends base\BaseController
                 'business.businessLocation.city'
             ])
             ->andWhere(['transaction_session.user_ordered' => \Yii::$app->user->getIdentity()->id])
-            ->orderBy(['created_at' => SORT_DESC])
+            ->orderBy(['transaction_session.created_at' => SORT_DESC])
             ->distinct()
             ->asArray();
 

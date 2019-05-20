@@ -49,7 +49,7 @@ class OrderController extends base\BaseController
                 'transactionItems.businessProduct'
             ])
             ->andWhere(['transaction_session.user_ordered' => \Yii::$app->user->getIdentity()->id])
-            ->andWhere(['transaction_session.is_closed' => false])
+            ->andWhere(['transaction_session.status' => 'Open'])
             ->one();
 
         $modelTransactionSessionOrder = new TransactionSessionOrder();
@@ -86,7 +86,7 @@ class OrderController extends base\BaseController
 
                     $modelTransactionSessionOrder->transaction_session_id = $modelTransactionSession->id;
 
-                    $modelTransactionSession->is_closed = true;
+                    $modelTransactionSession->status = 'New';
                     $modelTransactionSession->promo_item_id = !empty($modelTransactionSession->promo_item_id) ? $modelTransactionSession->promo_item_id : null;
 
                     if (($flag = ($modelTransactionSessionOrder->save() && $modelTransactionSession->save()))) {

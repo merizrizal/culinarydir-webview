@@ -1,11 +1,11 @@
 <?php
 
 use frontend\components\AddressType;
+use webview\components\Snackbar;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
-use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelTransactionSession core\models\TransactionSession */
@@ -66,7 +66,7 @@ $linkPager = LinkPager::widget([
                 'class' => 'btn btn-raised btn-default btn-small btn-round'
             ]);
 
-            $btnReorder = Html::a($dataTransactionSession['is_closed'] ? '<i class="aicon aicon-icon-online-ordering"></i> ' . \Yii::t('app', 'Reorder') : '<i class="aicon aicon-inspection_checklist"></i> ' . \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
+            $btnReorder = Html::a($dataTransactionSession['status'] != 'Open' ? '<i class="aicon aicon-icon-online-ordering"></i> ' . \Yii::t('app', 'Reorder') : '<i class="aicon aicon-inspection_checklist"></i> ' . \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
                 'class' => 'btn btn-raised btn-default btn-small btn-round btn-reorder',
                 'data-id' => $dataTransactionSession['id']
             ]);
@@ -94,7 +94,7 @@ $linkPager = LinkPager::widget([
                 </div>
                 <div class="row mb-10">
                 	<div class="col-sm-6 col-12">
-                		Grand Total : <?= \Yii::$app->formatter->asCurrency($grandTotal < 0 ? 0 : $grandTotal) ?> | <i class="aicon aicon-checkbox-checked <?= $dataTransactionSession['is_closed'] ? 'text-success' : 'text-danger' ?>"></i>
+                		Grand Total : <?= \Yii::$app->formatter->asCurrency($grandTotal < 0 ? 0 : $grandTotal) ?> | <i class="aicon aicon-checkbox-checked <?= $dataTransactionSession['status'] != 'Open' ? 'text-success' : 'text-danger' ?>"></i>
                 	</div>
                 	<div class="col-sm-6 text-right d-none d-sm-block d-md-none">
                 		<ul class="list-inline list-review mt-0 mb-0">

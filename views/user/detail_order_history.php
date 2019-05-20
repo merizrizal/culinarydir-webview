@@ -1,9 +1,9 @@
 <?php
 
 use frontend\components\AddressType;
+use webview\components\Snackbar;
 use yii\helpers\Html;
 use yii\web\View;
-use webview\components\Snackbar;
 
 /* @var $this yii\web\View */
 /* @var $modelTransactionSession core\models\TransactionSession */
@@ -85,7 +85,7 @@ $img = (!empty($modelTransactionSession['business']['businessImages']) ? $modelT
 
                             		<?php
                             		$grandTotal = $modelTransactionSession['total_price'] - $modelTransactionSession['discount_value'];
-                            		$checkSymbol = ' | <i class="aicon aicon-checkbox-checked ' . ($modelTransactionSession['is_closed'] ? "text-success" : "text-danger") . '"></i>';
+                            		$checkSymbol = ' | <i class="aicon aicon-checkbox-checked ' . ($modelTransactionSession['status'] != 'Open' ? "text-success" : "text-danger") . '"></i>';
 
                             		if (!empty($modelTransactionSession['discount_value'])) {
 
@@ -100,7 +100,7 @@ $img = (!empty($modelTransactionSession['business']['businessImages']) ? $modelT
                             	</div>
                             	<div class="col-sm-4 col-12">
 
-                            		<?= Html::a($modelTransactionSession['is_closed'] ? \Yii::t('app', 'Reorder') : \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
+                            		<?= Html::a($modelTransactionSession['status'] != 'Open' ? \Yii::t('app', 'Reorder') : \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
                                         'class' => 'btn btn-raised btn-danger btn-block btn-round btn-reorder',
                                         'data-id' => $modelTransactionSession['id']
                                     ]); ?>
