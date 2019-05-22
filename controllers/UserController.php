@@ -48,16 +48,16 @@ class UserController extends BaseController
         ]);
     }
 
-    public function actionUserProfile($id)
+    public function actionUserProfile($user)
     {
-        if (!empty(\Yii::$app->user->getIdentity()->id) && \Yii::$app->user->getIdentity()->id == $id) {
+        if (!empty(\Yii::$app->user->getIdentity()->id) && \Yii::$app->user->getIdentity()->username == $user) {
 
             return $this->redirect(ArrayHelper::merge(['user/index'], \Yii::$app->request->getQueryParams()));
         } else {
 
             $modelUser = User::find()
                 ->joinWith(['userPerson.person'])
-                ->andWhere(['user.id' => $id])
+                ->andWhere(['user.username' => $user])
                 ->asArray()->one();
 
             if (empty($modelUser)) {
