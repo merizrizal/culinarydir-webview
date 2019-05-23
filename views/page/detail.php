@@ -239,16 +239,13 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                                         <li>
                                                             <i class="aicon aicon-home1"></i>
 
-                                                            <?php
-                                                            echo AddressType::widget([
+															<?= AddressType::widget([
                                                                 'businessLocation' => $modelBusiness['businessLocation'],
                                                                 'showDetail' => true
-                                                            ]);
+                                                            ]); ?>
 
-                                                            echo !empty($modelBusiness['businessLocation']['address_info']) ? '<br>' . $modelBusiness['businessLocation']['address_info'] : '';
-
-                                                            echo Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . \Yii::t('app', 'See Map'), '', ['class' => 'btn btn-small btn-xs btn-round see-map-shortcut']); ?>
-
+                                                            <?= !empty($modelBusiness['businessLocation']['address_info']) ? '<br>' . $modelBusiness['businessLocation']['address_info'] : ''; ?>
+                                                            <?= Html::a('<i class="aicon aicon-icon-thin-location-line"></i> ' . \Yii::t('app', 'See Map'), '', ['class' => 'btn btn-small btn-xs btn-round see-map-shortcut']); ?>
                                                         </li>
                                                         <li>
                                                             <i class="aicon aicon-rupiah"></i> <?= $ogPriceRange; ?>
