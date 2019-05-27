@@ -61,7 +61,7 @@ $linkPager = LinkPager::widget([
 
             $img = (!empty($dataUserPostMain['business']['businessImages']) ? $dataUserPostMain['business']['businessImages'][0]['image'] : '') . '&w=64&h=64';
 
-            $urlBusinessDetail = ['page/detail', 'id' => $dataUserPostMain['business']['id']];
+            $urlBusinessDetail = ['page/detail', 'id' => $dataUserPostMain['business']['id'], 'name' => $dataUserPostMain['business']['name']];
 
             $totalVoteValue = 0;
             $ratingComponent = [];

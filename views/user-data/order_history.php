@@ -71,7 +71,7 @@ $linkPager = LinkPager::widget([
                 'data-id' => $dataTransactionSession['id']
             ]);
 
-            $urlBusinessDetail = ['page/detail', 'id' => $dataTransactionSession['business']['id']];
+            $urlBusinessDetail = ['page/detail', 'id' => $dataTransactionSession['business']['id'], 'name' => $dataTransactionSession['business']['name']];
 
             $grandTotal = $dataTransactionSession['total_price'] - $dataTransactionSession['discount_value']; ?>
 

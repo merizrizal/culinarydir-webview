@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Inflector;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -57,7 +56,7 @@ $linkPager = LinkPager::widget([
 
         foreach ($modelUserVisit as $dataUserVisit):
 
-            $urlBusinessDetail = ['page/detail', 'id' => $dataUserVisit['business']['id']]; ?>
+            $urlBusinessDetail = ['page/detail', 'id' => $dataUserVisit['business']['id'], 'name' => $dataUserVisit['business']['name']]; ?>
 
             <div class="col-sm-6 col-12 mb-10">
                 <div class="card box user">

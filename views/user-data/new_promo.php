@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Inflector;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -60,7 +59,8 @@ $linkPager = LinkPager::widget([
             $urlBusinessDetail = [
                 'page/detail',
                 '#' => 'special',
-                'id' => $dataBusinessPromo['business']['id']
+                'id' => $dataBusinessPromo['business']['id'],
+                'name' => $dataBusinessPromo['business']['name']
             ]; ?>
 
             <div class="col-sm-6 col-12 mb-10">
