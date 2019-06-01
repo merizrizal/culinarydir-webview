@@ -31,8 +31,7 @@ class UserActionController extends base\BaseController
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete-photo' => ['POST'],
-                        'delete-user-post' => ['POST'],
-                        'reorder' => ['POST']
+                        'delete-user-post' => ['POST']
                     ],
                 ],
             ]);
@@ -223,14 +222,16 @@ class UserActionController extends base\BaseController
 
             if ($modelTransactionSession['id'] == \Yii::$app->request->post('id')) {
 
-                return $this->redirect(['order/checkout']);
-            }
+                $return['redirect'] = true;
+                $return['business_id'] = $modelTransactionSession['business_id'];
+            } else {
 
-            $return['success'] = false;
-            $return['type'] = 'danger';
-            $return['icon'] = 'aicon aicon-icon-info';
-            $return['title'] = 'Pesan Ulang Gagal';
-            $return['text'] = 'Silahkan selesaikan pesanan anda terlebih dahulu.';
+                $return['success'] = false;
+                $return['type'] = 'danger';
+                $return['icon'] = 'aicon aicon-icon-info';
+                $return['title'] = 'Pesan Ulang Gagal';
+                $return['text'] = 'Silahkan selesaikan pesanan anda terlebih dahulu.';
+            }
         } else {
 
             $transaction = \Yii::$app->db->beginTransaction();
@@ -242,27 +243,27 @@ class UserActionController extends base\BaseController
                 ->andWhere(['transaction_session.id' => \Yii::$app->request->post('id')])
                 ->one();
 
-            $newModelTransactionSession = new TransactionSession();
-            $newModelTransactionSession->user_ordered = $oldModelTransaction->user_ordered;
-            $newModelTransactionSession->business_id = $oldModelTransaction->business_id;
-            $newModelTransactionSession->note = !empty($oldModelTransaction->note) ? $oldModelTransaction->note : null;
-            $newModelTransactionSession->total_price = $oldModelTransaction->total_price;
-            $newModelTransactionSession->total_amount = $oldModelTransaction->total_amount;
-            $newModelTransactionSession->order_id = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6) . '_' . time();
-            $newModelTransactionSession->status = 'Open';
+            $modelTransactionSession = new TransactionSession();
+            $modelTransactionSession->user_ordered = $oldModelTransaction->user_ordered;
+            $modelTransactionSession->business_id = $oldModelTransaction->business_id;
+            $modelTransactionSession->note = !empty($oldModelTransaction->note) ? $oldModelTransaction->note : null;
+            $modelTransactionSession->total_price = $oldModelTransaction->total_price;
+            $modelTransactionSession->total_amount = $oldModelTransaction->total_amount;
+            $modelTransactionSession->order_id = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6) . '_' . time();
+            $modelTransactionSession->status = 'Open';
 
-            if (($flag = $newModelTransactionSession->save())) {
+            if (($flag = $modelTransactionSession->save())) {
 
                 foreach ($oldModelTransaction->transactionItems as $dataTransactionItem) {
 
-                    $newModelTransactionItem = new TransactionItem();
-                    $newModelTransactionItem->transaction_session_id = $newModelTransactionSession->id;
-                    $newModelTransactionItem->business_product_id = $dataTransactionItem->business_product_id;
-                    $newModelTransactionItem->note = !empty($dataTransactionItem->note) ? $dataTransactionItem->note : null;
-                    $newModelTransactionItem->price = $dataTransactionItem->price;
-                    $newModelTransactionItem->amount = $dataTransactionItem->amount;
+                    $modelTransactionItem = new TransactionItem();
+                    $modelTransactionItem->transaction_session_id = $modelTransactionSession->id;
+                    $modelTransactionItem->business_product_id = $dataTransactionItem->business_product_id;
+                    $modelTransactionItem->note = !empty($dataTransactionItem->note) ? $dataTransactionItem->note : null;
+                    $modelTransactionItem->price = $dataTransactionItem->price;
+                    $modelTransactionItem->amount = $dataTransactionItem->amount;
 
-                    if (!($flag = $newModelTransactionItem->save())) {
+                    if (!($flag = $modelTransactionItem->save())) {
 
                         break;
                     }
@@ -273,7 +274,9 @@ class UserActionController extends base\BaseController
 
                 $transaction->commit();
 
-                return $this->redirect(['order/checkout']);
+                $return['success'] = true;
+                $return['redirect'] = true;
+                $return['business_id'] = $modelTransactionSession['business_id'];
             } else {
 
                 $transaction->rollBack();

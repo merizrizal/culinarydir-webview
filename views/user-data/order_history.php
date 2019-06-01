@@ -154,9 +154,12 @@ $jscript = '
             },
             success: function(response) {
 
-                if (!response.success) {
+                if (!response.success && !response.redirect) {
 
                     messageResponse(response.icon, response.title, response.text, response.type);
+                } else {
+
+                    mainJavaScriptInterface.callOrderCheckout(response.business_id);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
