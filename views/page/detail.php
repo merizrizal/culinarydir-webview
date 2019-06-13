@@ -304,7 +304,7 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                                                             $openAt = \Yii::$app->formatter->asTime($dataBusinessHourAdditional['open_at'], 'HH:mm');
                                                                             $closeAt = \Yii::$app->formatter->asTime($dataBusinessHourAdditional['close_at'], 'HH:mm');
 
-                                                                            $businessHourAdditional .= '<div class="col-7 offset-5">' . ($isOpenToday ? '<strong>' . $openAt . ' - ' . $closeAt . '</strong></div>' : $openAt . ' - ' . $closeAt);
+                                                                            $businessHourAdditional .= '<div class="col-7 offset-5">' . ($isOpenToday ? '<strong>' . $openAt . ' - ' . $closeAt . '</strong>' : $openAt . ' - ' . $closeAt) . '</div>';
 
                                                                             if (date('l') == $day) {
 
