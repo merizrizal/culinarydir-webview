@@ -10,7 +10,7 @@ use yii\web\View;
 
 $this->title = \Yii::t('app', 'Order Details');
 
-$urlBusinessDetail = ['page/detail', 'id' => $modelTransactionSession['business']['id']];
+$urlBusinessDetail = ['page/detail', 'id' => $modelTransactionSession['business']['id'], 'name' => $modelTransactionSession['business']['name']];
 
 $img = (!empty($modelTransactionSession['business']['businessImages']) ? $modelTransactionSession['business']['businessImages'][0]['image'] : '') . '&w=88&h=88'; ?>
 
@@ -100,7 +100,7 @@ $img = (!empty($modelTransactionSession['business']['businessImages']) ? $modelT
                             	</div>
                             	<div class="col-sm-4 col-12">
 
-                            		<?= Html::a($modelTransactionSession['status'] != 'Open' ? \Yii::t('app', 'Reorder') : \Yii::t('app', 'Confirmation'), ['user-action/reorder'], [
+                            		<?= Html::a($modelTransactionSession['status'] != 'Open' ? \Yii::t('app', 'Reorder') : \Yii::t('app', 'Confirmation'), ['user-action/reorder', 'business_id' => $modelTransactionSession['business']['id']], [
                                         'class' => 'btn btn-raised btn-danger btn-block btn-round btn-reorder',
                                         'data-id' => $modelTransactionSession['id']
                                     ]); ?>
