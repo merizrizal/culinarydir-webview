@@ -31,7 +31,8 @@ class UserActionController extends base\BaseController
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete-photo' => ['POST'],
-                        'delete-user-post' => ['POST']
+                        'delete-user-post' => ['POST'],
+                        'reorder' => ['POST']
                     ],
                 ],
             ]);
