@@ -84,17 +84,34 @@ $img = (!empty($modelTransactionSession['business']['businessImages']) ? $modelT
                             	<div class="col-sm-8 col-12 mb-10">
 
                             		<?php
-                            		$grandTotal = $modelTransactionSession['total_price'] - $modelTransactionSession['discount_value'];
-                            		$checkSymbol = ' | <i class="aicon aicon-checkbox-checked ' . ($modelTransactionSession['status'] != 'Open' ? "text-success" : "text-danger") . '"></i>';
+                            		$deliveryFee = 0;
+                            		
+                            		if (!empty($modelTransactionSession['transactionSessionDelivery'])) {
+                            		    
+                            		    $deliveryFee = $modelTransactionSession['transactionSessionDelivery']['total_delivery_fee'];
+                            		}
+                            		
+                            		$grandTotal = $modelTransactionSession['total_price'] - $modelTransactionSession['discount_value'] + $deliveryFee;
+                            		$checkSymbol = ' | <i class="aicon aicon-checkbox-checked ' . ($modelTransactionSession['status'] == 'Finish' ? "text-success" : "text-danger") . '"></i>';
+                            		$deliveryFeeText = !empty($deliveryFee) ? '<br>' . \Yii::t('app', 'Delivery Fee') . ' : ' . \Yii::$app->formatter->asCurrency($deliveryFee) : '';
 
                             		if (!empty($modelTransactionSession['discount_value'])) {
 
                             		    echo 'Subtotal : ' . \Yii::$app->formatter->asCurrency($modelTransactionSession['total_price']) . '
-                                            <br>Promo : ' . \Yii::$app->formatter->asCurrency($modelTransactionSession['discount_value']) . '
+                                            <br>Promo : ' . \Yii::$app->formatter->asCurrency($modelTransactionSession['discount_value']) .
+                                            $deliveryFeeText . '
                                             <br>Grand Total : ' . \Yii::$app->formatter->asCurrency($grandTotal < 0 ? 0 : $grandTotal) . $checkSymbol;
                             		} else {
+                            		    
+                            		    if (!empty($deliveryFee)) {
 
-                            		    echo 'Grand Total : ' . \Yii::$app->formatter->asCurrency($grandTotal) . $checkSymbol;
+                                		    echo 'Subtotal : ' . \Yii::$app->formatter->asCurrency($modelTransactionSession['total_price']) .
+                                		        $deliveryFeeText . '
+                                                <br>Grand Total : ' . \Yii::$app->formatter->asCurrency($grandTotal) . $checkSymbol;
+                            		    } else {
+                            		        
+                            		        echo 'Grand Total : ' . \Yii::$app->formatter->asCurrency($grandTotal) . $checkSymbol;
+                            		    }
                             		} ?>
 
                             	</div>

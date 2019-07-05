@@ -176,6 +176,7 @@ class UserController extends BaseController
                     $query->orderBy(['transaction_item.created_at' => SORT_ASC]);
                 },
                 'transactionItems.businessProduct',
+                'transactionSessionDelivery'
             ])
             ->andWhere(['transaction_session.id' => $id])
             ->asArray()->one();
