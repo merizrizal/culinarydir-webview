@@ -231,6 +231,8 @@ class PageController extends base\BaseController
             $dataBusinessImage[$businessImage['category']][] = $businessImage;
         }
 
+        $businessWhatsApp = !empty($modelBusiness['phone3']) ? 'https://api.whatsapp.com/send?phone=62' . substr(str_replace('-', '', $modelBusiness['phone3']), 1) : null;
+
         \Yii::$app->formatter->timeZone = 'UTC';
 
         return $this->render('detail', [
@@ -243,7 +245,8 @@ class PageController extends base\BaseController
             'modelRatingComponent' => $modelRatingComponent,
             'modelUserReport' => $modelUserReport,
             'modelTransactionSession' => $modelTransactionSession,
-            'isOrderOnline' => $isOrderOnline
+            'isOrderOnline' => $isOrderOnline,
+            'businessWhatsApp' => $businessWhatsApp
         ]);
     }
 
