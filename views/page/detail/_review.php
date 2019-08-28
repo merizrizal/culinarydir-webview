@@ -672,8 +672,7 @@ $jscript = '
                 $("#my-review-container").fadeIn();
             }
 
-            $("#error-rating").addClass("invisible");
-            $("#error-photo").addClass("invisible");
+            $("#error-rating, #error-photo").addClass("invisible");
 
             $("html, body").animate({ scrollTop: $("#title-write-review").offset().top }, "slow");
         });
@@ -1004,8 +1003,7 @@ $jscript = '
                         $("html, body").animate({ scrollTop: $("#title-write-review").offset().top }, "slow");
                     });
 
-                    $("#error-rating").addClass("invisible");
-                    $("#error-photo").addClass("invisible");
+                    $("#error-rating, #error-photo").addClass("invisible");
 
                     messageResponse(response.icon, response.title, response.message, response.type);
                 } else {

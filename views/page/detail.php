@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
 /* @var $modelTransactionSession core\models\TransactionSession */
 /* @var $dataUserVoteReview array */
 /* @var $isOrderOnline boolean */
+/* @var $businessWhatsApp string */
 
 common\assets\OwlCarouselAsset::register($this);
 

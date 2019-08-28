@@ -45,16 +45,12 @@ class PageController extends base\BaseController
             ->joinWith([
                 'businessCategories' => function ($query) {
 
-                    $query->andOnCondition([
-                        'business_category.is_active' => true
-                    ]);
+                    $query->andOnCondition(['business_category.is_active' => true]);
                 },
                 'businessCategories.category',
                 'businessFacilities' => function ($query) {
 
-                    $query->andOnCondition([
-                        'business_facility.is_active' => true
-                    ]);
+                    $query->andOnCondition(['business_facility.is_active' => true]);
                 },
                 'businessFacilities.facility',
                 'businessImages',
