@@ -102,16 +102,12 @@ class PageController extends base\BaseController
                 },
                 'userLoves' => function ($query) {
 
-                    $query->andOnCondition([
-                        'user_love.user_id' => ! empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null
-                    ])
-                        ->andOnCondition([
-                        'user_love.is_active' => true
-                    ]);
+                    $query->andOnCondition(['user_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
+                        ->andOnCondition(['user_love.is_active' => true]);
                 },
                 'userVisits' => function ($query) {
 
-                    $query->andOnCondition(['user_visit.user_id' => ! empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
+                    $query->andOnCondition(['user_visit.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
                         ->andOnCondition(['user_visit.is_active' => true]);
                 }
             ])
