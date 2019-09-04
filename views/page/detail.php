@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
 /* @var $modelTransactionSession core\models\TransactionSession */
 /* @var $dataUserVoteReview array */
 /* @var $isOrderOnline boolean */
+/* @var $businessWhatsApp string */
 
 common\assets\OwlCarouselAsset::register($this);
 
@@ -407,7 +408,7 @@ $noImg = \Yii::$app->params['endPointLoadImage'] . 'registry-business?image=&w=7
                                                 'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round report-business-trigger'
                                             ]);
 
-                                            $messagebtn = Html::a('<i class="aicon aicon-icon-envelope aicon-1-2x"></i> Message', '', [
+                                            $messagebtn = Html::a('<i class="aicon aicon-icon-envelope aicon-1-2x"></i> Message', $businessWhatsApp, [
                                                 'class' => 'btn btn-raised btn-standard btn-danger btn-block btn-round message-feature'
                                             ]); ?>
 
@@ -685,6 +686,24 @@ $this->params['beforeEndBody'][] = function() use ($modelBusiness, $modelUserRep
     ';
 
     echo '
+        <div id="modal-not-available" class="modal fade in" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title">' . \Yii::t('app', 'Information') . '</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>' . \Yii::t('app', 'Phone number not available') . '</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ';
+
+    echo '
         <div id="modal-report" class="modal fade in" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">';
@@ -903,9 +922,10 @@ $jscript = '
 
     $(".message-feature").on("click", function() {
 
-        $("#modal-coming-soon").modal("show");
+        if ($(this).attr("href") == null) {
 
-        return false;
+            $("#modal-not-available").modal("show");
+        }
     });
 
     $(".share-feature").on("click", function() {

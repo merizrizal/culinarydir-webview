@@ -45,16 +45,12 @@ class PageController extends base\BaseController
             ->joinWith([
                 'businessCategories' => function ($query) {
 
-                    $query->andOnCondition([
-                        'business_category.is_active' => true
-                    ]);
+                    $query->andOnCondition(['business_category.is_active' => true]);
                 },
                 'businessCategories.category',
                 'businessFacilities' => function ($query) {
 
-                    $query->andOnCondition([
-                        'business_facility.is_active' => true
-                    ]);
+                    $query->andOnCondition(['business_facility.is_active' => true]);
                 },
                 'businessFacilities.facility',
                 'businessImages',
@@ -106,16 +102,12 @@ class PageController extends base\BaseController
                 },
                 'userLoves' => function ($query) {
 
-                    $query->andOnCondition([
-                        'user_love.user_id' => ! empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null
-                    ])
-                        ->andOnCondition([
-                        'user_love.is_active' => true
-                    ]);
+                    $query->andOnCondition(['user_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
+                        ->andOnCondition(['user_love.is_active' => true]);
                 },
                 'userVisits' => function ($query) {
 
-                    $query->andOnCondition(['user_visit.user_id' => ! empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
+                    $query->andOnCondition(['user_visit.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
                         ->andOnCondition(['user_visit.is_active' => true]);
                 }
             ])
@@ -231,6 +223,8 @@ class PageController extends base\BaseController
             $dataBusinessImage[$businessImage['category']][] = $businessImage;
         }
 
+        $businessWhatsApp = !empty($modelBusiness['phone3']) ? 'https://api.whatsapp.com/send?phone=62' . substr(str_replace('-', '', $modelBusiness['phone3']), 1) : null;
+
         \Yii::$app->formatter->timeZone = 'UTC';
 
         return $this->render('detail', [
@@ -243,7 +237,8 @@ class PageController extends base\BaseController
             'modelRatingComponent' => $modelRatingComponent,
             'modelUserReport' => $modelUserReport,
             'modelTransactionSession' => $modelTransactionSession,
-            'isOrderOnline' => $isOrderOnline
+            'isOrderOnline' => $isOrderOnline,
+            'businessWhatsApp' => $businessWhatsApp
         ]);
     }
 
