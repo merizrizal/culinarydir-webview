@@ -250,7 +250,6 @@ class UserActionController extends base\BaseController
             $modelTransactionSession->note = !empty($oldModelTransaction->note) ? $oldModelTransaction->note : null;
             $modelTransactionSession->total_price = $oldModelTransaction->total_price;
             $modelTransactionSession->total_amount = $oldModelTransaction->total_amount;
-            $modelTransactionSession->order_id = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6) . '_' . time();
             $modelTransactionSession->status = 'Open';
 
             if (($flag = $modelTransactionSession->save())) {
