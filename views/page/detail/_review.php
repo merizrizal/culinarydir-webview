@@ -803,8 +803,6 @@ $jscript = '
 
     $("#modal-confirmation").find("#btn-delete").on("click", function() {
 
-        $("#modal-confirmation").find("#btn-delete").off("click");
-
         $("#modal-confirmation").modal("hide");
 
         $.ajax({
