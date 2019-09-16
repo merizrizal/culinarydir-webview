@@ -51,7 +51,7 @@ $jscript = '
         position: coordinate,
         map: seeMap,
         icon: {
-            url: "' . \Yii::$app->request->baseUrl . '/media/img/marker.png",
+            url: "' . \Yii::$app->request->baseUrl . '/img/marker.png",
             scaledSize: new google.maps.Size(32, 32),
             origin: new google.maps.Point(0,0),
             anchor: new google.maps.Point(15, 32)
