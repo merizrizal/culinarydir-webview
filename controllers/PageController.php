@@ -9,8 +9,10 @@ use core\models\BusinessPromo;
 use core\models\Promo;
 use core\models\RatingComponent;
 use core\models\TransactionSession;
+use core\models\UserLove;
 use core\models\UserPostMain;
 use core\models\UserReport;
+use core\models\UserVisit;
 use frontend\models\Post;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -83,16 +85,6 @@ class PageController extends base\BaseController
 
                     $query->andOnCondition(['product_service.code_name' => 'order-online'])
                         ->andOnCondition(['product_service.not_active' => false]);
-                },
-                'userLoves' => function ($query) {
-
-                    $query->andOnCondition(['user_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
-                        ->andOnCondition(['user_love.is_active' => true]);
-                },
-                'userVisits' => function ($query) {
-
-                    $query->andOnCondition(['user_visit.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
-                        ->andOnCondition(['user_visit.is_active' => true]);
                 }
             ])
             ->andWhere(['business.id' => $id])
@@ -117,6 +109,18 @@ class PageController extends base\BaseController
             ->andWhere(['business_hour.is_open' => true])
             ->orderBy(['business_hour.day' => SORT_ASC])
             ->cache(60)
+            ->asArray()->all();
+
+        $modelBusiness['userLoves'] = UserLove::find()
+            ->andWhere(['user_love.business_id' => $modelBusiness['id']])
+            ->andWhere(['user_love.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
+            ->andWhere(['user_love.is_active' => true])
+            ->asArray()->all();
+
+        $modelBusiness['userVisits'] = UserVisit::find()
+            ->andWhere(['user_visit.business_id' => $modelBusiness['id']])
+            ->andWhere(['user_visit.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
+            ->andWhere(['user_visit.is_active' => true])
             ->asArray()->all();
 
         $isOrderOnline = false;
@@ -168,20 +172,12 @@ class PageController extends base\BaseController
             ->andWhere(['user_post_main.user_id' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
             ->andWhere(['user_post_main.type' => 'Review'])
             ->andWhere(['user_post_main.is_publish' => true])
-            ->cache(60)
             ->asArray()->one();
 
         $modelRatingComponent = RatingComponent::find()
             ->where(['is_active' => true])
             ->orderBy(['order' => SORT_ASC])
             ->asArray()->all();
-
-        $modelTransactionSession = TransactionSession::find()
-            ->joinWith(['business'])
-            ->andWhere(['transaction_session.user_ordered' => !empty(\Yii::$app->user->getIdentity()->id) ? \Yii::$app->user->getIdentity()->id : null])
-            ->andWhere(['transaction_session.status' => 'Open'])
-            ->cache(60)
-            ->asArray()->one();
 
         $modelUserReport = new UserReport();
 
@@ -240,7 +236,6 @@ class PageController extends base\BaseController
             'modelPostPhoto' => $modelPostPhoto,
             'modelRatingComponent' => $modelRatingComponent,
             'modelUserReport' => $modelUserReport,
-            'modelTransactionSession' => $modelTransactionSession,
             'isOrderOnline' => $isOrderOnline,
             'businessWhatsApp' => $businessWhatsApp
         ]);
