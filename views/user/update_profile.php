@@ -94,9 +94,7 @@ $this->title = 'Update Profile ' . $modelUser->full_name; ?>
                                                 'readonly' => 'readonly',
                                             ]) ?>
 
-                                            <?= Html::submitButton('Update', ['class' => 'btn btn-raised btn-round btn-danger mb-30']) ?>
-                                            &nbsp;&nbsp;
-                                            <?= Html::a(\Yii::t('app', 'Cancel'), ['user/index'], ['class' => 'btn btn-raised btn-round btn-default mb-30']) ?>
+                                            <?= Html::submitButton('Update', ['class' => 'btn btn-raised btn-round btn-danger btn-block mb-30']) ?>
 
                                         </div>
 

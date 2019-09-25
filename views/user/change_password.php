@@ -51,9 +51,7 @@ $this->title = \Yii::t('app', 'Change Password'); ?>
                                         <div class="row mb-30">
                                             <div class="col-12">
 
-                                                <?= Html::submitButton('Update', ['class' => 'btn btn-raised btn-round btn-danger']) ?>
-                                                &nbsp;&nbsp;
-                                            	<?= Html::a(\Yii::t('app', 'Cancel'), ['user/index'], ['class' => 'btn btn-raised btn-round btn-default']) ?>
+                                                <?= Html::submitButton('Update', ['class' => 'btn btn-raised btn-round btn-danger btn-block']) ?>
 
                                             </div>
                                         </div>
